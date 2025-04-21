@@ -14,7 +14,7 @@ class Cake extends CI_Controller
         //$this->output->enable_profiler(TRUE);
     }
     //---------------------------------------------------------------
-
+    // we are here
 
     /**
      * Default action to be called
