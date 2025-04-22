@@ -95,8 +95,7 @@ class Mr_m extends MY_Model
         $this->db->join("module_rights", "modules.module_id = module_rights.module_id", "inner");
         $this->db->where("module_rights.role_id = " . $role_id . " and modules.module_menu_status = 1 and modules.module_status = 1 and modules.parent_id = 0");
         $this->db->order_by('modules.sort_number', 'ASC');
-        $query = $this->db->get();
-        $controllers = $query->result();
+        $controllers = $this->db->get()->result();
 
         $menu = array();
         foreach ($controllers as $controller) {

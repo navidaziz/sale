@@ -53,8 +53,7 @@ class Module_m extends MY_Model
         } else {
             $this->db->where("module_type = 'controller' and " . $this->status . " = 1 and module_id = " . $controller_id);
         }
-        $query = $this->db->get();
-        $controllers = $query->result();
+        $controllers = $this->db->get()->result();
 
         $module_tree = array();
         foreach ($controllers as $controller) {

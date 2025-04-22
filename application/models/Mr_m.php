@@ -88,7 +88,6 @@ class Mr_m extends MY_Model
     public function roleMenu($role_id)
     {
 
-        return NULL;
         $role_id = (int) $role_id;
 
         $this->db->select("modules.module_id, modules.module_title, modules.parent_id, modules.module_uri, modules.module_icon");
@@ -96,13 +95,7 @@ class Mr_m extends MY_Model
         $this->db->join("module_rights", "modules.module_id = module_rights.module_id", "inner");
         $this->db->where("module_rights.role_id = " . $role_id . " and modules.module_menu_status = 1 and modules.status = 1 and modules.parent_id = 0");
         $this->db->order_by('modules.sort_number', 'ASC');
-        $query = $this->db->get();
-        if (!$query) {
-            log_message('error', 'Query failed: ' . $this->db->last_query());
-            log_message('error', 'Error: ' . print_r($this->db->_error_message(), true)); // For CI 2.x
-            return [];
-        }
-        $controllers = $query->result();
+        $controllers = $this->db->get()->result();
 
         $menu = array();
         foreach ($controllers as $controller) {
