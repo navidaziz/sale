@@ -9,7 +9,7 @@ class Mr_m extends MY_Model
         parent::__construct();
         $this->table = "module_rights";
         $this->pk = "module_rights_id";
-        $this->status = "status";
+        $this->status = "module_status";
     }
     //-----------------------------------------------------------
 
@@ -93,7 +93,7 @@ class Mr_m extends MY_Model
         $this->db->select("modules.module_id, modules.module_title, modules.parent_id, modules.module_uri, modules.module_icon");
         $this->db->from("modules");
         $this->db->join("module_rights", "modules.module_id = module_rights.module_id", "inner");
-        $this->db->where("module_rights.role_id = " . $role_id . " and modules.module_menu_status = 1 and modules.status = 1 and modules.parent_id = 0");
+        $this->db->where("module_rights.role_id = " . $role_id . " and modules.module_menu_status = 1 and modules.module_status = 1 and modules.parent_id = 0");
         $this->db->order_by('modules.sort_number', 'ASC');
         $controllers = $this->db->get()->result();
 
@@ -108,7 +108,7 @@ class Mr_m extends MY_Model
             $this->db->select("modules.module_id, modules.module_title, modules.parent_id, modules.module_uri, modules.module_icon");
             $this->db->from("modules");
             $this->db->join("module_rights", "modules.module_id = module_rights.module_id", "inner");
-            $this->db->where("module_rights.role_id = " . $role_id . " and modules.module_menu_status = 1 and modules.status = 1 and modules.parent_id = " . $controller->module_id);
+            $this->db->where("module_rights.role_id = " . $role_id . " and modules.module_menu_status = 1 and modules.module_status = 1 and modules.parent_id = " . $controller->module_id);
             $act_query = $this->db->get();
             $actions = $act_query->result();
             foreach ($actions as $action) {
