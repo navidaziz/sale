@@ -82,8 +82,8 @@ switch (ENVIRONMENT) {
 		error_reporting(-1);
 		error_reporting(E_ERROR | E_PARSE);
 		ini_set('display_errors', 1);
-		echo 'we are here';
-		exit();
+		//echo 'we are here';
+		//exit();
 		break;
 
 	case 'testing':
