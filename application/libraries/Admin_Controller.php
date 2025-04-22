@@ -27,8 +27,8 @@ class Admin_Controller extends MY_Controller
         // $this->data["system_global_settings"] = $this->system_global_setting_model->joinGet($fields, "system_global_settings", $join_table, $where, false, true);
 
 
-
-
+        echo 'we are here admin_controller';
+        exit();
 
         // var_dump($this->session);
         // exit();
