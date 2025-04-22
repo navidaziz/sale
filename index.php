@@ -80,7 +80,7 @@ if ($hostname === 'localhost' || $hostname === '127.0.0.1') {
 switch (ENVIRONMENT) {
 	case 'development':
 		error_reporting(-1);
-		error_reporting(E_ERROR | E_PARSE);
+		//error_reporting(E_ERROR | E_PARSE);
 		ini_set('display_errors', 1);
 		//echo 'we are here';
 		//exit();
