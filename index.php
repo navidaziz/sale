@@ -1,4 +1,6 @@
 <?php
+echo 'Current PHP version: ' . phpversion();
+echo '<br />';
 echo 'error_log', __DIR__ . '/php-error.log';
 ini_set('log_errors', 1);
 ini_set('error_log', __DIR__ . '/php-error.log');
