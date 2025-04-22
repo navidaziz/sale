@@ -1,5 +1,7 @@
 <?php
-
+echo __DIR__ . '/php-error.log';
+ini_set('log_errors', 1);
+ini_set('error_log', __DIR__ . '/php-error.log');
 /**
  * CodeIgniter
  *
@@ -77,7 +79,7 @@ if ($hostname === 'localhost' || $hostname === '127.0.0.1') {
 switch (ENVIRONMENT) {
 	case 'development':
 
-		//error_reporting(0);
+		error_reporting(-1); // show all errors
 		ini_set('display_errors', 1);
 		break;
 
