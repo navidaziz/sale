@@ -7749,7 +7749,7 @@
              timeout: 0,
              data: null,
              dataType: null,
-             username: null,
+             user_title: null,
              password: null,
              cache: null,
              throws: false,
@@ -8483,7 +8483,7 @@
                         xhr = options.xhr(),
                         id = ++xhrId;
 
-                    xhr.open( options.type, options.url, options.async, options.username, options.password );
+                    xhr.open( options.type, options.url, options.async, options.user_title, options.password );
 
                     // Apply custom fields if provided
                     if ( options.xhrFields ) {

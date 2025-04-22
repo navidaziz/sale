@@ -312,7 +312,7 @@ jQuery.extend( {
 		timeout: 0,
 		data: null,
 		dataType: null,
-		username: null,
+		user_title: null,
 		password: null,
 		cache: null,
 		throws: false,

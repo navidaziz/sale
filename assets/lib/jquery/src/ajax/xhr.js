@@ -40,7 +40,7 @@ jQuery.ajaxTransport( function( options ) {
 					options.type,
 					options.url,
 					options.async,
-					options.username,
+					options.user_title,
 					options.password
 				);
 
