@@ -130,6 +130,20 @@ class MY_Model extends CI_Model
 
         //add the condition
         if ($where != FALSE) {
+
+            if (strpos($where, 'order by') !== false) {
+                // echo $where . "<br />";
+                $string = explode("order by", $where);
+                $order_by = $string[1];
+                $where = $string[1];
+            }
+            if (strpos($where, 'ORDER BY') !== false) {
+                // echo $where . "<br />";
+                $string = explode("ORDER BY", $where);
+                $order_by = $string[1];
+                $where = $string[1];
+            }
+            //
             $this->db->where($where);
         }
 

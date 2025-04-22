@@ -18,34 +18,6 @@ class MY_Controller extends CI_Controller
     //-----------------------------------------------------------------------
 
 
-    function send_sms($to, $from, $message)
-    {
-
-        $username = 'alhamraedu';
-        $password = 'khan1234';
-        $url = "http://Lifetimesms.com/plain?username=" . $username . "&password=" . $password .
-            "&to=" . $to . "&from=" . urlencode($from) . "&message=" . urlencode($message) . "";
-
-        //Curl Start
-        $ch = curl_init();
-        $timeout = 30;
-
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        $response = curl_exec($ch);
-        $response;
-
-        //save sms to database 
-        $query = "INSERT INTO `sms`( `mobile_number`, `message`,  `sms_status`, `date`) value ( '" . $to . "', '" . $message . "', '1', '" . date("Y-m-d G:i:s", time()) . "')";
-        $this->db->query($query);
-
-
-
-
-        curl_close($ch);
-        //exit();
-
-    }
 
 
     /**
@@ -60,6 +32,8 @@ class MY_Controller extends CI_Controller
      * with _thumbnail.
      * @return always return true
      */
+
+
     public function upload_file($field_name, $config = NULL)
     {
         if (is_null($config)) {
@@ -84,31 +58,32 @@ class MY_Controller extends CI_Controller
         if (!$this->upload->do_upload($field_name)) {
 
             $this->data['upload_error'] = $this->upload->display_errors();
-            //var_dump($this->data['upload_error']);
-            return $this->data['upload_error'];
+            return false;
         } else {
 
             $this->data['upload_data'] = $this->upload->data();
 
 
-            // //now create image thumbnail
-            // //if($this->data['upload_data']['is_image'] == true){
+            //now create image thumbnail
+            //if($this->data['upload_data']['is_image'] == true){
 
-            // $config['image_library'] = 'gd2';
-            // $config['source_image']    = $dir . $this->data['upload_data']['file_name'];
-            // $config['create_thumb'] = TRUE;
-            // //$config['maintain_ratio'] = TRUE;
-            // $config['width']    = 100;
-            // $config['height']    = 100;
+            $config['image_library'] = 'gd2';
+            $config['source_image']    = $dir . $this->data['upload_data']['file_name'];
+            $config['create_thumb'] = TRUE;
+            //$config['maintain_ratio'] = TRUE;
+            $config['width']    = 100;
+            $config['height']    = 100;
 
-            // //$this->load->library('image_lib', $config); 
-            // $this->image_lib->initialize($config);
+            $this->load->library('image_lib', $config);
+            $this->image_lib->initialize($config);
 
-            // $this->image_lib->resize();
+            $this->image_lib->resize();
             //}
-            return True;
+            return true;
         }
     }
+
+
     //------------------------------------------------------------------------------------
 
 
