@@ -9,7 +9,7 @@ class Module_m extends MY_Model
         parent::__construct();
         $this->table = "modules";
         $this->pk = "module_id";
-        $this->status = "status";
+        $this->status = "module_status";
     }
     //---------------------------------------------------------
 
@@ -49,9 +49,9 @@ class Module_m extends MY_Model
         $this->db->select("module_id, module_title, module_uri");
         $this->db->from($this->table);
         if ($controller_id == 0) {
-            $this->db->where("module_type = 'controller' and " . $this->status . " = 1");
+            $this->db->where("module_type = 'controller' and " . $this->status . " != 0");
         } else {
-            $this->db->where("module_type = 'controller' and " . $this->status . " = 1 and module_id = " . $controller_id);
+            $this->db->where("module_type = 'controller' and " . $this->status . " != 0 and module_id = " . $controller_id);
         }
         $query = $this->db->get();
         $controllers = $query->result();
@@ -151,7 +151,7 @@ class Module_m extends MY_Model
         $this->db->select("module_id");
         $this->db->from($this->table);
         $this->db->where(array(
-            //"module_uri" => $action_name,
+            "module_uri" => $action_name,
             "parent_id"  => $controller_id
         ));
         $this->db->limit(1);

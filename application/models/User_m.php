@@ -8,7 +8,7 @@ class User_m extends MY_Model
 
         parent::__construct();
         $this->table = "users";
-        $this->pk = "userId";
+        $this->pk = "user_id";
         $this->status = "status";
     }
     //------------------------------------------------------
@@ -35,9 +35,7 @@ class User_m extends MY_Model
     /**
      * login a user
      */
-    public function login()
-    {
-    }
+    public function login() {}
     //--------------------------------------------------------
 
 
@@ -71,19 +69,19 @@ class User_m extends MY_Model
     // my functions ...
     public function get_user_list($limit, $offset)
     {
-        $user_id = $this->session->userdata('userId');
-        $result = $this->db->where('userId', $user_id)->get('users')->result()[0];
+        $user_id = $this->session->userdata('user_id');
+        $result = $this->db->where('user_id', $user_id)->get('users')->result()[0];
         $district_id = $result->district_id;
         $role_id = $result->role_id;
 
-        $this->db->select('userId, userTitle, user_title, userPassword, userEmail, userStatus, gender, cnic, contactNumber, district_id, users.createdDate, users.createdBy, users.lastUpdatedBy, address, district.districtTitle as districtTitle');
+        $this->db->select('user_id, userName, userName, userPassword, userEmail, userStatus, gender, cnic, contactNumber, district_id, users.createdDate, users.createdBy, users.lastUpdatedBy, address, district.districtTitle as districtTitle');
         $this->db->from('users');
         $this->db->join('district', 'district.districtId = users.district_id', 'left');
-        $this->db->order_by('userId', 'DESC');
+        $this->db->order_by('user_id', 'DESC');
         $this->db->limit($limit, $offset);
-        if ($role_id == 16) :
+        if ($role_id == 16):
             $this->db->where('district_id', $district_id);
-            $this->db->where('userId >=', '109');
+            $this->db->where('user_id >=', '109');
         endif;
         $query = $this->db->get();
         return $query->result();
