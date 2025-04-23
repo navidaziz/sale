@@ -62,7 +62,7 @@
 
           <div class="col-md-6 col-md-offset-3">
             <div class="login-box" style="background-color:#5C9CCC; margin: 5px auto; padding: 55px 40px 40px;">
-              <h2 class="bigintro">Shop / Restaurant Detail</h2>
+              <strong>Shop / Restaurant Detail</strong>
               <div class="divide-20"></div>
               <form id="businesses" class="form-horizontal" enctype="multipart/form-data" method="post">
                 <input type="hidden" name="business_id" value="<?php echo $input->business_id; ?>" />
