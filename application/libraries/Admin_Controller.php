@@ -12,6 +12,10 @@ class Admin_Controller extends MY_Controller
 
         parent::__construct();
 
+
+        error_reporting(-1); // show all errors
+        ini_set('display_errors', 1);
+
         $this->load->helper("my_functions");
         $this->load->model("mr_m");
         $this->load->model("module_m");
