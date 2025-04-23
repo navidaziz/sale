@@ -1,5 +1,6 @@
 <?php
-
+ini_set('log_errors', 1);
+ini_set('error_log', __DIR__ . '/php-error.log');
 /**
  * CodeIgniter
  *
@@ -78,6 +79,7 @@ switch (ENVIRONMENT) {
 	case 'development':
 
 		//error_reporting(0);
+		error_reporting(-1); // show all errors
 		ini_set('display_errors', 1);
 		break;
 
