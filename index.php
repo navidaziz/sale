@@ -78,11 +78,8 @@ if ($hostname === 'localhost' || $hostname === '127.0.0.1') {
 //exit();
 switch (ENVIRONMENT) {
 	case 'development':
-
-		//error_reporting(0);
-		error_reporting(1); // show all errors
 		ini_set('display_errors', 1);
-		error_reporting(E_ALL & ~E_DEPRECATED & ~E_USER_DEPRECATED);
+		error_reporting(E_ALL & ~E_DEPRECATED & ~E_USER_DEPRECATED & ~E_NOTICE);
 		break;
 
 	case 'testing':
@@ -100,6 +97,7 @@ switch (ENVIRONMENT) {
 		echo 'The application environment is not set correctly.';
 		exit(1); // EXIT_ERROR
 }
+
 
 /*
  *---------------------------------------------------------------

@@ -92,20 +92,20 @@ class Register extends Admin_Controller
             'response' => $this->input->post('g-recaptcha-response')
         );
 
-        $verify = curl_init();
-        curl_setopt($verify, CURLOPT_URL, "https://www.google.com/recaptcha/api/siteverify");
-        curl_setopt($verify, CURLOPT_POST, true);
-        curl_setopt($verify, CURLOPT_POSTFIELDS, http_build_query($credential));
-        curl_setopt($verify, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($verify, CURLOPT_RETURNTRANSFER, true);
-        $response = curl_exec($verify);
+        // $verify = curl_init();
+        // curl_setopt($verify, CURLOPT_URL, "https://www.google.com/recaptcha/api/siteverify");
+        // curl_setopt($verify, CURLOPT_POST, true);
+        // curl_setopt($verify, CURLOPT_POSTFIELDS, http_build_query($credential));
+        // curl_setopt($verify, CURLOPT_SSL_VERIFYPEER, false);
+        // curl_setopt($verify, CURLOPT_RETURNTRANSFER, true);
+        // $response = curl_exec($verify);
 
-        $status = json_decode($response, true);
+        // $status = json_decode($response, true);
 
-        if ($status['success'] != 1) {
-            $this->session->set_flashdata('msg', 'Captcha error, Please try again.');
-            redirect("register/signup");
-        }
+        // if ($status['success'] != 1) {
+        //     $this->session->set_flashdata('msg', 'Captcha error, Please try again.');
+        //     redirect("register/signup");
+        // }
 
         // var_dump($_POST);
         // $this->form_validation->set_message('is_unique_email', 'The email address is already registered with QUCIK SALE. Try with differnt email address.');

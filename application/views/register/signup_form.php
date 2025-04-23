@@ -102,11 +102,7 @@
                    <i class="fa fa-envelope"></i>
                    <input required type="email" class="form-control" id="email_address" name="email_address" value="<?php echo set_value('email_address', @$email_address); ?>">
                  </div>
-                 <div class="form-group">
-                   <div class="g-recaptcha" data-sitekey="6Leuqa4ZAAAAAEBURd3DWqmwV4cdzXi5zzcljMLR" style="height: 100px;">
-                   </div>
-                   <div class="validation_message" style="font-weight: bold;"></div>
-                 </div>
+
                  <div>
 
                    <button type="submit" class="btn btn-success">Create Account</button>
