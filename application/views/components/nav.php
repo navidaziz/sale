@@ -4,7 +4,7 @@
 
 
 $menu_list = "<ul>";
-if ($menu_arr) {
+if (isset($menu_arr) and is_array($menu_arr)) {
     foreach ($menu_arr as $controller_id => $controller_data) {
 
         $cn_class = "";
