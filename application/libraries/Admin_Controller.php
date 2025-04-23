@@ -23,18 +23,6 @@ class Admin_Controller extends MY_Controller
         $this->data['method_name'] = $this->method_name = $this->router->fetch_method();
         $this->data['menu_arr'] = $this->mr_m->roleMenu($this->session->userdata("role_id"));
 
-        // $this->load->model("system_global_setting_model");
-        // $system_global_setting_id = 1;
-        // $fields = $fields = array("sytem_admin_logo", "system_title", "system_sub_title", "sytem_public_logo");
-        // $join_table = $join_table = array();
-        // $where = "system_global_setting_id = $system_global_setting_id";
-        // $this->data["system_global_settings"] = $this->system_global_setting_model->joinGet($fields, "system_global_settings", $join_table, $where, false, true);
-
-
-
-        // var_dump($this->session);
-        // exit();
-        //login check
         $exception_uri = array(
             "user/login",
             "user/logout",
@@ -50,8 +38,7 @@ class Admin_Controller extends MY_Controller
         if (!in_array(uri_string(), $exception_uri)) {
             //check if the user is logged in or not
             if (!$this->session->userdata('user_id') && empty($this->session->userdata('user_id'))) {
-                // echo "problem is here too many redirections here...";
-                // exit(); 
+
                 $is_ajax = 'xmlhttprequest' == strtolower($_SERVER['HTTP_X_REQUESTED_WITH'] ?? '');
                 if ($is_ajax) {
                     echo '<div class="alert alert-danger">';
@@ -65,11 +52,11 @@ class Admin_Controller extends MY_Controller
             }
 
             //now we will check if the current module is assigned to the user or not
-            //$this->data['current_action_id'] = $current_action_id = $this->module_m->actionIdFromName($this->controller_name, $this->method_name);
+            $this->data['current_action_id'] = $current_action_id = $this->module_m->actionIdFromName($this->controller_name, $this->method_name);
 
-            //$allowed_modules = $this->mr_m->rightsByRole($this->session->userdata("role_id"));
-            $current_action_id = 1;
-            $allowed_modules = array();
+            $allowed_modules = $this->mr_m->rightsByRole($this->session->userdata("role_id"));
+            //$current_action_id = 1;
+            //$allowed_modules = array();
             //add role homepage to allowed modules
             $allowed_modules[] = $this->session->userdata("role_homepage_id");
 
