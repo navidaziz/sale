@@ -4,58 +4,60 @@
 
 
 $menu_list = "<ul>";
-foreach ($menu_arr as $controller_id => $controller_data) {
+if ($menu_arr) {
+    foreach ($menu_arr as $controller_id => $controller_data) {
 
-    $cn_class = "";
-    if ($controller_name == $controller_data['controller_uri']) {
-        $cn_class = "active";
-    }
+        $cn_class = "";
+        if ($controller_name == $controller_data['controller_uri']) {
+            $cn_class = "active";
+        }
 
-    if ($controller_data['actions']) {
+        if ($controller_data['actions']) {
 
-        $menu_list .= "<li class='has-sub " . $cn_class . "'>
+            $menu_list .= "<li class='has-sub " . $cn_class . "'>
 				<a href='javascript:;' class=''>
 				<i style=\"color:#000\" class='fa " . $controller_data['controller_icon'] . " fa-fw'></i> <span class='menu-text' style=\"color:#000\">" . $controller_data['controller_title'] . "</span>
 				<span class='arrow'></span>
 				</a>";
 
 
-        //create sub menu
-        $menu_list .= "<ul class='sub'>";
-        //check of we have any action for this controller
-        if (isset($controller_data['actions']) and is_array($controller_data['actions'])) {
+            //create sub menu
+            $menu_list .= "<ul class='sub'>";
+            //check of we have any action for this controller
+            if (isset($controller_data['actions']) and is_array($controller_data['actions'])) {
 
-            foreach ($controller_data['actions'] as $action) {
+                foreach ($controller_data['actions'] as $action) {
 
-                $class = "";
-                if (@$current_action_id == $action['action_id']) {
-                    $class = "current";
+                    $class = "";
+                    if (@$current_action_id == $action['action_id']) {
+                        $class = "current";
+                    }
+                    $menu_list .= "<li class='" . $class . "' ><a class='' href='" . site_url($controller_data['controller_uri'] . "/" . $action['action_uri']) . "'><span class='sub-menu-text' style=\"color:#000\">" . $action['action_title'] . "</span></a></li>";
                 }
-                $menu_list .= "<li class='" . $class . "' ><a class='' href='" . site_url($controller_data['controller_uri'] . "/" . $action['action_uri']) . "'><span class='sub-menu-text' style=\"color:#000\">" . $action['action_title'] . "</span></a></li>";
             }
-        }
 
-        $menu_list .= "</ul>";
-        //end of sub menu
+            $menu_list .= "</ul>";
+            //end of sub menu
 
-        $menu_list .= "</li>";
-    } else {
-        if (isset($controller_data['actions']) and is_array($controller_data['actions'])) {
+            $menu_list .= "</li>";
+        } else {
+            if (isset($controller_data['actions']) and is_array($controller_data['actions'])) {
 
-            foreach ($controller_data['actions'] as $action) {
+                foreach ($controller_data['actions'] as $action) {
 
-                $class = "";
-                if ($current_action_id == $action['action_id']) {
-                    $class = "current";
-                }
-
+                    $class = "";
+                    if ($current_action_id == $action['action_id']) {
+                        $class = "current";
+                    }
 
 
-                $menu_list .= "<li class='has-sub " . $cn_class . "'>
+
+                    $menu_list .= "<li class='has-sub " . $cn_class . "'>
 				<a href='" . site_url($controller_data['controller_uri'] . "/" . $action['action_uri']) . "' class=''>
 				<i style=\"color:#000\" class='fa " . $controller_data['controller_icon'] . " fa-fw'></i> <span class='menu-text' style=\"color:#000\">" . $controller_data['controller_title'] . "</span>
 				<!--<span class='arrow'></span>-->
 				</a></li>";
+                }
             }
         }
     }
