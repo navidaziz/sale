@@ -39,7 +39,7 @@ class Admin_Controller extends MY_Controller
             //     //check if the user is logged in or not
             if (!$this->session->userdata('user_id') && empty($this->session->userdata('user_id'))) {
 
-                $is_ajax = 'xmlhttprequest' == strtolower($_SERVER['HTTP_X_REQUESTED_WITH'] ?? '');
+                $is_ajax = isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest';
                 if ($is_ajax) {
                     echo '<div class="alert alert-danger">';
                     echo 'Please log in again as your session has expired.';
