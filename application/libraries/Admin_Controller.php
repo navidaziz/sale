@@ -68,7 +68,8 @@ class Admin_Controller extends MY_Controller
             //$this->data['current_action_id'] = $current_action_id = $this->module_m->actionIdFromName($this->controller_name, $this->method_name);
 
             //$allowed_modules = $this->mr_m->rightsByRole($this->session->userdata("role_id"));
-
+            $current_action_id = 1;
+            $allowed_modules = array();
             //add role homepage to allowed modules
             $allowed_modules[] = $this->session->userdata("role_homepage_id");
 
