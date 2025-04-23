@@ -80,8 +80,9 @@ switch (ENVIRONMENT) {
 	case 'development':
 
 		//error_reporting(0);
-		error_reporting(-1); // show all errors
+		error_reporting(1); // show all errors
 		ini_set('display_errors', 1);
+		error_reporting(E_ALL & ~E_DEPRECATED & ~E_USER_DEPRECATED);
 		break;
 
 	case 'testing':
