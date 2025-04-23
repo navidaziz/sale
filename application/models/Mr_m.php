@@ -88,6 +88,9 @@ class Mr_m extends MY_Model
     public function roleMenu($role_id)
     {
 
+        if (!$role_id) {
+            return array();
+        }
         $role_id = (int) $role_id;
 
         $this->db->select("modules.module_id, modules.module_title, modules.parent_id, modules.module_uri, modules.module_icon");
