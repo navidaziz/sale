@@ -118,10 +118,7 @@
                   <i class="fa fa-lock"></i>
                   <input type="password" name="userPassword" class="form-control" id="userPassword" value="" required>
                 </div>
-                <div class="form-group">
-                  <div class="g-recaptcha" data-sitekey="6Leuqa4ZAAAAAEBURd3DWqmwV4cdzXi5zzcljMLR" style="height: 100px;"></div>
-                  <div class="validation_message" style="font-weight: bold;"></div>
-                </div>
+
                 <div>
                   <button type="submit" class="btn btn-danger">Login</button>
                   <a class="btn btn-link btn-sm" href="<?php echo site_url('register/password_reset'); ?>" style="text-decoration: none; margin-bottom:5px;">Forgot Password?</a>
