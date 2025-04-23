@@ -278,7 +278,7 @@ class Sale_point extends Admin_Controller
 			if ($sales_items_user_list->total_quantity >= 0) {
 				$user_item_list .= '<th>' . $sales_items_user_list->total_quantity . '</th>';
 			} else {
-				$user_item_list .= '<td style="color:red">' . $sales_items_user_list->total_quantity . '0</td>';
+				$user_item_list .= '<td style="color:red">' . $sales_items_user_list->total_quantity . '</td>';
 			}
 
 			$user_item_list .= '<th>' . ucwords($sales_items_user_list->name) . '</th>
