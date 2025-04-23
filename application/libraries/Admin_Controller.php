@@ -16,12 +16,12 @@ class Admin_Controller extends MY_Controller
         error_reporting(-1); // show all errors
         ini_set('display_errors', 1);
 
-        $this->load->helper("my_functions");
-        $this->load->model("mr_m");
-        $this->load->model("module_m");
+        //$this->load->helper("my_functions");
+        //$this->load->model("mr_m");
+        //$this->load->model("module_m");
         $this->data['controller_name'] = $this->controller_name = $this->router->fetch_class();
         $this->data['method_name'] = $this->method_name = $this->router->fetch_method();
-        $this->data['menu_arr'] = $this->mr_m->roleMenu($this->session->userdata("role_id"));
+        //$this->data['menu_arr'] = $this->mr_m->roleMenu($this->session->userdata("role_id"));
 
         // $this->load->model("system_global_setting_model");
         // $system_global_setting_id = 1;
