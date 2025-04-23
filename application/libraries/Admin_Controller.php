@@ -51,37 +51,37 @@ class Admin_Controller extends MY_Controller
                 }
             }
 
-            //     //now we will check if the current module is assigned to the user or not
-            //     $this->data['current_action_id'] = $current_action_id = $this->module_m->actionIdFromName($this->controller_name, $this->method_name);
+            //now we will check if the current module is assigned to the user or not
+            $this->data['current_action_id'] = $current_action_id = $this->module_m->actionIdFromName($this->controller_name, $this->method_name);
 
-            //     $allowed_modules = $this->mr_m->rightsByRole($this->session->userdata("role_id"));
-            //     //$current_action_id = 1;
-            //     //$allowed_modules = array();
-            //     //add role homepage to allowed modules
-            //     $allowed_modules[] = $this->session->userdata("role_homepage_id");
+            $allowed_modules = $this->mr_m->rightsByRole($this->session->userdata("role_id"));
+            //$current_action_id = 1;
+            //$allowed_modules = array();
+            //add role homepage to allowed modules
+            $allowed_modules[] = $this->session->userdata("role_homepage_id");
 
-            //     if (!in_array($current_action_id, $allowed_modules)) {
-            //         $is_ajax = 'xmlhttprequest' == strtolower($_SERVER['HTTP_X_REQUESTED_WITH'] ?? '');
-            //         if ($is_ajax) {
-            //             echo '<div class="alert alert-danger">
-            //                 <strong>Error!</strong> You are not allowed to access this module.
-            //                 ' . $this->controller_name . ' - ' . $this->method_name . '
-            //             </div>
-            //             ';
-            //             exit();
-            //         } else {
-            //             if (!$this->session->userdata('user_id') && empty($this->session->userdata('user_id'))) {
-            //                 redirect("login");
-            //             } else {
-            //                 $this->session->set_flashdata('msg_error', 'You are not allowed to access this module');
-            //                 // redirect($_SERVER['HTTP_REFERER']);
-            //                 // session_destroy();
-            //                 //redirect($this->session->userdata("role_homepage_uri"));
-            //                 $module = $this->controller_name . '-' . $this->method_name;
-            //                 redirect(site_url("errors/index?module=$module"));
-            //             }
-            //         }
-            //     }
+            if (!in_array($current_action_id, $allowed_modules)) {
+                $is_ajax = 'xmlhttprequest' == strtolower($_SERVER['HTTP_X_REQUESTED_WITH'] ?? '');
+                if ($is_ajax) {
+                    echo '<div class="alert alert-danger">
+                            <strong>Error!</strong> You are not allowed to access this module.
+                            ' . $this->controller_name . ' - ' . $this->method_name . '
+                        </div>
+                        ';
+                    exit();
+                } else {
+                    if (!$this->session->userdata('user_id') && empty($this->session->userdata('user_id'))) {
+                        redirect("login");
+                    } else {
+                        $this->session->set_flashdata('msg_error', 'You are not allowed to access this module');
+                        // redirect($_SERVER['HTTP_REFERER']);
+                        // session_destroy();
+                        //redirect($this->session->userdata("role_homepage_uri"));
+                        $module = $this->controller_name . '-' . $this->method_name;
+                        redirect(site_url("errors/index?module=$module"));
+                    }
+                }
+            }
         }
     }
 }
