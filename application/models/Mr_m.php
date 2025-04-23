@@ -91,7 +91,9 @@ class Mr_m extends MY_Model
         if (!$role_id) {
             return array();
         }
-        $role_id = (int) $role_id;
+        echo $role_id = (int) $role_id;
+
+        exit();
 
         $this->db->select("modules.module_id, modules.module_title, modules.parent_id, modules.module_uri, modules.module_icon");
         $this->db->from("modules");
