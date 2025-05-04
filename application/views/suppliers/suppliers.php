@@ -39,8 +39,8 @@
                                         <?php
                                         $query = "SELECT  ROUND(SUM( `inventory`.`item_cost_price`*`inventory`.`inventory_transaction`),2) AS total 
                                                 FROM   `inventory` WHERE `inventory`.`supplier_id`='" . $supplier->supplier_id . "';";
-                                        $result = $this->db->query($query)->result();
-                                        $total_amount = $result[0]->total;
+                                        $result = $this->db->query($query)->row();
+                                        $total_amount = $result->total;
                                         echo $total_amount;
                                         ?>
                                     </td>
