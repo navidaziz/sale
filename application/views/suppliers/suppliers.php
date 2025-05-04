@@ -93,28 +93,32 @@
                                             Print </a>
                                     </td>
                                     <td>
-                                        <?php echo status($supplier->status,  $this->lang); ?>
-                                        <?php
+                                        <?php if ($supplier->supplier_name != 'Opening Stock') {  ?>
+                                            <?php echo status($supplier->status,  $this->lang); ?>
+                                            <?php
 
-                                        //set uri segment
-                                        if (!$this->uri->segment(4)) {
-                                            $page = 0;
-                                        } else {
-                                            $page = $this->uri->segment(4);
-                                        }
+                                            //set uri segment
+                                            if (!$this->uri->segment(4)) {
+                                                $page = 0;
+                                            } else {
+                                                $page = $this->uri->segment(4);
+                                            }
 
-                                        if ($supplier->status == 0) {
-                                            echo "<a href='" . site_url("suppliers/publish/" . $supplier->supplier_id . "/" . $page) . "'> &nbsp;" . $this->lang->line('Publish') . "</a>";
-                                        } elseif ($supplier->status == 1) {
-                                            echo "<a href='" . site_url("suppliers/draft/" . $supplier->supplier_id . "/" . $page) . "'> &nbsp;" . $this->lang->line('Draft') . "</a>";
-                                        }
-                                        ?>
+                                            if ($supplier->status == 0) {
+                                                echo "<a href='" . site_url("suppliers/publish/" . $supplier->supplier_id . "/" . $page) . "'> &nbsp;" . $this->lang->line('Publish') . "</a>";
+                                            } elseif ($supplier->status == 1) {
+                                                echo "<a href='" . site_url("suppliers/draft/" . $supplier->supplier_id . "/" . $page) . "'> &nbsp;" . $this->lang->line('Draft') . "</a>";
+                                            }
+                                            ?>
+                                        <?php } ?>
                                     </td>
 
                                     <td>
                                         <a class="llink llink-view" href="<?php echo site_url("suppliers/view_supplier/" . $supplier->supplier_id . "/" . $this->uri->segment(4)); ?>"><i class="fa fa-eye"></i> </a>
-                                        <a class="llink llink-edit" href="<?php echo site_url("suppliers/edit/" . $supplier->supplier_id . "/" . $this->uri->segment(4)); ?>"><i class="fa fa-pencil-square-o"></i></a>
-                                        <a class="llink llink-trash" href="<?php echo site_url("suppliers/trash/" . $supplier->supplier_id . "/" . $this->uri->segment(4)); ?>"><i class="fa fa-trash-o"></i></a>
+                                        <?php if ($supplier->supplier_name != 'Opening Stock') {  ?>
+                                            <a class="llink llink-edit" href="<?php echo site_url("suppliers/edit/" . $supplier->supplier_id . "/" . $this->uri->segment(4)); ?>"><i class="fa fa-pencil-square-o"></i></a>
+                                            <a class="llink llink-trash" href="<?php echo site_url("suppliers/trash/" . $supplier->supplier_id . "/" . $this->uri->segment(4)); ?>"><i class="fa fa-trash-o"></i></a>
+                                        <?php } ?>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
