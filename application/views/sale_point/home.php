@@ -359,7 +359,7 @@
 			$('#item_list').html('');
 			//$('#print_area').html(data);
 			//Print2(data);
-			window.print();
+			//window.print();
 		});
 
 

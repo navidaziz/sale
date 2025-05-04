@@ -145,11 +145,24 @@ class Sale_point extends Admin_Controller
                      SUM(discount) as discount, 
                      SUM(`total_payable`) as total_sale 
                      FROM `sales` 
-                     WHERE DATE(created_date) = DATE(NOW())";
+                     WHERE 
+					 business_id = '" . $this->session->userdata("business_id") . "'
+					 AND DATE(created_date) = DATE(NOW())";
 		$today_sale_summary = $this->db->query($query);
 		if ($today_sale_summary) {
-			$this->data['today_sale_summary'] = $today_sale_summary->result()[0];
+			$this->data['today_sale_summary'] = $today_sale_summary->row();
 		}
+		$query = "SELECT 
+		SUM(quantity * sale_price) AS total_sale,
+		SUM(quantity * (sale_price - cost_price)) AS total_profit
+		FROM 
+		sales_items
+		WHERE 
+		business_id = '" . $this->session->userdata("business_id") . "'
+		AND DATE(created_date) = CURDATE();
+		";
+		$this->data['today_sale_profit'] = $this->db->query($query)->row();
+
 		$this->load->view("sale_point/sale_reports", $this->data);
 	}
 
@@ -495,7 +508,7 @@ class Sale_point extends Admin_Controller
 				$sales_items_user_lists = $this->get_user_items();
 				foreach ($sales_items_user_lists as $sales_items_user_list) {
 					$query = "INSERT INTO `sales_items`(
-					`sales_items`,
+					`business_id`,
 					`sale_id`, 
                                               `item_id`, 
                                               `item_name`, 
@@ -527,7 +540,7 @@ class Sale_point extends Admin_Controller
 
 				if ($tax_ids) {
 					$query = "SELECT * FROM taxes WHERE `status`=1 
-					WHERE business_id = '" . $business_id . "'
+					AND business_id = '" . $business_id . "'
 					AND tax_id IN(" . trim($tax_ids, ',') . ")";
 					$taxes = $this->db->query($query)->result();
 					foreach ($taxes as $tax) {
@@ -573,7 +586,7 @@ class Sale_point extends Admin_Controller
 		$this->data['sale_items'] = $this->db->query($query)->result();
 		$query = "SELECT * FROM `sale_taxes` 
               WHERE `sale_id` = '" . $sale_id . "'
-			  AND sales.business_id = '" . $business_id . "'";
+			  AND sale_taxes.business_id = '" . $business_id . "'";
 		$this->data['sale_taxes'] = $this->db->query($query)->result();
 		$this->load->view("sale_point/print_recepit", $this->data);
 	}
