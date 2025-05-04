@@ -23,6 +23,10 @@ class Suppliers extends Admin_Controller
      */
     public function index()
     {
+        error_reporting(E_ALL);
+        ini_set('display_errors', 1);
+        ini_set('display_startup_errors', 1);
+
         // $main_page = base_url() . $this->router->fetch_class() . "/view";
         // redirect($main_page);
         $business_id = $this->session->userdata("business_id");
