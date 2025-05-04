@@ -26,7 +26,7 @@ class Suppliers extends Admin_Controller
         // $main_page = base_url() . $this->router->fetch_class() . "/view";
         // redirect($main_page);
         $business_id = $this->session->userdata("business_id");
-        echo $where = "`suppliers`.`status` IN (0, 1) AND `suppliers`.`business_id` = '" . $business_id . "'";
+        $where = "`suppliers`.`status` IN (0, 1) AND `suppliers`.`business_id` = '" . $business_id . "'";
         $data = $this->supplier_model->get_supplier_list($where);
         $this->data["suppliers"] = $data->suppliers;
         $this->data["pagination"] = $data->pagination;
