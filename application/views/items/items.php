@@ -86,14 +86,14 @@
             <!-- /BREADCRUMBS -->
             <div class="row">
 
-                <div class="col-md-6">
+                <div class="col-md-3">
                     <div class="clearfix">
                         <h3 class="content-title pull-left"><?php echo $title; ?></h3>
                     </div>
                     <div class="description"><?php echo $title; ?></div>
                 </div>
 
-                <div class="col-md-6">
+                <div class="col-md-9">
                     <div class="pull-right">
                         <a class="btn btn-primary btn-sm" href="<?php echo site_url("items/add"); ?>"><i class="fa fa-plus"></i> <?php echo $this->lang->line('New'); ?></a>
                         <a class="btn btn-danger btn-sm" href="<?php echo site_url("items/trashed"); ?>"><i class="fa fa-trash-o"></i> <?php echo $this->lang->line('Trash'); ?></a>
