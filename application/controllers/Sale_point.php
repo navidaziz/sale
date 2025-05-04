@@ -340,44 +340,35 @@ class Sale_point extends Admin_Controller
 
 
 		foreach ($taxes as $tax) {
-			$sale_summary .= '<p>' . $tax->name . ' - ' . $tax->tax_percentage . '%</p>';
+			$sale_summary .= '<p>' . $tax->name . ' - ' . round($tax->tax_percentage, 2) . '% - ' . (($sales_items_summary->total_price * $tax->tax_percentage) / 100) . '</p>';
 		}
 		$sale_summary .= '
-		
-					
-    <table class="table table-bordered table-striped" style="margin-top:3px">
-        <tr>
-		<td rowspan="2" >
-		<small>
-		<p>Total: Rs ' . $sales_items_summary->total_price . '</p>
-		<p>Tax: Rs ' . $sales_items_summary->total_tax_pay_able . '</p>
-		<input type="hidden" name="tax_ids" id="tax_ids" value="' . $tax_ids . '" />
-		</small>
-		</td>
-           <td>
-                 After Tax Total 
-            </td>
-			 <td>
-			 Discount
-            </td>
-			 <td>
-			 Payable
-			 
-            </td> 
-			</tr>
-			<tr>
-            <td >
-			' . $sales_items_summary->items_total . '
-            </td>
-			 <td>
-			 <span >' . $sales_items_summary->total_discount . '</span>
-            </td>
-			 <td >
-			 <span id="pay_able">' . $sales_items_summary->pay_able . '</span>
-			 <input type="hidden" name="pay_able_total" id="pay_able_total" value="' . $sales_items_summary->pay_able . '" />
-            </td>
-        </tr>
-    </table>';
+<div class="table-responsive" style="margin-top: 5px;">
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Item Total</th>
+                <th>Discount</th>
+                <th>Total</th>
+				 <th>Tax</th>
+                <th>Total Payable</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>' . $sales_items_summary->items_total . '</td>
+                <td>' . $sales_items_summary->total_discount . '</td>
+                <td>' . $sales_items_summary->total_price . '</td>
+				 <td>' . $sales_items_summary->total_tax_pay_able . '</td>
+                <td>' . $sales_items_summary->pay_able . '
+				 <input type="hidden" name="tax_ids" id="tax_ids" value="' . $tax_ids . '" />
+                    <input type="hidden" name="pay_able_total" id="pay_able_total" value="' . $sales_items_summary->pay_able . '" />
+                </td>
+				</tr>
+        </tbody>
+    </table>
+</div>';
+
 
 		return $sale_summary;
 	}
@@ -452,6 +443,8 @@ class Sale_point extends Admin_Controller
 
 	public function add_sale_data()
 	{
+		var_dump($_POST);
+		exit();
 		$payment_type = $this->input->post('payment_type');
 		$remarks = $this->input->post('remarks');
 		$discount = $this->input->post('discount');

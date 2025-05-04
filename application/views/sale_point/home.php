@@ -321,8 +321,10 @@
 		cash_amount = parseFloat($('#cash_amount').val());
 		customer_name = $('#customer_name').val();
 		customer_mobile_no = $('#customer_mobile_no').val();
-		pay_able_total = parseFloat($('#pay_able_total').html());
+		pay_able_total = parseFloat($('#pay_able_total').val());
 		cash_back = parseFloat($('#cash_back').html());
+
+		return;
 		if (cash_amount == 0) {
 			alert("Cash Amout is Zero");
 			return false;
@@ -369,18 +371,20 @@
 
 
 	function add_discount() {
-		discount = parseFloat($('#discount').val());
-		pay_able = parseFloat($('#pay_able').html());
-		$('#payment_discount').html(discount);
-		$('#pay_able_total').html(pay_able - discount);
+		// discount = parseFloat($('#discount').val());
+		// pay_able = parseFloat($('#pay_able').html());
+		// alert(pay_able);
+		// $('#payment_discount').html(discount);
+		// $('#pay_able_total').html(pay_able - discount);
 		cash_calulator();
 
 	}
 
 	function cash_calulator() {
 		cash_amount = parseFloat($('#cash_amount').val());
+		discount = parseFloat($('#discount').val());
 		pay_able_total = parseFloat($('#pay_able_total').val());
-		$('#cash_back').html(cash_amount - pay_able_total);
+		$('#cash_back').html(pay_able_total - Math.abs(cash_amount - discount));
 	}
 
 	$(function() {
