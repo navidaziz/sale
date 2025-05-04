@@ -443,8 +443,7 @@ class Sale_point extends Admin_Controller
 
 	public function add_sale_data()
 	{
-		var_dump($_POST);
-		exit();
+
 		$payment_type = $this->input->post('payment_type');
 		$remarks = $this->input->post('remarks');
 		$discount = $this->input->post('discount');
