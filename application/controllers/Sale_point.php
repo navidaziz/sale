@@ -552,7 +552,8 @@ class Sale_point extends Admin_Controller
 				AND business_id = '" . $business_id . "'
 				";
 			$this->db->query($query);
-			$this->print_receipt($sale_id);
+			echo 'success';
+			//$this->print_receipt($sale_id);
 		}
 	}
 

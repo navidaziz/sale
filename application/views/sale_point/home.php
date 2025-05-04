@@ -308,7 +308,6 @@
 	}
 
 	function save_data() {
-
 		var tax_ids = $("#tax_ids").val();
 		var payment_type = $("input[name='payment_type']:checked").val();
 		remarks = $('#remarks').val();
@@ -322,9 +321,9 @@
 		customer_name = $('#customer_name').val();
 		customer_mobile_no = $('#customer_mobile_no').val();
 		pay_able_total = parseFloat($('#pay_able_total').val());
-		cash_back = parseFloat($('#cash_back').html());
+		let cash_back_raw = $('#cash_back').html();
+		let cash_back = isNaN(parseFloat(cash_back_raw)) ? 0 : parseFloat(cash_back_raw);
 
-		return;
 		if (cash_amount == 0) {
 			alert("Cash Amout is Zero");
 			return false;
@@ -349,19 +348,23 @@
 				tax_ids: tax_ids
 			}
 		}).done(function(data) {
-
-			$('#print_area').html(data);
-			get_user_sale_summary();
-			$('#cash_amount').val(0);
-			$('#customer_name').val("");
-			$('#customer_mobile_no').val("");
-			$('#pay_able_total').html("0.00");
-			$('#cash_back').html("0.00");
-			$('#discount').val(0);
-			$('#item_list').html('');
-			//$('#print_area').html(data);
-			//Print2(data);
-			//window.print();
+			alert(data);
+			if (data == 'success') {
+				$('#print_area').html(data);
+				get_user_sale_summary();
+				$('#cash_amount').val(0);
+				$('#customer_name').val("");
+				$('#customer_mobile_no').val("");
+				$('#pay_able_total').html("0.00");
+				$('#cash_back').html("0.00");
+				$('#discount').val(0);
+				$('#item_list').html('');
+				//$('#print_area').html(data);
+				//Print2(data);
+				//window.print();
+			} else {
+				//alert(data);
+			}
 		});
 
 
