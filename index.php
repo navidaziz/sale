@@ -76,8 +76,8 @@ if ($hostname === 'localhost' || $hostname === '127.0.0.1') {
 //exit();
 switch (ENVIRONMENT) {
 	case 'development':
-
-		//error_reporting(0);
+		echo ENVIRONMENT;
+		error_reporting(1);
 		ini_set('display_errors', 1);
 		break;
 
