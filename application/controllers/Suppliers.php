@@ -398,7 +398,11 @@ class Suppliers extends Admin_Controller
         $this->db->where('si.supplier_id', $supplier_id);
         $this->db->where('si.business_id', $this->session->userdata("business_id"));
         $this->db->from('suppliers_invoices si');
-        $supplier_invoices = $this->db->get()->result();
+        if ($this->db->get()) {
+            $supplier_invoices = $this->db->get()->result();
+        } else {
+            $supplier_invoices = NULL;
+        }
         $this->data["supplier_invoices"] = $supplier_invoices;
         $this->data["suppliers"] = $this->supplier_model->get_supplier($supplier_id);
         $this->data["title"] = $this->data["suppliers"][0]->supplier_name;
