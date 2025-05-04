@@ -31,7 +31,6 @@ class Suppliers extends Admin_Controller
         $this->data["suppliers"] = $data->suppliers;
         $this->data["pagination"] = $data->pagination;
         $this->data["title"] = $this->lang->line('Suppliers');
-        exit();
         $this->data["view"] = "suppliers/suppliers";
         $this->load->view("layout", $this->data);
     }
