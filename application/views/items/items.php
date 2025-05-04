@@ -102,6 +102,11 @@
                     </div>
 
                 </div>
+            <?php } else { ?>
+                <div style="text-align: center;">
+                    <a class="btn btn-primary btn-sm" href="<?php echo site_url("items/add"); ?>"><i class="fa fa-plus"></i> Add New Item</a>
+                    <a class="btn btn-danger btn-sm" href="<?php echo site_url("items/trashed"); ?>"><i class="fa fa-trash-o"></i> <?php echo $this->lang->line('Trash'); ?></a>
+                </div>
             <?php } ?>
 
 
@@ -121,10 +126,7 @@
             </div>
             <div class="box-body">
                 <?php if (preg_match('/mobile/i', $_SERVER['HTTP_USER_AGENT'])) { ?>
-                    <div style="text-align: center;">
-                        <a class="btn btn-primary btn-sm" href="<?php echo site_url("items/add"); ?>"><i class="fa fa-plus"></i> Add New Item</a>
-                        <a class="btn btn-danger btn-sm" href="<?php echo site_url("items/trashed"); ?>"><i class="fa fa-trash-o"></i> <?php echo $this->lang->line('Trash'); ?></a>
-                    </div>
+
                     <div class="table-responsive">
 
                         <table id="item_table" class="table table-bordered table_small" style="font-size: 12px;">
