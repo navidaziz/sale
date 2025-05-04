@@ -83,24 +83,26 @@
                 </li>
                 <li><?php echo $title; ?></li>
             </ul>
-            <!-- /BREADCRUMBS -->
-            <div class="row">
+            <?php if (preg_match('/mobile/i', $_SERVER['HTTP_USER_AGENT'])) { ?>
+                <!-- /BREADCRUMBS -->
+                <div class="row">
 
-                <div class="col-md-3">
-                    <div class="clearfix">
-                        <h3 class="content-title pull-left"><?php echo $title; ?></h3>
+                    <div class="col-md-3">
+                        <div class="clearfix">
+                            <h3 class="content-title pull-left"><?php echo $title; ?></h3>
+                        </div>
+                        <div class="description"><?php echo $title; ?></div>
                     </div>
-                    <div class="description"><?php echo $title; ?></div>
-                </div>
 
-                <div class="col-md-9">
-                    <div class="pull-right">
-                        <a class="btn btn-primary btn-sm" href="<?php echo site_url("items/add"); ?>"><i class="fa fa-plus"></i> <?php echo $this->lang->line('New'); ?></a>
-                        <a class="btn btn-danger btn-sm" href="<?php echo site_url("items/trashed"); ?>"><i class="fa fa-trash-o"></i> <?php echo $this->lang->line('Trash'); ?></a>
+                    <div class="col-md-9">
+                        <div class="pull-right">
+                            <a class="btn btn-primary btn-sm" href="<?php echo site_url("items/add"); ?>"><i class="fa fa-plus"></i> <?php echo $this->lang->line('New'); ?></a>
+                            <a class="btn btn-danger btn-sm" href="<?php echo site_url("items/trashed"); ?>"><i class="fa fa-trash-o"></i> <?php echo $this->lang->line('Trash'); ?></a>
+                        </div>
                     </div>
-                </div>
 
-            </div>
+                </div>
+            <?php } ?>
 
 
         </div>
@@ -119,7 +121,10 @@
             </div>
             <div class="box-body">
                 <?php if (preg_match('/mobile/i', $_SERVER['HTTP_USER_AGENT'])) { ?>
-
+                    <div style="text-align: center;">
+                        <a class="btn btn-primary btn-sm" href="<?php echo site_url("items/add"); ?>"><i class="fa fa-plus"></i> Add New Item</a>
+                        <a class="btn btn-danger btn-sm" href="<?php echo site_url("items/trashed"); ?>"><i class="fa fa-trash-o"></i> <?php echo $this->lang->line('Trash'); ?></a>
+                    </div>
                     <div class="table-responsive">
 
                         <table id="item_table" class="table table-bordered table_small" style="font-size: 12px;">
