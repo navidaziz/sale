@@ -14,23 +14,30 @@
                 <li><?php echo $title; ?></li>
             </ul>
             <!-- /BREADCRUMBS -->
-            <div class="row">
+            <?php if (!preg_match('/mobile/i', $_SERVER['HTTP_USER_AGENT'])) { ?>
+                <div class="row">
 
-                <div class="col-md-6">
-                    <div class="clearfix">
-                        <h3 class="content-title pull-left"><?php echo $title; ?></h3>
+                    <div class="col-md-6">
+                        <div class="clearfix">
+                            <h3 class="content-title pull-left"><?php echo $title; ?></h3>
+                        </div>
+                        <div class="description"><?php echo $title; ?></div>
                     </div>
-                    <div class="description"><?php echo $title; ?></div>
-                </div>
 
-                <div class="col-md-6">
-                    <div class="pull-right">
-                        <a class="btn btn-primary btn-sm" href="<?php echo site_url("suppliers/add"); ?>"><i class="fa fa-plus"></i> <?php echo $this->lang->line('New'); ?></a>
-                        <a class="btn btn-danger btn-sm" href="<?php echo site_url("suppliers/trashed"); ?>"><i class="fa fa-trash-o"></i> <?php echo $this->lang->line('Trash'); ?></a>
+                    <div class="col-md-6">
+                        <div class="pull-right">
+                            <a class="btn btn-primary btn-sm" href="<?php echo site_url("suppliers/add"); ?>"><i class="fa fa-plus"></i> <?php echo $this->lang->line('New'); ?></a>
+                            <a class="btn btn-danger btn-sm" href="<?php echo site_url("suppliers/trashed"); ?>"><i class="fa fa-trash-o"></i> <?php echo $this->lang->line('Trash'); ?></a>
+                        </div>
                     </div>
-                </div>
 
-            </div>
+                </div>
+            <?php } else { ?>
+                <div style="text-align: center;">
+                    <a class="btn btn-primary btn-sm" href="<?php echo site_url("suppliers/add"); ?>"><i class="fa fa-plus"></i> <?php echo $this->lang->line('New'); ?></a>
+                    <a class="btn btn-danger btn-sm" href="<?php echo site_url("suppliers/trashed"); ?>"><i class="fa fa-trash-o"></i> <?php echo $this->lang->line('Trash'); ?></a>
+                </div>
+            <?php } ?>
 
 
         </div>
@@ -64,9 +71,9 @@
                                     <?php foreach ($suppliers as $index => $supplier): ?>
                                         <tr>
                                             <td>
-                                                <strong>#<?php echo $index + 1; ?> - <?php echo $supplier->supplier_name; ?></strong> -
-                                                <small>📞 <?php echo $supplier->supplier_contact_no; ?></small> -
-                                                <small>🏢 <?php echo $supplier->company_name; ?></small> -
+                                                <strong>#<?php echo $index + 1; ?> - <?php echo $supplier->supplier_name; ?></strong> <br />
+                                                <small>📞 <?php echo $supplier->supplier_contact_no; ?></small> <br />
+                                                <small>🏢 <?php echo $supplier->company_name; ?></small> <br />
                                                 <small>💳 <?php echo $supplier->account_number; ?></small>
                                                 <br />
                                                 <?php if ($supplier->supplier_name != 'Opening Stock') { ?>
