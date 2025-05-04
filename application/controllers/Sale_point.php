@@ -259,14 +259,14 @@ class Sale_point extends Admin_Controller
 	function get_user_items_list()
 	{
 		$sales_items_user_lists = $this->get_user_items();
+		//var_dump($sales_items_user_lists);
 
 		$user_item_list = '<table class="table table2 table-striped" style="font-size:10px">';
 		$user_item_list .= '<tr>
                 <th>#</th>
                 <th>Stock</th>
                 <th>Name</th>
-                
-                <th>Price</th>
+				<th>Price</th>
                 <th>Discount</th>
                 <th>Sale Price</th>
                 <th >Quantity</th>
@@ -293,7 +293,7 @@ class Sale_point extends Admin_Controller
 
                   </tr>';
 		}
-		return $user_item_list .= '</table>';
+		echo  $user_item_list .= '</table>';
 	}
 
 	public function items_sale_summary()
@@ -365,7 +365,7 @@ class Sale_point extends Admin_Controller
         </tr>
     </table>';
 
-		return $sale_summary;
+		echo  $sale_summary;
 	}
 
 
