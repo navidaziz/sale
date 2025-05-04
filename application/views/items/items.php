@@ -83,7 +83,7 @@
                 </li>
                 <li><?php echo $title; ?></li>
             </ul>
-            <?php if (preg_match('/mobile/i', $_SERVER['HTTP_USER_AGENT'])) { ?>
+            <?php if (!preg_match('/mobile/i', $_SERVER['HTTP_USER_AGENT'])) { ?>
                 <!-- /BREADCRUMBS -->
                 <div class="row">
 
