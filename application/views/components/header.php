@@ -112,6 +112,7 @@
 
 
                 <div class="visible-xs">
+                    <h4 style="color: white;">Quick Sale - <?php echo $this->session->userdata("business_name"); ?></h4>
                     <a href="#" class="team-status-toggle switcher btn dropdown-toggle">
                         <i class="fa fa-users">
                         </i>
