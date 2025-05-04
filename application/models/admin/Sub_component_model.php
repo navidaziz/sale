@@ -161,7 +161,10 @@ class Sub_component_model extends MY_Model
     {
         $data = (object) array();
         $fields = array(
-            "sub_components.*", "projects.project_name", "components.component_name","components.component_detail"
+            "sub_components.*",
+            "projects.project_name",
+            "components.component_name",
+            "components.component_detail"
         );
         $join_table = array(
             "projects" => "projects.project_id = sub_components.project_id",
@@ -185,7 +188,7 @@ class Sub_component_model extends MY_Model
                 $config["base_url"]  = base_url($this->uri->segment(1) . "/" . $this->uri->segment(2));
             } else {
                 $this->sub_component_model->uri_segment = $this->uri->segment(4);
-                $config["base_url"]  = base_url(ADMIN_DIR . $this->uri->segment(2) . "/" . $this->uri->segment(3));
+                $config["base_url"]  = base_url($this->uri->segment(2) . "/" . $this->uri->segment(3));
             }
             $config["total_rows"] = $this->sub_component_model->joinGet($fields, "sub_components", $join_table, $where, true);
             $this->pagination->initialize($config);
@@ -201,7 +204,9 @@ class Sub_component_model extends MY_Model
     {
 
         $fields = array(
-            "sub_components.*", "projects.project_name", "components.component_name"
+            "sub_components.*",
+            "projects.project_name",
+            "components.component_name"
         );
         $join_table = array(
             "projects" => "projects.project_id = sub_components.project_id",

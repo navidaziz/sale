@@ -86,7 +86,7 @@ class Annual_work_plan_model extends MY_Model
     public function save_data($image_field = NULL)
     {
 
-        
+
         $inputs = array();
 
         $inputs["project_id"]  =  $this->input->post("project_id");
@@ -107,9 +107,9 @@ class Annual_work_plan_model extends MY_Model
 
         $inputs["farmer_share"]  =  0;
 
-        $inputs["total_cost"]  =   $inputs["material_cost"]+$inputs["labor_cost"];
+        $inputs["total_cost"]  =   $inputs["material_cost"] + $inputs["labor_cost"];
 
-        
+
 
         return $this->annual_work_plan_model->save($inputs);
     }
@@ -136,9 +136,9 @@ class Annual_work_plan_model extends MY_Model
 
         $inputs["farmer_share"]  =  $this->input->post("farmer_share");
 
-       $inputs["farmer_share"]  =  0;
+        $inputs["farmer_share"]  =  0;
 
-        $inputs["total_cost"]  =   $inputs["material_cost"]+$inputs["labor_cost"];
+        $inputs["total_cost"]  =   $inputs["material_cost"] + $inputs["labor_cost"];
 
         return $this->annual_work_plan_model->save($inputs, $annual_work_plan_id);
     }
@@ -148,7 +148,12 @@ class Annual_work_plan_model extends MY_Model
     {
         $data = (object) array();
         $fields = array(
-            "annual_work_plans.*", "projects.project_name", "components.component_name", "sub_components.sub_component_name", "component_categories.category", "financial_years.financial_year"
+            "annual_work_plans.*",
+            "projects.project_name",
+            "components.component_name",
+            "sub_components.sub_component_name",
+            "component_categories.category",
+            "financial_years.financial_year"
         );
         $join_table = array(
             "projects" => "projects.project_id = annual_work_plans.project_id",
@@ -178,7 +183,7 @@ class Annual_work_plan_model extends MY_Model
                 $config["base_url"]  = base_url($this->uri->segment(1) . "/" . $this->uri->segment(2));
             } else {
                 $this->annual_work_plan_model->uri_segment = $this->uri->segment(4);
-                $config["base_url"]  = base_url(ADMIN_DIR . $this->uri->segment(2) . "/" . $this->uri->segment(3));
+                $config["base_url"]  = base_url($this->uri->segment(2) . "/" . $this->uri->segment(3));
             }
             $config["total_rows"] = $this->annual_work_plan_model->joinGet($fields, "annual_work_plans", $join_table, $where, true);
             $this->pagination->initialize($config);
@@ -194,7 +199,12 @@ class Annual_work_plan_model extends MY_Model
     {
 
         $fields = array(
-            "annual_work_plans.*", "projects.project_name", "components.component_name", "sub_components.sub_component_name", "component_categories.category", "financial_years.financial_year"
+            "annual_work_plans.*",
+            "projects.project_name",
+            "components.component_name",
+            "sub_components.sub_component_name",
+            "component_categories.category",
+            "financial_years.financial_year"
         );
         $join_table = array(
             "projects" => "projects.project_id = annual_work_plans.project_id",

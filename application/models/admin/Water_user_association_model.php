@@ -120,9 +120,9 @@ class Water_user_association_model extends MY_Model
 
         //     // Redirect back to the update form
         //     if ($this->input->post('water_user_association_id') > 0) {
-        //         redirect(ADMIN_DIR . 'water_user_associations/edit/' . $water_user_association_id);
+        //         redirect('water_user_associations/edit/' . $water_user_association_id);
         //     } else {
-        //         redirect(ADMIN_DIR . 'water_user_associations/add');
+        //         redirect('water_user_associations/add');
         //     }
         //     return; // Return to avoid further processing
         // }
@@ -139,9 +139,9 @@ class Water_user_association_model extends MY_Model
         //     $this->session->set_flashdata('bank_account_number', 'The Water User Association Account No is already registered. Please use a different WUA Account No.');
 
         //     if ($this->input->post('water_user_association_id') > 0) {
-        //         redirect(ADMIN_DIR . 'water_user_associations/edit/' . $water_user_association_id);
+        //         redirect('water_user_associations/edit/' . $water_user_association_id);
         //     } else {
-        //         redirect(ADMIN_DIR . 'water_user_associations/add');
+        //         redirect('water_user_associations/add');
         //     }
         //     return; // Return to avoid further processing
         // }
@@ -283,7 +283,7 @@ class Water_user_association_model extends MY_Model
                 $config["base_url"]  = base_url($this->uri->segment(1) . "/" . $this->uri->segment(2));
             } else {
                 $this->water_user_association_model->uri_segment = $this->uri->segment(4);
-                $config["base_url"]  = base_url(ADMIN_DIR . $this->uri->segment(2) . "/" . $this->uri->segment(3));
+                $config["base_url"]  = base_url($this->uri->segment(2) . "/" . $this->uri->segment(3));
             }
             $config["total_rows"] = $this->water_user_association_model->joinGet($fields, "water_user_associations", $join_table, $where, true);
             $this->pagination->initialize($config);

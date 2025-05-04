@@ -71,7 +71,7 @@ class Water_user_association_model extends MY_Model
                 "field"  =>  "bank_branch_code",
                 "label"  =>  "Bank Branch Code",
                 "rules"  =>  "required"
-            ), 
+            ),
 
             array(
                 "field"  =>  "cm_name",
@@ -101,41 +101,41 @@ class Water_user_association_model extends MY_Model
                 "label"  =>  "Contact No.",
                 "rules"  =>  "required|regex_match[/^[\+\d\-\(\)\s]*$/]"
             )
-            
+
 
         );
         //set and run the validation
-       if (!$this->input->post('water_user_association_id')) {
-    // Validation for creating a new record
-    $validation_config[] = array(
-        "field"  => "wua_registration_no",
-        "label"  => "Wua Registration No",
-        "rules"  => "required|is_unique[water_user_associations.wua_registration_no]",
-    );
-} else {
-    // Validation for updating an existing record
-    $validation_config[] = array(
-        "field"  => "wua_registration_no",
-        "label"  => "Wua Registration No",
-        "rules"  => "required|callback_check_unique_wua_registration_no",
-    );
-}
+        if (!$this->input->post('water_user_association_id')) {
+            // Validation for creating a new record
+            $validation_config[] = array(
+                "field"  => "wua_registration_no",
+                "label"  => "Wua Registration No",
+                "rules"  => "required|is_unique[water_user_associations.wua_registration_no]",
+            );
+        } else {
+            // Validation for updating an existing record
+            $validation_config[] = array(
+                "field"  => "wua_registration_no",
+                "label"  => "Wua Registration No",
+                "rules"  => "required|callback_check_unique_wua_registration_no",
+            );
+        }
 
-            // Manually check uniqueness if water_user_association_id is set
-            $water_user_association_id = (int) $this->input->post('water_user_association_id');
-            $wua_registration_no = $this->input->post('wua_registration_no');
-            $this->db->where('wua_registration_no', $wua_registration_no);
-            $this->db->where('water_user_association_id !=', $this->input->post('water_user_association_id'));
-            $query = $this->db->get('water_user_associations');
-            $total = $query->num_rows();
-            if ($total > 0) {
-                echo "<div style='text-align:center'><h4>Sorry!</h4> 
+        // Manually check uniqueness if water_user_association_id is set
+        $water_user_association_id = (int) $this->input->post('water_user_association_id');
+        $wua_registration_no = $this->input->post('wua_registration_no');
+        $this->db->where('wua_registration_no', $wua_registration_no);
+        $this->db->where('water_user_association_id !=', $this->input->post('water_user_association_id'));
+        $query = $this->db->get('water_user_associations');
+        $total = $query->num_rows();
+        if ($total > 0) {
+            echo "<div style='text-align:center'><h4>Sorry!</h4> 
                 <h5>We can't update the record. The Water User Association Registration No is already registered. Please use a different WUA Registration No.</h5>
-<a href='" . site_url(ADMIN_DIR . 'water_user_associations/update_data/' . $water_user_association_id) . "'>Click Here to Go Back</a></div>";
+<a href='" . site_url('water_user_associations/update_data/' . $water_user_association_id) . "'>Click Here to Go Back</a></div>";
 
-                exit();
-            }
-        
+            exit();
+        }
+
         $this->form_validation->set_rules($validation_config);
         return $this->form_validation->run();
     }
@@ -210,7 +210,7 @@ class Water_user_association_model extends MY_Model
         $inputs["cm_cnic"]  =  $this->input->post("cm_cnic");
         $inputs["cm_contact_no"]  =  $this->input->post("cm_contact_no");
 
-        
+
         $inputs["created_by"] = $this->session->userdata("userId");
         $inputs["last_updated"] = date('Y-m-d H:i:s');
 
@@ -230,7 +230,9 @@ class Water_user_association_model extends MY_Model
     {
         $data = (object) array();
         $fields = array(
-            "water_user_associations.*", "projects.project_name", "districts.district_name"
+            "water_user_associations.*",
+            "projects.project_name",
+            "districts.district_name"
         );
         $join_table = array(
             "projects" => "projects.project_id = water_user_associations.project_id",
@@ -254,7 +256,7 @@ class Water_user_association_model extends MY_Model
                 $config["base_url"]  = base_url($this->uri->segment(1) . "/" . $this->uri->segment(2));
             } else {
                 $this->water_user_association_model->uri_segment = $this->uri->segment(4);
-                $config["base_url"]  = base_url(ADMIN_DIR . $this->uri->segment(2) . "/" . $this->uri->segment(3));
+                $config["base_url"]  = base_url($this->uri->segment(2) . "/" . $this->uri->segment(3));
             }
             $config["total_rows"] = $this->water_user_association_model->joinGet($fields, "water_user_associations", $join_table, $where, true);
             $this->pagination->initialize($config);
@@ -270,7 +272,9 @@ class Water_user_association_model extends MY_Model
     {
 
         $fields = array(
-            "water_user_associations.*", "projects.project_name", "districts.district_name"
+            "water_user_associations.*",
+            "projects.project_name",
+            "districts.district_name"
         );
         $join_table = array(
             "projects" => "projects.project_id = water_user_associations.project_id",
@@ -284,19 +288,19 @@ class Water_user_association_model extends MY_Model
 
 
     public function check_unique_wua_registration_no($wua_registration_no)
-{
-    $water_user_association_id = $this->input->post('water_user_association_id');
+    {
+        $water_user_association_id = $this->input->post('water_user_association_id');
 
-    // Query to check if the registration number exists for other records
-    $this->db->where('wua_registration_no', $wua_registration_no);
-    $this->db->where('wua_user_association_id !=', $water_user_association_id);
-    $query = $this->db->get('water_user_associations');
+        // Query to check if the registration number exists for other records
+        $this->db->where('wua_registration_no', $wua_registration_no);
+        $this->db->where('wua_user_association_id !=', $water_user_association_id);
+        $query = $this->db->get('water_user_associations');
 
-    if ($query->num_rows() > 0) {
-        $this->form_validation->set_message('check_unique_wua_registration_no', 'The {field} must be unique.');
-        return false;
-    } else {
-        return true;
+        if ($query->num_rows() > 0) {
+            $this->form_validation->set_message('check_unique_wua_registration_no', 'The {field} must be unique.');
+            return false;
+        } else {
+            return true;
+        }
     }
-}
 }

@@ -53,7 +53,7 @@ class Admin_Controller extends MY_Controller
 
 
             if ($userStatus != 1 || $roleStatus != 1) {
-                $this->handleAjaxOrRedirect("Your account is disabled. Please contact the administrator.", site_url(ADMIN_DIR . "errors/account_disable"));
+                $this->handleAjaxOrRedirect("Your account is disabled. Please contact the administrator.", site_url("errors/account_disable"));
             }
 
             // Check if the current module is assigned to the user
@@ -65,7 +65,7 @@ class Admin_Controller extends MY_Controller
                 $module = $this->controller_name . '-' . $this->method_name;
                 $this->handleAjaxOrRedirect(
                     "You are not allowed to access this module.",
-                    site_url(ADMIN_DIR . "errors/index?module=$module")
+                    site_url("errors/index?module=$module")
                 );
             }
         }

@@ -156,7 +156,12 @@ class District_annual_work_plan_model extends MY_Model
     {
         $data = (object) array();
         $fields = array(
-            "annual_work_plans.*", "projects.project_name", "components.component_name", "sub_components.sub_component_name", "component_categories.category", "financial_years.financial_year"
+            "annual_work_plans.*",
+            "projects.project_name",
+            "components.component_name",
+            "sub_components.sub_component_name",
+            "component_categories.category",
+            "financial_years.financial_year"
         );
         $join_table = array(
             "projects" => "projects.project_id = annual_work_plans.project_id",
@@ -186,7 +191,7 @@ class District_annual_work_plan_model extends MY_Model
                 $config["base_url"]  = base_url($this->uri->segment(1) . "/" . $this->uri->segment(2));
             } else {
                 $this->district_annual_work_plan_model->uri_segment = $this->uri->segment(4);
-                $config["base_url"]  = base_url(ADMIN_DIR . $this->uri->segment(2) . "/" . $this->uri->segment(3));
+                $config["base_url"]  = base_url($this->uri->segment(2) . "/" . $this->uri->segment(3));
             }
             $config["total_rows"] = $this->district_annual_work_plan_model->joinGet($fields, "annual_work_plans", $join_table, $where, true);
             $this->pagination->initialize($config);
@@ -202,7 +207,12 @@ class District_annual_work_plan_model extends MY_Model
     {
 
         $fields = array(
-            "district_annual_work_plans.*", "projects.project_name", "components.component_name", "sub_components.sub_component_name", "component_categories.category", "financial_years.financial_year"
+            "district_annual_work_plans.*",
+            "projects.project_name",
+            "components.component_name",
+            "sub_components.sub_component_name",
+            "component_categories.category",
+            "financial_years.financial_year"
         );
         $join_table = array(
             "projects" => "projects.project_id = annual_work_plans.project_id",

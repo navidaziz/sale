@@ -50,6 +50,7 @@ class Supplier_model extends MY_Model
 	public function save_data($image_field = NULL)
 	{
 		$inputs = array();
+		$inputs["business_id"] = $this->session->userdata("business_id");
 
 		$inputs["supplier_name"]  =  $this->input->post("supplier_name");
 
@@ -74,7 +75,9 @@ class Supplier_model extends MY_Model
 
 		$inputs["account_number"]  =  $this->input->post("account_number");
 
-		return $this->supplier_model->save($inputs, $supplier_id);
+		$this->db->where("supplier_id", $supplier_id);
+		$this->db->where("business_id", $this->session->userdata("business_id"));
+		return $this->db->update("suppliers", $inputs);
 	}
 
 	//----------------------------------------------------------------
@@ -100,7 +103,7 @@ class Supplier_model extends MY_Model
 				$config["base_url"]  = base_url($this->uri->segment(1) . "/" . $this->uri->segment(2));
 			} else {
 				$this->supplier_model->uri_segment = $this->uri->segment(4);
-				$config["base_url"]  = base_url($this->uri->segment(2) . "/" . $this->uri->segment(3));
+				$config["base_url"]  = base_url(ADMIN_DIR . $this->uri->segment(2) . "/" . $this->uri->segment(3));
 			}
 			$config["total_rows"] = $this->supplier_model->joinGet($fields, "suppliers", $join_table, $where, true);
 			$this->pagination->initialize($config);
@@ -117,7 +120,7 @@ class Supplier_model extends MY_Model
 
 		$fields = array("suppliers.*");
 		$join_table = array();
-		$where = "suppliers.supplier_id = $supplier_id";
+		$where = "suppliers.supplier_id = $supplier_id AND suppliers.business_id = " . $this->session->userdata("business_id");
 
 		return $this->supplier_model->joinGet($fields, "suppliers", $join_table, $where, FALSE, TRUE);
 	}

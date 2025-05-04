@@ -35,9 +35,7 @@ class User_m extends MY_Model
     /**
      * login a user
      */
-    public function login()
-    {
-    }
+    public function login() {}
     //--------------------------------------------------------
 
 
@@ -76,7 +74,7 @@ class User_m extends MY_Model
         $district_id = $result->district_id;
         $role_id = $result->role_id;
 
-        $this->db->select('userId, userTitle, user_title, userPassword, userEmail, userStatus, gender, cnic, contactNumber, district_id, users.createdDate, users.createdBy, users.lastUpdatedBy, address, district.districtTitle as districtTitle');
+        $this->db->select('userId, userTitle, userTitle, userPassword, userEmail, userStatus, gender, cnic, contactNumber, district_id, users.createdDate, users.createdBy, users.lastUpdatedBy, address, district.districtTitle as districtTitle');
         $this->db->from('users');
         $this->db->join('district', 'district.districtId = users.district_id', 'left');
         $this->db->order_by('userId', 'DESC');

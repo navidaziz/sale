@@ -24,7 +24,7 @@ class User_model extends MY_Model
             ),
 
             array(
-                "field"  =>  "user_title",
+                "field"  =>  "userTitle",
                 "label"  =>  "User Title",
                 "rules"  =>  "required"
             ),
@@ -93,7 +93,7 @@ class User_model extends MY_Model
         $inputs["role_id"]  =  $this->input->post("role_id");
         $inputs["department_id"]  =  $this->input->post("department_id");
 
-        $inputs["user_title"]  =  $this->input->post("user_title");
+        $inputs["userTitle"]  =  $this->input->post("userTitle");
 
         $inputs["user_email"]  =  $this->input->post("user_email");
 
@@ -102,7 +102,7 @@ class User_model extends MY_Model
         $inputs["user_name"]  =  $this->input->post("user_name");
 
         $inputs["user_password"]  =  $this->input->post("user_password");
-         $inputs["district"]  =  $this->input->post("district");
+        $inputs["district"]  =  $this->input->post("district");
 
 
 
@@ -122,7 +122,7 @@ class User_model extends MY_Model
         $inputs["role_id"]  =  $this->input->post("role_id");
         $inputs["department_id"]  =  $this->input->post("department_id");
 
-        $inputs["user_title"]  =  $this->input->post("user_title");
+        $inputs["userTitle"]  =  $this->input->post("userTitle");
 
         $inputs["user_email"]  =  $this->input->post("user_email");
 
@@ -132,7 +132,7 @@ class User_model extends MY_Model
 
         $inputs["user_password"]  =  $this->input->post("user_password");
 
- $inputs["district"]  =  $this->input->post("district");
+        $inputs["district"]  =  $this->input->post("district");
 
 
 
@@ -152,7 +152,8 @@ class User_model extends MY_Model
     {
         $data = (object) array();
         $fields = array(
-            "users.*", "roles.role_title"
+            "users.*",
+            "roles.role_title"
         );
         $join_table = array(
             "roles" => "roles.ROLE_ID = users.ROLE_ID",
@@ -174,7 +175,7 @@ class User_model extends MY_Model
                 $config["base_url"]  = base_url($this->uri->segment(1) . "/" . $this->uri->segment(2));
             } else {
                 $this->user_model->uri_segment = $this->uri->segment(4);
-                $config["base_url"]  = base_url(ADMIN_DIR . $this->uri->segment(2) . "/" . $this->uri->segment(3));
+                $config["base_url"]  = base_url($this->uri->segment(2) . "/" . $this->uri->segment(3));
             }
             $config["total_rows"] = $this->user_model->joinGet($fields, "users", $join_table, $where, true);
             $this->pagination->initialize($config);
@@ -190,7 +191,8 @@ class User_model extends MY_Model
     {
 
         $fields = array(
-            "users.*", "roles.role_title"
+            "users.*",
+            "roles.role_title"
         );
         $join_table = array(
             "roles" => "roles.ROLE_ID = users.ROLE_ID",

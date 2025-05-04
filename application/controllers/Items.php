@@ -13,6 +13,7 @@ class Items extends Admin_Controller
         $this->load->model("item_model");
         $this->lang->load("items", 'english');
         $this->lang->load("system", 'english');
+
         //$this->output->enable_profiler(TRUE);
     }
     //---------------------------------------------------------------
@@ -286,16 +287,59 @@ class Items extends Admin_Controller
                 }
                 $date = date('Y-m-d', time());
 
+                $supplier_id = 0;
+                $query = "SELECT supplier_id, count(*) as total FROM `suppliers` WHERE business_id = ? LIMIT 1";
+                $result = $this->db->query($query, [$business_id])->row();
+                if ($result->total == 0) {
+                    // Create new supplier for opening stock
+                    $supplier_data = [
+                        'business_id' => $business_id,
+                        'supplier_name' => 'Opening Stock',
+                        'supplier_contact_no' => '0000000000000',
+                        'company_name' => 'Opening Stock',
+                        'account_number' => '0000000000000'
+                    ];
+                    $this->db->insert('suppliers', $supplier_data);
+                    $supplier_id = $this->db->insert_id();
+                } else {
+                    $supplier_id = $result->supplier_id;
+                }
 
-                //update item enventory after first time add 
-                $query = "INSERT INTO `inventory`(`business_id`, `item_id`, `supplier_id`, `supplier_invoice_id`, `item_cost_price`, `item_unit_price`, `transaction_type`, `inventory_transaction`,`created_by`, `expiry_date`) 
-                            VALUES ('" . $business_id . "', '" . $item_id . "', '2', '2', '" . $cost_price . "', '" . $unit_price . "', 'Item Created','" . $stock . "','" . $created_by . "', '" . $date . "')";
-                $this->db->query($query);
+                $supplier_invoice_id = 0;
+                // Optionally get the latest invoice if needed
+                $query = "SELECT supplier_invoice_id, count(*) as total FROM `suppliers_invoices` 
+                    WHERE supplier_id = ? and business_id = ? ORDER BY invoice_date DESC LIMIT 1";
+                $invoice_result = $this->db->query($query, [$supplier_id, $business_id])->row();
+
+                if ($invoice_result->total == 0) {
+                    $invoice_data = [
+                        'business_id' => $business_id,
+                        'supplier_invoice_number' => '1',
+                        'supplier_id' => $supplier_id,
+                        'return_receipt' => 0,
+                        'created_by' => $created_by,
+                        'invoice_date' => date('Y-m-d')
+                    ];
+
+                    $this->db->insert('suppliers_invoices', $invoice_data);
+                    $supplier_invoice_id = $this->db->insert_id();
+                } else {
+                    $supplier_invoice_id = $invoice_result->supplier_invoice_id;
+                }
+
+                if ($supplier_id != 0 and $supplier_invoice_id != 0) {
+                    //update item enventory after first time add 
+                    $query = "INSERT INTO `inventory`(`business_id`, `item_id`, `supplier_id`, `supplier_invoice_id`, `item_cost_price`, `item_unit_price`, `transaction_type`, `inventory_transaction`,`created_by`, `expiry_date`) 
+                            VALUES ('" . $business_id . "', '" . $item_id . "', '" . $supplier_id . "', '" . $supplier_invoice_id . "', '" . $cost_price . "', '" . $unit_price . "', 'Item Created','" . $stock . "','" . $created_by . "', '" . $date . "')";
+                    $this->db->query($query);
 
 
 
-                $this->session->set_flashdata("msg_success", $this->lang->line("add_msg_success"));
-                redirect("items/edit/$item_id");
+                    $this->session->set_flashdata("msg_success", $this->lang->line("add_msg_success"));
+                    redirect("items/edit/$item_id");
+                } else {
+                    echo 'Opening stock not added';
+                }
             } else {
 
                 $this->session->set_flashdata("msg_error", $this->lang->line("msg_error"));

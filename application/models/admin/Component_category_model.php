@@ -147,7 +147,7 @@ class Component_category_model extends MY_Model
 
         $inputs["project_id"]  =  $this->input->post("project_id");
 
-        
+
 
         $inputs["sub_component_id"]  =  $sub_component_id = (int) $this->input->post("sub_component_id");
         $query = "SELECT component_id FROM sub_components WHERE sub_component_id = ?";
@@ -184,7 +184,10 @@ class Component_category_model extends MY_Model
     {
         $data = (object) array();
         $fields = array(
-            "component_categories.*", "projects.project_name", "components.component_name", "sub_components.sub_component_name"
+            "component_categories.*",
+            "projects.project_name",
+            "components.component_name",
+            "sub_components.sub_component_name"
         );
         $join_table = array(
             "projects" => "projects.project_id = component_categories.project_id",
@@ -210,7 +213,7 @@ class Component_category_model extends MY_Model
                 $config["base_url"]  = base_url($this->uri->segment(1) . "/" . $this->uri->segment(2));
             } else {
                 $this->component_category_model->uri_segment = $this->uri->segment(4);
-                $config["base_url"]  = base_url(ADMIN_DIR . $this->uri->segment(2) . "/" . $this->uri->segment(3));
+                $config["base_url"]  = base_url($this->uri->segment(2) . "/" . $this->uri->segment(3));
             }
             $config["total_rows"] = $this->component_category_model->joinGet($fields, "component_categories", $join_table, $where, true);
             $this->pagination->initialize($config);

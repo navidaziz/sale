@@ -36,6 +36,20 @@
                                     </td>
                                 </tr>
                                 <tr>
+                                    <td colspan="2">
+                                        <?php $product_name = ucwords(strtolower($item->name)); ?>
+                                        <?php $barcode_value = $item->item_code_no; ?>
+
+                                        <div style="text-align:center;">
+                                            <div style="font-weight:bold; margin-bottom:5px;">
+                                                <?php echo $product_name; ?>
+                                            </div>
+                                            <img src="https://bwipjs-api.metafloor.com/?bcid=code128&text=<?php echo $barcode_value; ?>&scale=3&height=10&includetext" alt="Barcode" />
+                                        </div>
+
+                                    </td>
+                                </tr>
+                                <tr>
                                     <th><?php echo $this->lang->line('description'); ?></th>
                                     <td>
                                         <?php echo $item->description; ?>
@@ -256,9 +270,7 @@
                                 <?php endforeach; ?>
                         </tbody>
                     </table>
-                    <div>
-                        <img src="<?php echo $barcode; ?>">
-                    </div>
+
                 </div>
 
 

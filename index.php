@@ -1,7 +1,5 @@
 <?php
-// echo __DIR__ . '/php-error.log';
-// ini_set('log_errors', 1);
-// ini_set('error_log', __DIR__ . '/php-error.log');
+
 /**
  * CodeIgniter
  *
@@ -78,8 +76,9 @@ if ($hostname === 'localhost' || $hostname === '127.0.0.1') {
 //exit();
 switch (ENVIRONMENT) {
 	case 'development':
+
+		//error_reporting(0);
 		ini_set('display_errors', 1);
-		error_reporting(E_ALL & ~E_DEPRECATED & ~E_USER_DEPRECATED & ~E_NOTICE);
 		break;
 
 	case 'testing':
@@ -97,7 +96,6 @@ switch (ENVIRONMENT) {
 		echo 'The application environment is not set correctly.';
 		exit(1); // EXIT_ERROR
 }
-
 
 /*
  *---------------------------------------------------------------

@@ -670,3 +670,23 @@ function convertToExactNumber2($value)
 	}
 	return $value; // Return as-is if it's not in scientific notation
 }
+
+
+if (!function_exists('generate_css_barcode')) {
+	/**
+	 * Generate a CSS-based barcode (no GD needed)
+	 * @param string $text - The text to encode
+	 * @return string - HTML barcode
+	 */
+	function generate_css_barcode($text)
+	{
+		$barcode = '<div style="font-family: monospace; letter-spacing: 5px; font-weight: bold;">';
+		$barcode .= str_replace(
+			['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
+			['▍', '▍ ', '▍  ', '▍   ', '▍    ', '▍     ', '▍      ', '▍       ', '▍        ', '▍         '],
+			$text
+		);
+		$barcode .= '</div>';
+		return $barcode;
+	}
+}

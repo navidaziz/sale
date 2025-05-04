@@ -142,7 +142,9 @@ class Wua_member_model extends MY_Model
     {
         $data = (object) array();
         $fields = array(
-            "wua_members.*", "projects.project_name", "districts.district_name",
+            "wua_members.*",
+            "projects.project_name",
+            "districts.district_name",
             "water_user_associations.wua_name"
         );
         $join_table = array(
@@ -169,7 +171,7 @@ class Wua_member_model extends MY_Model
                 $config["base_url"]  = base_url($this->uri->segment(1) . "/" . $this->uri->segment(2));
             } else {
                 $this->wua_member_model->uri_segment = $this->uri->segment(4);
-                $config["base_url"]  = base_url(ADMIN_DIR . $this->uri->segment(2) . "/" . $this->uri->segment(3));
+                $config["base_url"]  = base_url($this->uri->segment(2) . "/" . $this->uri->segment(3));
             }
             $config["total_rows"] = $this->wua_member_model->joinGet($fields, "wua_members", $join_table, $where, true);
             $this->pagination->initialize($config);
@@ -185,7 +187,10 @@ class Wua_member_model extends MY_Model
     {
 
         $fields = array(
-            "wua_members.*", "projects.project_name", "districts.district_name", "water_user_associations.wua_name"
+            "wua_members.*",
+            "projects.project_name",
+            "districts.district_name",
+            "water_user_associations.wua_name"
         );
         $join_table = array(
             "projects" => "projects.project_id = wua_members.project_id",

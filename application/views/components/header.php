@@ -137,7 +137,7 @@
 
             <?php if (!preg_match('/mobile/i', $_SERVER['HTTP_USER_AGENT'])) { ?>
                 <div class="nav navbar-nav pull-left">
-                    <h4>Quick Sale - </h4>
+                    <h4 style="color: white;">Quick Sale - <?php echo $this->session->userdata("business_name"); ?></h4>
                 </div>
                 <ul class="nav navbar-nav pull-right">
                     <li style="float:right;" class="dropdown user" id="header-user"> <a href="#" class="dropdown-toggle"

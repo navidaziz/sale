@@ -12,7 +12,11 @@ class Update_account extends MY_Controller
 
 		parent::__construct();
 		$this->load->model("user_model");
-		$this->load->model("user_m");
+		$this->load->model("module_m");
+		$this->load->model("role_m");
+
+
+
 		//$this->lang->load("users", 'english');
 		//$this->lang->load("system", 'english');
 
@@ -85,10 +89,23 @@ class Update_account extends MY_Controller
 			$query = "SELECT * FROM businesses WHERE user_id = '" . $this->session->userdata("user_id") . "'";
 			$business = $this->db->query($query)->row();
 
+			//
+			$role_homepage_id = $this->role_m->getCol("role_homepage", $this->session->userdata("role_id"));
+			$role_homepage_parent_id = $this->module_m->getCol("parent_id", $role_homepage_id);
+
+			//now create homepage path
+			$homepage_path = "";
+			if ($role_homepage_parent_id != 0) {
+				$homepage_path .= $this->module_m->getCol("module_uri", $role_homepage_parent_id) . "/";
+			}
+			$homepage_path .= $this->module_m->getCol("module_uri", $role_homepage_id);
+
 			$user_data = array(
 				'business_id' => $business->business_id,
 				'business_name' => $business->name,
-				'business_category' => $business->category
+				'business_category' => $business->category,
+				"role_homepage_id" => $role_homepage_id,
+				"role_homepage_uri" => $homepage_path,
 			);
 			$this->session->set_userdata($user_data);
 			echo "success";
