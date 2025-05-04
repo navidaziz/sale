@@ -14,9 +14,9 @@ class Suppliers extends Admin_Controller
         $this->lang->load("suppliers", 'english');
         $this->lang->load("system", 'english');
         //$this->output->enable_profiler(TRUE);
-        error_reporting(E_ALL);
-        ini_set('display_errors', 1);
-        ini_set('display_startup_errors', 1);
+        // error_reporting(E_ALL);
+        // ini_set('display_errors', 1);
+        // ini_set('display_startup_errors', 1);
     }
     //---------------------------------------------------------------
 

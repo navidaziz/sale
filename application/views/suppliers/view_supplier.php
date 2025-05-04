@@ -99,9 +99,11 @@
 					</table>
 
 					<div style="text-align: center;">
-						<button type="button" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#exampleModal">
-							Add Stock In Invoice or Return Receipt
-						</button>
+						<?php if ($title != 'Opening Stock') {  ?>
+							<button type="button" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#exampleModal">
+								Add Stock In Invoice or Return Receipt
+							</button>
+						<?php } ?>
 						<!-- Modal -->
 						<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 							<div class="modal-dialog" role="document">
