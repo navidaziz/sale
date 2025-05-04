@@ -175,6 +175,18 @@
 											<label>Return: <span id="cash_back">0.00</span></label>
 											<button id="save_sale_button" onclick="save_data()" class="btn btn-success btn-block">Sale</button>
 										</div>
+
+									</div>
+									<div class="row mt-2">
+										<div class="col-xs-4">
+											<a href="<?php echo site_url("return_point") ?>" class="btn btn-danger btn-block">Return Items</a>
+										</div>
+										<div class="col-xs-4">
+											<button onclick="get_sale_reports()" data-toggle="modal" data-target="#sale_report_mode" class="btn btn-primary btn-block">Sale Reports</button>
+										</div>
+										<div class="col-xs-4">
+											<button onclick="get_sale_receipts()" data-toggle="modal" data-target="#item_return_modal" class="btn btn-warning btn-block">Reprint Receipt</button>
+										</div>
 									</div>
 								</div>
 
