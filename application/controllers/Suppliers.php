@@ -392,18 +392,22 @@ class Suppliers extends Admin_Controller
 
         $supplier_id = (int) $supplier_id;
 
-        $this->db->select('supplier_invoice_id, supplier_invoice_number, invoice_date, return_receipt, supplier_id');
-        $this->db->select('(SELECT COUNT(DISTINCT item_id) FROM inventory WHERE supplier_invoice_id = si.supplier_invoice_id) AS total_items', false);
-        $this->db->select('(SELECT ROUND(SUM(item_cost_price * inventory_transaction), 2) FROM inventory WHERE supplier_invoice_id = si.supplier_invoice_id) AS total_cost', false);
-        $this->db->where('si.supplier_id', $supplier_id);
-        $this->db->where('si.business_id', $this->session->userdata("business_id"));
-        $this->db->from('suppliers_invoices si');
-        if ($this->db->get()) {
-            $supplier_invoices = $this->db->get()->result();
-        } else {
-            $supplier_invoices = NULL;
-        }
-        $this->data["supplier_invoices"] = $supplier_invoices;
+        $query = 'SELECT 
+            si.supplier_invoice_id,
+            si.supplier_invoice_number,
+            si.invoice_date,
+            si.return_receipt,
+            si.supplier_id,
+            (SELECT COUNT(DISTINCT item_id) FROM inventory WHERE supplier_invoice_id = si.supplier_invoice_id) AS total_items,
+            (SELECT ROUND(SUM(item_cost_price * inventory_transaction), 2) FROM inventory WHERE supplier_invoice_id = si.supplier_invoice_id) AS total_cost
+            FROM 
+            suppliers_invoices si
+            WHERE 
+            si.supplier_id = ?
+            AND si.business_id = ? ';
+
+
+        $this->data["supplier_invoices"] = $this->db->query($query, array($supplier_id, $this->session->userdata("business_id")))->result();
         $this->data["suppliers"] = $this->supplier_model->get_supplier($supplier_id);
         $this->data["title"] = $this->data["suppliers"][0]->supplier_name;
         $this->data["detail"] = "Mobile No: " . $this->data["suppliers"][0]->supplier_contact_no . " - Account No:" . $this->data["suppliers"][0]->account_number;
