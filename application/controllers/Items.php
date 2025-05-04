@@ -316,7 +316,7 @@ class Items extends Admin_Controller
                         'business_id' => $business_id,
                         'supplier_invoice_number' => '1',
                         'supplier_id' => $supplier_id,
-                        'return_receipt' => 0,
+                        'return_receipt' => 1,
                         'created_by' => $created_by,
                         'invoice_date' => date('Y-m-d')
                     ];
