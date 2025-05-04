@@ -251,9 +251,10 @@ class Sale_point extends Admin_Controller
             `sales_item_users` 
           WHERE `all_items`.`item_id` = `sales_item_users`.`item_id`
           AND  `sales_item_users`.`user_id` = '" . $user_id . "'
-		  AND `all_items`.`business_id` = '" . $business_id . "'
+		  
 		  AND `sales_item_users`.`business_id` = '" . $business_id . "'
 		  ";
+		//AND `all_items`.`business_id` = '" . $business_id . "'
 		return $this->db->query($query)->result();
 	}
 	function get_user_items_list()
@@ -748,6 +749,7 @@ class Sale_point extends Admin_Controller
 		$query = 'SELECT * FROM items WHERE category LIKE ? 
 		AND business_id = ?
 		AND status IN (1)
+		GROUP BY item_id
 		order by `name` ASC';
 		$category_items_list = $this->db->query($query, [$like_category, $business_id])->result();
 
