@@ -93,7 +93,7 @@
 <body>
   <page size='A4'>
     <div style="padding: 5px;  padding-left:20px; padding-right:20px; " contenteditable="true">
-      <h3 style="text-align: center;"> Shades & Shadow </h3>
+      <h3 style="text-align: center;"> <?php echo $this->session->userdata("business_name"); ?> </h3>
       <h4 style="text-align: center;"> Current Stock Report ( Date: <?php echo date("d F, Y ", time()) ?>)</h4>
 
 
@@ -188,7 +188,7 @@
       ?> </p>
 
       <p class="divFooter" style="text-align: right;"><b><?php echo $user_data->userName; ?> <?php echo $user_data->role_title; ?></b>
-        <br />Shades & Shadow City <br />
+        <br /><?php echo $this->session->userdata("business_name"); ?> <br />
         <strong>Printed at: <?php echo date("d, F, Y h:i:s A", time()); ?></strong>
       </p>
 

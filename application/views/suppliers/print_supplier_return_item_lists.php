@@ -96,7 +96,7 @@
 			<table class="table">
 				<tr>
 					<td>
-						<h3 style="text-align: center;"> Shades & Shadow </h3>
+						<h3 style="text-align: center;"> <?php echo $this->session->userdata("business_name"); ?> </h3>
 						<h5 style="text-align: center;"></h5>
 						<h4 style="text-align: center;">Items Return to Supplier </h4>
 					</td>
@@ -186,7 +186,7 @@
 			?> </p>
 
 			<p class="divFooter" style="text-align: right;"><b><?php echo $user_data->userTitle; ?> <?php echo $user_data->role_title; ?></b>
-				<br />Shades & Shadow City <br />
+				<br /><?php echo $this->session->userdata("business_name"); ?> <br />
 				<strong>Printed at: <?php echo date("d, F, Y h:i:s A", time()); ?></strong>
 			</p>
 

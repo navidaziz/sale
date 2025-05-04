@@ -41,7 +41,7 @@
     <thead>
         <tr>
             <th colspan="5">
-                <h4 style="text-align: center;">Shades & Shadow</h4>
+                <h4 style="text-align: center;"><?php echo $this->session->userdata("business_name"); ?></h4>
                 <h6 style="text-align: center; font-size: 11px;">DC Office Road, Near Alfalah Bank Chitral
                     <br /> Sadam Hussain: 0345-9028847
                 </h6>
