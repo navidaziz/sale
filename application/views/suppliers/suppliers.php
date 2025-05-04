@@ -34,7 +34,7 @@
                 </div>
             <?php } else { ?>
                 <div style="text-align: center;">
-                    <a class="btn btn-primary btn-sm" href="<?php echo site_url("suppliers/add"); ?>"><i class="fa fa-plus"></i> <?php echo $this->lang->line('New'); ?></a>
+                    <a class="btn btn-primary btn-sm" href="<?php echo site_url("suppliers/add"); ?>"><i class="fa fa-plus"></i> Add New Suppliers</a>
                     <a class="btn btn-danger btn-sm" href="<?php echo site_url("suppliers/trashed"); ?>"><i class="fa fa-trash-o"></i> <?php echo $this->lang->line('Trash'); ?></a>
                 </div>
             <?php } ?>
