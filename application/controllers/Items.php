@@ -673,7 +673,7 @@ class Items extends Admin_Controller
                 $inputs->discount = 0;
                 $inputs->reorder_level = 0;
                 $inputs->location = NULL;
-                $this->db->insert("item s", $inputs);
+                $this->db->insert("items", $inputs);
                 $item_id = $this->db->insert_id();
 
                 if ($supplier_id != 0 and $supplier_invoice_id != 0 and $item_id != 0 and $stock != 0) {
