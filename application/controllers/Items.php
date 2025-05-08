@@ -290,7 +290,6 @@ class Items extends Admin_Controller
                 $supplier_id = 0;
                 $query = "SELECT supplier_id, count(*) as total FROM `suppliers` WHERE business_id = ? LIMIT 1";
                 $result = $this->db->query($query, [$business_id])->row();
-                var_dump($result);
                 if ($result->total == 0) {
                     echo "need to add supplier";
                     // Create new supplier for opening stock
@@ -299,7 +298,7 @@ class Items extends Admin_Controller
                         'supplier_name' => 'Opening Stock',
                         'supplier_contact_no' => '0000000000000',
                         'company_name' => 'Opening Stock',
-                        'a ccount_number' => '0000000000000'
+                        'account_number' => NULL
                     ];
                     $this->db->insert('suppliers', $supplier_data);
                     $supplier_id = $this->db->insert_id();
@@ -329,8 +328,6 @@ class Items extends Admin_Controller
                     $supplier_invoice_id = $invoice_result->supplier_invoice_id;
                 }
 
-                echo "if ($supplier_id != 0 and $supplier_invoice_id != 0) {";
-                exit();
 
                 if ($supplier_id != 0 and $supplier_invoice_id != 0) {
                     //update item enventory after first time add 
