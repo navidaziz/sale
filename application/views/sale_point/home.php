@@ -89,6 +89,25 @@
 									<?php } ?>
 
 								</div>
+								<div style="text-align: center;">
+									<button onclick="get_item_form('0')" class="btn btn-primary">Add New Item</button>
+								</div>
+								<script>
+									function get_item_form(item_id) {
+										$.ajax({
+												method: "POST",
+												url: "<?php echo site_url('items/get_item_form'); ?>",
+												data: {
+													item_id: item_id
+												},
+											})
+											.done(function(respose) {
+												$('#modal').modal('show');
+												$('#modal_title').html('Items');
+												$('#modal_body').html(respose);
+											});
+									}
+								</script>
 							</div>
 						</div>
 					</div>
@@ -137,6 +156,25 @@
 										<?php } ?>
 
 									</div>
+									<div style="text-align: center;">
+										<button onclick="get_item_form('0')" class="btn btn-primary">Add New Item</button>
+									</div>
+									<script>
+										function get_item_form(item_id) {
+											$.ajax({
+													method: "POST",
+													url: "<?php echo site_url('items/get_item_form'); ?>",
+													data: {
+														item_id: item_id
+													},
+												})
+												.done(function(respose) {
+													$('#modal').modal('show');
+													$('#modal_title').html('Items');
+													$('#modal_body').html(respose);
+												});
+										}
+									</script>
 								</div>
 							<?php } ?>
 							<?php if (preg_match('/mobile/i', $_SERVER['HTTP_USER_AGENT'])) { ?>
