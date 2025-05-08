@@ -551,8 +551,180 @@ class Items extends Admin_Controller
     }
 
 
+    public function get_item_form()
+    {
+        $item_id = (int) $this->input->post("item_id");
+        if ($item_id == 0) {
+
+            $input = $this->get_inputs();
+        } else {
+            $query = "SELECT * FROM 
+            items 
+            WHERE item_id = $item_id";
+            $input = $this->db->query($query)->row();
+        }
+        $this->data["input"] = $input;
+        $this->load->view("items/get_item_form", $this->data);
+    }
+
+    private function get_inputs()
+    {
+        $input["item_id"] = $this->input->post("item_id");
+        $input["business_id"] = $this->session->userdata("business_id");
+        $input["name"] = $this->input->post("name");
+        $input["item_code_no"] = $this->input->post("item_code_no");
+        $input["category"] = $this->input->post("category");
+        $input["description"] = $this->input->post("description");
+        $input["cost_price"] = $this->input->post("cost_price");
+        $input["unit_price"] = $this->input->post("unit_price");
+        $input["discount"] = $this->input->post("discount");
+        $input["unit"] = $this->input->post("unit");
+        $input["reorder_level"] = $this->input->post("reorder_level");
+        $input["location"] = $this->input->post("location");
+        $inputs =  (object) $input;
+        return $inputs;
+    }
+
+
+    public function add_item()
+    {
+        $business_id = $this->session->userdata("business_id");
+        $created_by = $this->session->userdata("user_id");
+        $item_id = (int) $this->input->post("item_id");
+        $supplier_id = 0;
+        $query = "SELECT supplier_id, count(*) as total FROM `suppliers` WHERE business_id = ? LIMIT 1";
+        $result = $this->db->query($query, [$business_id])->row();
+        if ($result->total == 0) {
+            echo "need to add supplier";
+            // Create new supplier for opening stock
+            $supplier_data = [
+                'business_id' => $business_id,
+                'supplier_name' => 'Opening Stock',
+                'supplier_contact_no' => '0000000000000',
+                'company_name' => 'Opening Stock',
+                'account_number' => NULL
+            ];
+            $this->db->insert('suppliers', $supplier_data);
+            $supplier_id = $this->db->insert_id();
+        } else {
+            $supplier_id = $result->supplier_id;
+        }
+
+        $supplier_invoice_id = 0;
+        // Optionally get the latest invoice if needed
+        $query = "SELECT supplier_invoice_id, count(*) as total FROM `suppliers_invoices` 
+                    WHERE supplier_id = ? and business_id = ? ORDER BY invoice_date DESC LIMIT 1";
+        $invoice_result = $this->db->query($query, [$supplier_id, $business_id])->row();
+
+        if ($invoice_result->total == 0) {
+            $invoice_data = [
+                'business_id' => $business_id,
+                'supplier_invoice_number' => '1',
+                'supplier_id' => $supplier_id,
+                'return_receipt' => 1,
+                'created_by' => $created_by,
+                'invoice_date' => date('Y-m-d')
+            ];
+
+            $this->db->insert('suppliers_invoices', $invoice_data);
+            $supplier_invoice_id = $this->db->insert_id();
+        } else {
+            $supplier_invoice_id = $invoice_result->supplier_invoice_id;
+        }
+
+
+
+        //$this->form_validation->set_rules("business_id", "Business Id", "required");
+        $this->form_validation->set_rules("name", "Name", "required");
+        // $this->form_validation->set_rules("item_code_no", "Item Code No", "required");
+        $this->form_validation->set_rules("category", "Category", "required");
+        //$this->form_validation->set_rules("description", "Description", "required");
+        $this->form_validation->set_rules("cost_price", "Cost Price", "required");
+        $this->form_validation->set_rules("unit_price", "Unit Price", "required");
+        //$this->form_validation->set_rules("discount", "Discount", "required");
+        //$this->form_validation->set_rules("unit", "Unit", "required");
+        //$this->form_validation->set_rules("reorder_level", "Reorder Level", "required");
+        //$this->form_validation->set_rules("location", "Location", "required");
+
+        if ($this->form_validation->run() == FALSE) {
+            echo '<div class="alert alert-danger">' . validation_errors() . "</div>";
+            exit();
+        } else {
+
+            if ($item_id == 0) {
+                $query = "SELECT COUNT(*) as total FROM items WHERE items.name = ? and business_id = ?";
+                $item_name = $this->db->query($query, [$this->input->post('name'), $business_id])->row();
+                if ($item_name->total > 0) {
+                    echo "Item Name Duplicate. Try with other name.";
+                    exit();
+                }
+
+                $cost_price = $this->input->post("cost_price");
+                $unit_price = $this->input->post("unit_price");
+                $created_by = $this->session->userdata("user_id");
+
+                if ($this->input->post("stock")) {
+                    $stock = $this->input->post("stock");
+                } else {
+                    $stock = 0;
+                }
+                $date = date('Y-m-d', time());
+                $inputs = $this->get_inputs();
+                $inputs->created_by = $this->session->userdata("user_id");
+                $inputs->discount = 0;
+                $inputs->reorder_level = 0;
+                $inputs->location = NULL;
+                $this->db->insert("items", $inputs);
+                $item_id = $this->db->insert_id();
+
+                if ($supplier_id != 0 and $supplier_invoice_id != 0 and $item_id != 0 and $stock != 0) {
+                    //update item enventory after first time add 
+                    $query = "INSERT INTO `inventory`(`business_id`, `item_id`, `supplier_id`, `supplier_invoice_id`, `item_cost_price`, `item_unit_price`, `transaction_type`, `inventory_transaction`,`created_by`, `expiry_date`) 
+                            VALUES ('" . $business_id . "', '" . $item_id . "', '" . $supplier_id . "', '" . $supplier_invoice_id . "', '" . $cost_price . "', '" . $unit_price . "', 'Item Created','" . $stock . "','" . $created_by . "', '" . $date . "')";
+                    $this->db->query($query);
+                }
+                $this->db->where("item_id", $item_id);
+                $item_code['item_code_no'] = $business_id . "" . $item_id;
+                $this->db->update("items", $item_code);
+                echo 'success';
+            } else {
+                $query = "SELECT COUNT(*) as total FROM items WHERE items.name = ? and business_id = ?
+                AND items.item_id != ?  ";
+                $item_name = $this->db->query($query, [$this->input->post('name'), $business_id, $item_id])->row();
+                if ($item_name->total > 0) {
+                    echo "Item Name Duplicate. Try with other name.";
+                    exit();
+                }
+                $inputs = $this->get_inputs();
+                $this->db->where("item_id", $item_id);
+                $inputs->last_updated = date('Y-m-d H:i:s');
+                $this->db->update("items", $inputs);
+
+                echo 'success';
+            }
+        }
+    }
+
     public function validate_form_data($operation = false)
     {
+
+        $business_id = $this->session->userdata("business_id");
+
+        // Add custom validation rule for duplicate item name
+        $this->form_validation->set_rules('name', 'Name', [
+            'required',
+            // Add callback to check for duplicate name
+            function ($value) use ($business_id) {
+                $query = "SELECT COUNT(*) as total FROM items WHERE items.name = ? AND items.business_id = ?";
+                $result = $this->db->query($query, [$value, $business_id])->row();
+
+                if ($result->total > 0) {
+                    $this->form_validation->set_message('name', 'Duplicate Item Name. Try Again with different name');
+                    return FALSE;
+                }
+                return TRUE;
+            }
+        ]);
 
 
         $validation_config = array(

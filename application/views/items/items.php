@@ -83,6 +83,8 @@
                 </li>
                 <li><?php echo $title; ?></li>
             </ul>
+
+
             <?php if (!preg_match('/mobile/i', $_SERVER['HTTP_USER_AGENT'])) { ?>
                 <!-- /BREADCRUMBS -->
                 <div class="row">
@@ -104,7 +106,25 @@
                 </div>
             <?php } else { ?>
                 <div style="text-align: center;">
-                    <a class="btn btn-primary btn-sm" href="<?php echo site_url("items/add"); ?>"><i class="fa fa-plus"></i> Add New Item</a>
+                    <div style="text-align: center;">
+                        <button onclick="get_item_form('0')" class="btn btn-primary">Add New Item</button>
+                    </div>
+                    <script>
+                        function get_item_form(item_id) {
+                            $.ajax({
+                                    method: "POST",
+                                    url: "<?php echo site_url('items/get_item_form'); ?>",
+                                    data: {
+                                        item_id: item_id
+                                    },
+                                })
+                                .done(function(respose) {
+                                    $('#modal').modal('show');
+                                    $('#modal_title').html('Items');
+                                    $('#modal_body').html(respose);
+                                });
+                        }
+                    </script>
                     <a class="btn btn-danger btn-sm" href="<?php echo site_url("items/trashed"); ?>"><i class="fa fa-trash-o"></i> <?php echo $this->lang->line('Trash'); ?></a>
                 </div>
             <?php } ?>
@@ -204,7 +224,8 @@
                                                 }
                                                 ?>
                                                 <a class="btn btn-xs btn-info" href="<?php echo site_url("items/view_item/" . $item->item_id . "/" . $page); ?>"><i class="fa fa-eye"></i></a>
-                                                <a class="btn btn-xs btn-primary" href="<?php echo site_url("items/edit/" . $item->item_id . "/" . $page); ?>"><i class="fa fa-pencil-square-o"></i></a>
+                                                <button class="btn btn-success btn-xs" onclick="get_item_form('<?php echo $item->item_id ?>')">Edit</button>
+
                                                 <a class="btn btn-xs btn-danger" href="<?php echo site_url("items/trash/" . $item->item_id . "/" . $page); ?>"><i class="fa fa-trash-o"></i></a>
                                                 <a class="btn btn-xs btn-default" onclick="get_item_detail('<?php echo $item->item_id; ?>')" href="#" data-toggle="modal" data-target="#exampleModal">Inventory</a>
                                             </div>
@@ -317,8 +338,12 @@
                                                 echo "<a href='" . site_url("items/draft/" . $item->item_id . "/" . $page) . "'> &nbsp;" . $this->lang->line('Draft') . "</a>";
                                             }
                                             ?> </td>
-                                        <td> <a class="llink llink-view" href="<?php echo site_url("items/view_item/" . $item->item_id . "/" . $this->uri->segment(4)); ?>"><i class="fa fa-eye"></i> </a>
-                                            <a class="llink llink-edit" href="<?php echo site_url("items/edit/" . $item->item_id . "/" . $this->uri->segment(4)); ?>"><i class="fa fa-pencil-square-o"></i></a>
+                                        <td>
+
+                                            <button class="btn btn-success btn-xs" onclick="get_item_form('<?php echo $item->item_id ?>')">Edit</button>
+
+                                            <!-- <a class="llink llink-view" href="<?php echo site_url("items/view_item/" . $item->item_id . "/" . $this->uri->segment(4)); ?>"><i class="fa fa-eye"></i> </a> -->
+                                            <!-- <a class="llink llink-edit" href="<?php echo site_url("items/edit/" . $item->item_id . "/" . $this->uri->segment(4)); ?>"><i class="fa fa-pencil-square-o"></i></a> -->
                                             <a class="llink llink-trash" href="<?php echo site_url("items/trash/" . $item->item_id . "/" . $this->uri->segment(4)); ?>"><i class="fa fa-trash-o"></i></a>
                                         </td>
                                         <td><a onclick="get_item_detail('<?php echo $item->item_id; ?>')" href="#" data-toggle="modal" data-target="#exampleModal">
