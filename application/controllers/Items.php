@@ -659,9 +659,7 @@ class Items extends Admin_Controller
                     exit();
                 }
 
-                $cost_price = $this->input->post("cost_price");
-                $unit_price = $this->input->post("unit_price");
-                $created_by = $this->session->userdata("user_id");
+
 
                 if ($this->input->post("stock")) {
                     $stock = $this->input->post("stock");

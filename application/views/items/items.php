@@ -98,7 +98,25 @@
 
                     <div class="col-md-9">
                         <div class="pull-right">
-                            <a class="btn btn-primary btn-sm" href="<?php echo site_url("items/add"); ?>"><i class="fa fa-plus"></i> <?php echo $this->lang->line('New'); ?></a>
+                            <div style="text-align: center;">
+                                <button onclick="get_item_form('0')" class="btn btn-primary">Add New Item</button>
+                            </div>
+                            <script>
+                                function get_item_form(item_id) {
+                                    $.ajax({
+                                            method: "POST",
+                                            url: "<?php echo site_url('items/get_item_form'); ?>",
+                                            data: {
+                                                item_id: item_id
+                                            },
+                                        })
+                                        .done(function(respose) {
+                                            $('#modal').modal('show');
+                                            $('#modal_title').html('Items');
+                                            $('#modal_body').html(respose);
+                                        });
+                                }
+                            </script>
                             <a class="btn btn-danger btn-sm" href="<?php echo site_url("items/trashed"); ?>"><i class="fa fa-trash-o"></i> <?php echo $this->lang->line('Trash'); ?></a>
                         </div>
                     </div>
