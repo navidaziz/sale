@@ -292,6 +292,7 @@ class Items extends Admin_Controller
                 $result = $this->db->query($query, [$business_id])->row();
                 var_dump($result);
                 if ($result->total == 0) {
+                    echo "need to add supplier";
                     // Create new supplier for opening stock
                     $supplier_data = [
                         'business_id' => $business_id,
