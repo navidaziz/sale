@@ -328,7 +328,8 @@
 			alert("Cash Amout is Zero");
 			return false;
 		}
-		if (cash_amount < pay_able_total) {
+		alert((cash_amount - discount));
+		if ((cash_amount - discount) < pay_able_total) {
 			alert("Cash Amout is less the Payable total amount");
 			return false;
 		}
@@ -387,7 +388,7 @@
 		cash_amount = parseFloat($('#cash_amount').val());
 		discount = parseFloat($('#discount').val());
 		pay_able_total = parseFloat($('#pay_able_total').val());
-		$('#cash_back').html(pay_able_total - Math.abs(cash_amount - discount));
+		$('#cash_back').html(Math.abs(cash_amount + discount - pay_able_total));
 	}
 
 	$(function() {

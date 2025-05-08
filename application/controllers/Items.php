@@ -327,6 +327,9 @@ class Items extends Admin_Controller
                     $supplier_invoice_id = $invoice_result->supplier_invoice_id;
                 }
 
+                echo "if ($supplier_id != 0 and $supplier_invoice_id != 0) {";
+                exit();
+
                 if ($supplier_id != 0 and $supplier_invoice_id != 0) {
                     //update item enventory after first time add 
                     $query = "INSERT INTO `inventory`(`business_id`, `item_id`, `supplier_id`, `supplier_invoice_id`, `item_cost_price`, `item_unit_price`, `transaction_type`, `inventory_transaction`,`created_by`, `expiry_date`) 
