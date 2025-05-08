@@ -299,7 +299,7 @@ class Items extends Admin_Controller
                         'supplier_name' => 'Opening Stock',
                         'supplier_contact_no' => '0000000000000',
                         'company_name' => 'Opening Stock',
-                        'account_number' => '0000000000000'
+                        'a ccount_number' => '0000000000000'
                     ];
                     $this->db->insert('suppliers', $supplier_data);
                     $supplier_id = $this->db->insert_id();
