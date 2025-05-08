@@ -290,6 +290,7 @@ class Items extends Admin_Controller
                 $supplier_id = 0;
                 $query = "SELECT supplier_id, count(*) as total FROM `suppliers` WHERE business_id = ? LIMIT 1";
                 $result = $this->db->query($query, [$business_id])->row();
+                var_dump($result);
                 if ($result->total == 0) {
                     // Create new supplier for opening stock
                     $supplier_data = [
