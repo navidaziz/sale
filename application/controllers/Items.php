@@ -570,7 +570,7 @@ class Items extends Admin_Controller
     private function get_inputs()
     {
         $input["item_id"] = $this->input->post("item_id");
-        $input["business_id"] = $this->session->userdata("business_id");
+
         $input["name"] = $this->input->post("name");
         $input["item_code_no"] = $this->input->post("item_code_no");
         $input["category"] = $this->input->post("category");
@@ -657,8 +657,6 @@ class Items extends Admin_Controller
                 if ($item_name->total > 0) {
                     echo "Item Name Duplicate. Try with other name.";
                     exit();
-                } else {
-                    echo 'add item';
                 }
 
 
@@ -671,10 +669,11 @@ class Items extends Admin_Controller
                 $date = date('Y-m-d', time());
                 $inputs = $this->get_inputs();
                 $inputs->created_by = $this->session->userdata("user_id");
+                $inputs->business_id = $this->session->userdata("business_id");
                 $inputs->discount = 0;
                 $inputs->reorder_level = 0;
                 $inputs->location = NULL;
-                $this->db->insert("items", $inputs);
+                $this->db->insert("item s", $inputs);
                 $item_id = $this->db->insert_id();
 
                 if ($supplier_id != 0 and $supplier_invoice_id != 0 and $item_id != 0 and $stock != 0) {
@@ -697,6 +696,7 @@ class Items extends Admin_Controller
                 }
                 $inputs = $this->get_inputs();
                 $this->db->where("item_id", $item_id);
+                $this->db->where("business_id", $this->session->userdata("business_id"));
                 $inputs->last_updated = date('Y-m-d H:i:s');
                 $this->db->update("items", $inputs);
 
