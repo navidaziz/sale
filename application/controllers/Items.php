@@ -657,6 +657,8 @@ class Items extends Admin_Controller
                 if ($item_name->total > 0) {
                     echo "Item Name Duplicate. Try with other name.";
                     exit();
+                } else {
+                    echo 'add item';
                 }
 
 
