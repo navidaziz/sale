@@ -305,7 +305,7 @@ class Suppliers extends Admin_Controller
         $this->load->view("suppliers/print_supplier_invoices", $this->data);
     }
 
-    public function add_supplier_invoce()
+    public function add_supplier_invoice()
     {
         $validation_config = array(
 
