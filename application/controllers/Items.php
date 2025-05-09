@@ -679,7 +679,7 @@ class Items extends Admin_Controller
                 if ($supplier_id != 0 and $supplier_invoice_id != 0 and $item_id != 0 and $stock != 0) {
                     //update item enventory after first time add 
                     $query = "INSERT INTO `inventory`(`business_id`, `item_id`, `supplier_id`, `supplier_invoice_id`, `item_cost_price`, `item_unit_price`, `transaction_type`, `inventory_transaction`,`created_by`, `expiry_date`) 
-                            VALUES ('" . $business_id . "', '" . $item_id . "', '" . $supplier_id . "', '" . $supplier_invoice_id . "', '" . $cost_price . "', '" . $unit_price . "', 'Item Created','" . $stock . "','" . $created_by . "', '" . $date . "')";
+                            VALUES ('" . $business_id . "', '" . $item_id . "', '" . $supplier_id . "', '" . $supplier_invoice_id . "', '" . $inputs->cost_price . "', '" . $inputs->unit_price . "', 'Item Created','" . $stock . "','" . $created_by . "', '" . $date . "')";
                     $this->db->query($query);
                 }
                 $this->db->where("item_id", $item_id);
