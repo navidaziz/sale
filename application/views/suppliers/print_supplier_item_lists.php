@@ -93,7 +93,7 @@
 <body>
 	<page size='A4'>
 		<div style="padding: 5px;  padding-left:20px; padding-right:20px; " contenteditable="true">
-			<table class="table">
+			<table class="table" style="font-size: 12px; width`: 100%;">
 				<tr>
 					<td>
 						<h3 style="text-align: center;"> <?php echo $this->session->userdata("business_name"); ?> </h3>
@@ -112,19 +112,18 @@
 
 			<hr />
 
-			<h4>Return Items List</h4>
+			<h4>Items List</h4>
 
 			<table class="table table-bordered" style="font-size: 12px;">
 				<thead>
 					<th>#</th>
 					<th>Item Name</th>
-					<!-- <th>Batch Number</th>
-					<th>Expiry Date</th> -->
 					<th>Quantity</th>
-					<th>Trade Price</th>
-					<th>Net Amount</th>
-					<!-- <th>Unit Price</th> -->
-					<!-- <th>Transaction Type</th> -->
+					<th>Cost Price</th>
+					<th>Total Cost</th>
+					<th>Sale Price</th>
+					<th>Sale Total</th>
+					<th>Expected Profit</th>
 					<th>Remarks</th>
 				</thead>
 				<tbody>
@@ -132,40 +131,25 @@
 					$count = 1;
 					$net_total = 0;
 					foreach ($inventories as $inventory) :
-						$net_total += $inventory->item_cost_price * $inventory->inventory_transaction;
+						$net_cost_total += $inventory->item_cost_price * $inventory->inventory_transaction;
+						$net_sale_total += $inventory->item_unit_price * $inventory->inventory_transaction;
 					?>
 						<tr>
 							<td><?php echo $count++; ?></td>
 							<td><?php echo $inventory->name; ?></td>
-							<!--<td><?php echo $inventory->batch_number; ?></td> 
-							<td>
-								<?php if ($inventory->expiry_date) { ?>
-									<?php echo date('d M, Y', strtotime($inventory->expiry_date)); ?>
-								<?php } ?>
-							</td>-->
-							<td>
-								<span id="stock_view_<?php echo $inventory->inventory_id; ?>">
-									<?php echo $inventory->inventory_transaction; ?>
-								</span>
-
-								<!-- <input type="text" name="stock" value="<?php echo $inventory->inventory_transaction; ?>" id="stock_<?php echo $inventory->inventory_id; ?>" onkeyup="update_stock('<?php echo $inventory->inventory_id; ?>')" /> -->
-
-							</td>
+							<td><?php echo $inventory->inventory_transaction; ?></td>
 							<td><?php echo $inventory->item_cost_price; ?></td>
 							<td><?php echo $inventory->item_cost_price * $inventory->inventory_transaction; ?></td>
-							<!-- <td><?php echo $inventory->item_unit_price; ?></td> -->
-							<!-- <td><strong><?php echo $inventory->transaction_type; ?></strong>
-								<?php if ($inventory->return_date) { ?>
-									<small><?php echo date('d M, Y', strtotime($inventory->return_date)); ?></small>
-								<?php } ?>
-							</td> -->
-							<td><?php echo $inventory->remarks; ?></td>
+							<td><?php echo $inventory->item_unit_price; ?></td>
+							<td><?php echo $inventory->item_unit_price * $inventory->inventory_transaction; ?></td>
+							<td><?php echo (($inventory->item_cost_price * $inventory->inventory_transaction) - ($inventory->item_unit_price * $inventory->inventory_transaction)) ?></td>
+							<td></td>
 						</tr>
 
 					<?php endforeach; ?>
 					<tr>
 						<td colspan="4" style="text-align: right;">Total</td>
-						<th colspan="2"><?php echo $net_total; ?> Rs.</th>
+						<th colspan="2"><?php echo $net_cost_total; ?> Rs.</th>
 					</tr>
 				</tbody>
 			</table>

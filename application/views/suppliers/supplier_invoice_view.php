@@ -20,6 +20,41 @@
 	}
 </script>
 
+<script>
+	function update_cost_price(id) {
+		item_cost_price = $('#item_cost_price_' + id).val();
+		$.ajax({
+			type: "POST",
+			url: "<?php echo site_url("suppliers/update_supplier_item_cost_price") ?>",
+			data: {
+				inventory_id: id,
+				item_cost_price: item_cost_price
+			}
+		}).done(function(data) {
+			//alert(data);
+			$('#item_cost_price_stock_view_' + id).html(data);
+		});
+
+	}
+</script>
+
+<script>
+	function update_unit_price(id) {
+		item_unit_price = $('#item_unit_price_' + id).val();
+		$.ajax({
+			type: "POST",
+			url: "<?php echo site_url("suppliers/update_supplier_item_unit_price") ?>",
+			data: {
+				inventory_id: id,
+				item_unit_price: item_unit_price
+			}
+		}).done(function(data) {
+			$('#item_unit_price_view_' + id).html(data);
+		});
+
+	}
+</script>
+
 <div class="row">
 	<div class="col-sm-12">
 		<div class="page-header">
@@ -228,13 +263,23 @@
 								<tr>
 									<td><?php echo $count++; ?></td>
 									<td><?php echo $inventory->name; ?></td>
-									<td><?php echo $inventory->item_cost_price; ?></td>
-									<td><?php echo $inventory->item_unit_price; ?></td>
+									<td>
+										<span id="item_cost_price_stock_view_<?php echo $inventory->inventory_id; ?>">
+											<?php echo $inventory->item_cost_price; ?>
+										</span>
+										<input type="text" name="item_cost_price" value="<?php echo $inventory->item_cost_price; ?>" id="item_cost_price_<?php echo $inventory->inventory_id; ?>" onkeyup="update_cost_price('<?php echo $inventory->inventory_id; ?>')" />
+									</td>
+									<td>
+										<span id="item_unit_price_view_<?php echo $inventory->inventory_id; ?>">
+											<?php echo $inventory->item_unit_price; ?>
+										</span>
+										<input type="text" name="item_unit_price" value="<?php echo $inventory->item_unit_price; ?>" id="item_unit_price_<?php echo $inventory->inventory_id; ?>" onkeyup="update_unit_price('<?php echo $inventory->inventory_id; ?>')" />
+									</td>
 									<td>
 										<span id="stock_view_<?php echo $inventory->inventory_id; ?>">
 											<?php echo $inventory->inventory_transaction; ?>
 										</span>
-										<?php if ($suppliers_invoices->supplier_invoice_id != 1) { ?>
+										<?php if ($suppliers_invoices->supplier_invoice_id != 1 or 1 == 1) { ?>
 											<input type="text" name="stock" value="<?php echo $inventory->inventory_transaction; ?>" id="stock_<?php echo $inventory->inventory_id; ?>" onkeyup="update_stock('<?php echo $inventory->inventory_id; ?>')" />
 										<?php } ?>
 									</td>
@@ -248,9 +293,8 @@
 
 									<td><?php echo $inventory->userTitle; ?></td>
 									<td>
-										<?php if ($suppliers_invoices->supplier_invoice_id != 1) { ?>
-											<a href="<?php echo site_url("suppliers/remove_supplier_item/" . $inventory->supplier_id . "/" . $inventory->supplier_invoice_id . "/" . $inventory->inventory_id) ?>">Remove</a>
-										<?php } ?>
+										<a class="btn btn-danger btn-xs" href="<?php echo site_url("suppliers/remove_supplier_item/" . $inventory->supplier_id . "/" . $inventory->supplier_invoice_id . "/" . $inventory->inventory_id) ?>">Remove</a>
+										<button onclick="update_stock_form('<?php echo $inventory->inventory_id; ?>')" class="btn btn-success btn-xs">Edit</button>
 									</td>
 
 								</tr>
@@ -283,4 +327,22 @@
 	$(document).ready(function() {
 		$('.js-example-basic-single2').select2();
 	});
+</script>
+
+
+<script>
+	function update_stock_form(inventory_id) {
+		$.ajax({
+				method: "POST",
+				url: "<?php echo site_url('suppliers/update_stock_form'); ?>",
+				data: {
+					inventory_id: inventory_id
+				},
+			})
+			.done(function(respose) {
+				$('#modal').modal('show');
+				$('#modal_title').html('Items Inventory');
+				$('#modal_body').html(respose);
+			});
+	}
 </script>

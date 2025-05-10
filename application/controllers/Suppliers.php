@@ -53,6 +53,30 @@ class Suppliers extends Admin_Controller
         }
     }
 
+    function update_supplier_item_cost_price()
+    {
+        $inventory_id = (int) $this->input->post("inventory_id");
+        $item_cost_price =  (int) $this->input->post("item_cost_price");
+        $query = "UPDATE inventory SET item_cost_price ='" . $item_cost_price . "'
+        WHERE inventory_id = '" . $inventory_id . "'";
+        if ($this->db->query($query)) {
+
+            echo $item_cost_price;
+        }
+    }
+
+    function update_supplier_item_unit_price()
+    {
+        $inventory_id = (int) $this->input->post("inventory_id");
+        $item_unit_price =  (int) $this->input->post("item_unit_price");
+        $query = "UPDATE inventory SET item_unit_price ='" . $item_unit_price . "'
+        WHERE inventory_id = '" . $inventory_id . "'";
+        if ($this->db->query($query)) {
+
+            echo $item_unit_price;
+        }
+    }
+
     function remove_supplier_item($supplier_id, $supplier_invoice_id, $inventory_id, $return = false)
     {
         $inventory_id  = (int) $inventory_id;
@@ -595,4 +619,15 @@ class Suppliers extends Admin_Controller
     }
     //-----------------------------------------------------
 
+
+    public function update_stock_form()
+    {
+        $this->data["title"] = $this->lang->line('Update Stock');
+        $inventory = (int) $this->input->post('inventory_id');
+        $query = "SELECT i.*, `items`.`name` FROM `inventory` as i 
+        INNER JOIN items ON i.item_id = items.item_id
+        WHERE i.`inventory_id` = ? ";
+        $this->data["inventory"] = $this->db->query($query, [$inventory])->row();
+        $this->load->view("suppliers/update_stock_form", $this->data);
+    }
 }
