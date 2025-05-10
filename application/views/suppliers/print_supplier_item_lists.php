@@ -142,7 +142,7 @@
 							<td><?php echo $inventory->item_cost_price * $inventory->inventory_transaction; ?></td>
 							<td><?php echo $inventory->item_unit_price; ?></td>
 							<td><?php echo $inventory->item_unit_price * $inventory->inventory_transaction; ?></td>
-							<td><?php echo (($inventory->item_cost_price * $inventory->inventory_transaction) - ($inventory->item_unit_price * $inventory->inventory_transaction)) ?></td>
+							<td><?php echo (($inventory->item_unit_price * $inventory->inventory_transaction) - ($inventory->item_cost_price * $inventory->inventory_transaction)) ?></td>
 							<td></td>
 						</tr>
 
