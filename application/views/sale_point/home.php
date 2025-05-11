@@ -85,12 +85,12 @@
 									$query = "SELECT category FROM items WHERE business_id = ? AND status=1 GROUP BY category ORDER BY category ASC";
 									$categories = $this->db->query($query, [$business_id])->result();
 									foreach ($categories as $category) { ?>
-										<button onclick="get_items_by_category('<?php echo $category->category ?>')" class="btn btn-success"><?php echo $category->category ?></button>
+										<button onclick="get_items_by_category('<?php echo $category->category ?>')" class="btn btn-success btn-xs"><?php echo $category->category ?></button>
 									<?php } ?>
 
 								</div>
 								<div style="text-align: center;">
-									<button onclick="get_item_form('0')" class="btn btn-primary">Add New Item</button>
+									<button onclick="get_item_form('0')" class="btn btn-primary btn-xs">Add New Item</button>
 								</div>
 								<script>
 									function get_item_form(item_id) {
