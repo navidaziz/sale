@@ -297,7 +297,8 @@ class Sale_point extends Admin_Controller
 
 			$user_item_list .= '<th>' . ucwords($sales_items_user_list->name) . '</th>
                    
-                    <th><input min="' . $sales_items_user_list->cost_price . '" id="user_item_unit_price_' . $sales_items_user_list->id . '" enterkeyhint="go"  onkeydown="update_user_item_unit_price(\'' . $sales_items_user_list->id . '\')" type="number" name="unit_price" value="' . $sales_items_user_list->unit_price . '" style="width:40px" /></th>
+                    <th>' . $sales_items_user_list->unit_price . '
+					<input id="user_item_unit_price_' . $sales_items_user_list->id . '" enterkeyhint="go"  onkeydown="update_user_item_unit_price(\'' . $sales_items_user_list->id . '\')" type="number" name="unit_price" value="' . $sales_items_user_list->unit_price . '" style="width:40px" /></th>
 					</th>
                     <th>
                     <input id="user_item_discount_' . $sales_items_user_list->id . '" enterkeyhint="go"  onkeydown="update_user_item_discount(\'' . $sales_items_user_list->id . '\')" type="number" name="discount" value="' . $sales_items_user_list->discount . '" style="width:40px" /></th>
@@ -434,25 +435,11 @@ class Sale_point extends Admin_Controller
 
 
 		$query = "UPDATE `sales_item_users` SET `discount`='" . $discount . "',
-		`sale_price`='" . ($sale_price - $discount) . "'
-			WHERE id='" . $id . "' ";
+    `sale_price`='" . ($sale_price - $discount) . "'
+        WHERE id='" . $id . "' ";
 		$this->db->query($query);
 
 
-		echo $this->get_user_items_list();
-	}
-
-	public function update_user_item_unit_price()
-	{
-		$user_item_id = (int) $this->input->post("user_item_id");
-		$unit_price = $this->input->post("unit_price");
-		$query = "select * from sales_item_users where id='" . $user_item_id . "'";
-		$sales_item_users = $this->db->query($query)->row();
-		$input['unit_price'] =  $unit_price;
-		$input['discount'] =  $sales_item_users->discount;
-		$input['sale_price'] = $unit_price - $sales_item_users->discount;
-		$this->db->where('id', $user_item_id);
-		$this->db->update('sales_item_users', $input);
 		echo $this->get_user_items_list();
 	}
 

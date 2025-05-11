@@ -92,7 +92,25 @@
 				</div>
 
 				<div class="col-md-6">
+					<button onclick="add_stock_form()" class="btn btn-success">Add Item Inventory</button>
+					<script>
+						function add_stock_form() {
+							$.ajax({
+									method: "POST",
+									url: "<?php echo site_url('suppliers/add_stock_form'); ?>",
+									data: {
+										supplier_id: '<?php echo  $suppliers[0]->supplier_id; ?>',
+										supplier_invoice_id: '<?php echo  $suppliers_invoices->supplier_invoice_id; ?>'
 
+									},
+								})
+								.done(function(respose) {
+									$('#modal').modal('show');
+									$('#modal_title').html('Items Inventory');
+									$('#modal_body').html(respose);
+								});
+						}
+					</script>
 				</div>
 
 			</div>
@@ -263,26 +281,9 @@
 								<tr>
 									<td><?php echo $count++; ?></td>
 									<td><?php echo $inventory->name; ?></td>
-									<td>
-										<span id="item_cost_price_stock_view_<?php echo $inventory->inventory_id; ?>">
-											<?php echo $inventory->item_cost_price; ?>
-										</span>
-										<input type="text" name="item_cost_price" value="<?php echo $inventory->item_cost_price; ?>" id="item_cost_price_<?php echo $inventory->inventory_id; ?>" onkeyup="update_cost_price('<?php echo $inventory->inventory_id; ?>')" />
-									</td>
-									<td>
-										<span id="item_unit_price_view_<?php echo $inventory->inventory_id; ?>">
-											<?php echo $inventory->item_unit_price; ?>
-										</span>
-										<input type="text" name="item_unit_price" value="<?php echo $inventory->item_unit_price; ?>" id="item_unit_price_<?php echo $inventory->inventory_id; ?>" onkeyup="update_unit_price('<?php echo $inventory->inventory_id; ?>')" />
-									</td>
-									<td>
-										<span id="stock_view_<?php echo $inventory->inventory_id; ?>">
-											<?php echo $inventory->inventory_transaction; ?>
-										</span>
-										<?php if ($suppliers_invoices->supplier_invoice_id != 1 or 1 == 1) { ?>
-											<input type="text" name="stock" value="<?php echo $inventory->inventory_transaction; ?>" id="stock_<?php echo $inventory->inventory_id; ?>" onkeyup="update_stock('<?php echo $inventory->inventory_id; ?>')" />
-										<?php } ?>
-									</td>
+									<td><?php echo $inventory->item_cost_price; ?></td>
+									<td><?php echo $inventory->item_unit_price; ?></td>
+									<td><?php echo $inventory->inventory_transaction; ?></td>
 
 									<td><strong><?php echo $inventory->transaction_type; ?></strong>
 										<?php if ($inventory->return_date) { ?>

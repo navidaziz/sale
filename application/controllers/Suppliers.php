@@ -630,4 +630,43 @@ class Suppliers extends Admin_Controller
         $this->data["inventory"] = $this->db->query($query, [$inventory])->row();
         $this->load->view("suppliers/update_stock_form", $this->data);
     }
+
+    function update_inventory_item()
+    {
+        $inventory_id = (int) $this->input->post("inventory_id");
+        $input['item_unit_price'] = $this->input->post("item_unit_price");
+        $input['item_cost_price'] = $this->input->post("item_cost_price");
+        $input['inventory_transaction'] = $this->input->post("inventory_transaction");
+        $item_id = $this->input->post("item_id");
+        $business_id = $this->session->userdata("business_id");
+
+        $this->db->where('inventory_id', $inventory_id);
+        $this->db->where('business_id', $business_id);
+        $this->db->where('item_id', $item_id);
+        $this->db->update('inventory', $input);  // fixed table name
+
+        if ($this->db->affected_rows() > 0) {
+            $this->db->where('item_id', $item_id);
+            $this->db->where('business_id', $business_id);
+            $item_price['cost_price'] = $input['item_cost_price'];
+            $item_price['unit_price'] = $input['item_unit_price'];
+            $this->db->update('items', $item_price);
+            if ($this->db->affected_rows() > 0) {
+                echo 'success';
+            } else {
+                echo 'Error while update item cost and sale price.';
+            }
+        } else {
+            echo 'no changes made or failed';
+        }
+    }
+
+    public function add_stock_form()
+    {
+        $this->data["title"] = 'Add Inventory Stock';
+
+        $this->data['supplier_id'] = (int) $this->input->post('supplier_id');
+        $this->data['supplier_invoice_id'] = (int) $this->input->post('supplier_invoice_id');
+        $this->load->view("suppliers/add_stock_form", $this->data);
+    }
 }

@@ -125,11 +125,13 @@
 													<label for="supplier_invoice_number" class="col-sm-6 col-form-label">Invoice Type:</label>
 
 													<div class="form-check form-check-inline">
-														<input class="form-check-input" type="radio" name="return_receipt" id="return_receipt" value="0" checked>
-														<label class="form-check-label" for="return_receipt">Return Receipt</label>
-														<span class="ml-3"></span>
-														<input class="form-check-input" type="radio" name="return_receipt" id="stock_in_invoice" value="1">
+
+														<input class="form-check-input" type="radio" name="return_receipt" id="stock_in_invoice" value="1" checked>
 														<label class="form-check-label" for="stock_in_invoice">Stock In Invoice</label>
+														<span class="ml-3"></span>
+														<input class="form-check-input" type="radio" name="return_receipt" id="return_receipt" value="0">
+														<label class="form-check-label" for="return_receipt">Return Receipt</label>
+
 													</div>
 												</div>
 
