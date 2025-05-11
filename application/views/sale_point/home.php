@@ -82,7 +82,9 @@
 
 									<?php
 									$business_id = $this->session->userdata("business_id");
-									$query = "SELECT category FROM items WHERE business_id = ? AND status=1 GROUP BY category ORDER BY category ASC";
+									$query = "SELECT category FROM items WHERE business_id = ? 
+									AND items.status=1 
+									GROUP BY category ORDER BY category ASC";
 									$categories = $this->db->query($query, [$business_id])->result();
 									foreach ($categories as $category) { ?>
 										<button onclick="get_items_by_category('<?php echo $category->category ?>')" class="btn btn-success btn-xs"><?php echo $category->category ?></button>
@@ -149,7 +151,9 @@
 
 										<?php
 										$business_id = $this->session->userdata("business_id");
-										$query = "SELECT category FROM items WHERE business_id = ? GROUP BY category ORDER BY category ASC";
+										$query = "SELECT category FROM items WHERE business_id = ? 
+										AND items.status=1
+										GROUP BY category ORDER BY category ASC";
 										$categories = $this->db->query($query, [$business_id])->result();
 										foreach ($categories as $category) { ?>
 											<button onclick="get_items_by_category('<?php echo $category->category ?>')" class="btn btn-success"><?php echo $category->category ?></button>
