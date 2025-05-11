@@ -496,7 +496,12 @@
 	function update_user_item_unit_price(user_item_id) {
 		//item_quantity: item_quantity.replace(/[^a-zA-Z0-9]/g, ''),
 		if (event.key === 'Enter') {
-			var unit_price = $('#user_item_unit_price_' + user_item_id).val();ß
+			var unit_price = $('#user_item_unit_price_' + user_item_id).val();
+			let minValue = $('#user_item_unit_price_' + user_item_id).attr('min');
+			if (unit_price < minValue) {
+				alert('Unit Price less or equal to ' + minValue);
+				return false;
+			}
 			$('#item_list').html('<p style="text-align:center"><strong>Please Wait...... Loading</strong></p>');
 			$.ajax({
 				type: "POST",
@@ -518,19 +523,27 @@
 		//item_quantity: item_quantity.replace(/[^a-zA-Z0-9]/g, ''),
 		if (event.key === 'Enter') {
 			var item_discount = $('#user_item_discount_' + user_item_id).val();
-			$('#item_list').html('<p style="text-align:center"><strong>Please Wait...... Loading</strong></p>');
-			$.ajax({
-				type: "POST",
-				url: "<?php echo site_url("sale_point/update_user_item_discount") ?>",
-				data: {
-					user_item_id: user_item_id,
-					item_discount: item_discount,
-				}
-			}).done(function(data) {
-				$('#item_list').html(data);
-				get_user_sale_summary();
+			let minValue = $('#user_item_discount_' + user_item_id).attr('min');
 
-			});
+			if (item_discount < minValue) {
+				$('#item_list').html('<p style="text-align:center"><strong>Please Wait...... Loading</strong></p>');
+				$.ajax({
+					type: "POST",
+					url: "<?php echo site_url("sale_point/update_user_item_discount") ?>",
+					data: {
+						user_item_id: user_item_id,
+						item_discount: item_discount,
+					}
+				}).done(function(data) {
+					$('#item_list').html(data);
+					get_user_sale_summary();
+
+				});
+			} else {
+				alert('Discount less or equal to ' + minValue);
+				return false;
+			}
+
 		}
 
 	}
