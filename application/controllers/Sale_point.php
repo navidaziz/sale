@@ -190,7 +190,7 @@ class Sale_point extends Admin_Controller
 		business_id = '" . $this->session->userdata("business_id") . "'
 		 AND MONTH(created_date) = MONTH(NOW())
 		AND YEAR(created_date) = YEAR(NOW())";
-		$this->data['monthly_sale_profit'] = $this->db->query($query)->row();
+		$this->data['current_month_sale_profit'] = $this->db->query($query)->row();
 
 		$this->load->view("sale_point/sale_reports", $this->data);
 	}
