@@ -15,7 +15,7 @@
                     <div class="col-md-6 col-sm-12">
                         <div class="panel panel-primary text-center" style="border-radius: 6px;">
                             <div class="panel-heading" style="font-size: 18px; font-weight: bold;">
-                                <i class="fa fa-shopping-cart"></i> Current Month Sale
+                                <i class="fa fa-shopping-cart"></i> Today's Sale
                             </div>
                             <div class="panel-body">
                                 <h2 style="color: green; font-weight: bold; margin: 0;">
@@ -28,7 +28,7 @@
                     <div class="col-md-6 col-sm-12">
                         <div class="panel panel-success text-center" style="border-radius: 6px;">
                             <div class="panel-heading" style="font-size: 18px; font-weight: bold;">
-                                <i class="fa fa-line-chart"></i> Current Month Net Profit (After Tax & Discount)
+                                <i class="fa fa-line-chart"></i> Net Profit (After Tax & Discount)
                             </div>
                             <div class="panel-body">
                                 <h2 style="color: #337ab7; font-weight: bold; margin: 0;">
@@ -86,11 +86,11 @@
                     <div class="col-md-6 col-sm-12">
                         <div class="panel panel-primary text-center" style="border-radius: 6px;">
                             <div class="panel-heading" style="font-size: 18px; font-weight: bold;">
-                                <i class="fa fa-shopping-cart"></i> Today's Sale
+                                <i class="fa fa-shopping-cart"></i> Current Month Sale
                             </div>
                             <div class="panel-body">
                                 <h2 style="color: green; font-weight: bold; margin: 0;">
-                                    <?php echo number_format($today_sale_profit->total_sale, 2); ?> PKR
+                                    <?php echo number_format($current_month_sale_profit->total_sale, 2); ?> PKR
                                 </h2>
                             </div>
                         </div>
@@ -99,11 +99,11 @@
                     <div class="col-md-6 col-sm-12">
                         <div class="panel panel-success text-center" style="border-radius: 6px;">
                             <div class="panel-heading" style="font-size: 18px; font-weight: bold;">
-                                <i class="fa fa-line-chart"></i> Net Profit (After Tax & Discount)
+                                <i class="fa fa-line-chart"></i> Current Month Net Profit (After Tax & Discount)
                             </div>
                             <div class="panel-body">
                                 <h2 style="color: #337ab7; font-weight: bold; margin: 0;">
-                                    <?php echo number_format($today_sale_profit->total_profit, 2); ?> PKR
+                                    <?php echo number_format($current_month_sale_profit->total_profit, 2); ?> PKR
                                 </h2>
                             </div>
                         </div>
