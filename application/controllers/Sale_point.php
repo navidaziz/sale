@@ -152,6 +152,22 @@ class Sale_point extends Admin_Controller
 		if ($today_sale_summary) {
 			$this->data['today_sale_summary'] = $today_sale_summary->row();
 		}
+
+
+		$query = "SELECT SUM(items_total_price) as items_price, 
+                     SUM(total_tax_pay_able) as total_tax, 
+                     SUM(discount) as discount, 
+                     SUM(`total_payable`) as total_sale 
+                     FROM `sales` 
+                     WHERE 
+					 business_id = '" . $this->session->userdata("business_id") . "'
+					 AND MONTH(created_date) = MONTH(NOW())
+					 AND YEAR(created_date) = YEAR(NOW())";
+		$current_month_sale_summary = $this->db->query($query);
+		if ($current_month_sale_summary) {
+			$this->data['current_month_sale_summary'] = $today_sale_summary->row();
+		}
+
 		$query = "SELECT 
 		SUM(quantity * sale_price) AS total_sale,
 		SUM(quantity * (sale_price - cost_price)) AS total_profit
