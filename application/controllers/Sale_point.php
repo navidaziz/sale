@@ -165,7 +165,7 @@ class Sale_point extends Admin_Controller
 					 AND YEAR(created_date) = YEAR(NOW())";
 		$current_month_sale_summary = $this->db->query($query);
 		if ($current_month_sale_summary) {
-			$this->data['current_month_sale_summary'] = $today_sale_summary->row();
+			$this->data['current_month_sale_summary'] = $current_month_sale_summary->row();
 		}
 
 		$query = "SELECT 
