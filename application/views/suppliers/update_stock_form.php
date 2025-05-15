@@ -30,6 +30,7 @@
          </div>
      </div>
      <div style="text-align: center;">
+         <div id="result_response"></div>
          <button class="btn btn-success">Update</button>
      </div>
 
@@ -48,6 +49,7 @@
              url: '<?php echo site_url("suppliers/update_inventory_item"); ?>', // URL to submit form data
              data: formData,
              success: function(response) {
+                 //alert(response);
                  // Display response
                  if (response == 'success') {
                      location.reload();

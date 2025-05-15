@@ -634,18 +634,17 @@ class Suppliers extends Admin_Controller
     function update_inventory_item()
     {
         $inventory_id = (int) $this->input->post("inventory_id");
-        $input['item_unit_price'] = $this->input->post("item_unit_price");
-        $input['item_cost_price'] = $this->input->post("item_cost_price");
+        $input['item_unit_price'] = (float) $this->input->post("item_unit_price");
+        $input['item_cost_price'] = (float) $this->input->post("item_cost_price");
         $input['inventory_transaction'] = $this->input->post("inventory_transaction");
         $item_id = $this->input->post("item_id");
         $business_id = $this->session->userdata("business_id");
-
+        var_dump($input);
         $this->db->where('inventory_id', $inventory_id);
         $this->db->where('business_id', $business_id);
-        $this->db->where('item_id', $item_id);
-        $this->db->update('inventory', $input);  // fixed table name
+        $this->db->where('item_id', $item_id);;  // fixed table name
 
-        if ($this->db->affected_rows() > 0) {
+        if ($this->db->update('inventory', $input)) {
             $this->db->where('item_id', $item_id);
             $this->db->where('business_id', $business_id);
             $item_price['cost_price'] = $input['item_cost_price'];
