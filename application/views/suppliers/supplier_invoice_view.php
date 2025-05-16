@@ -199,6 +199,26 @@
 										<?php
 										echo form_dropdown("item_id", array("" => "Seelect Item") + $items, "", "id = \"item_id1\" class=\"js-example-basic-single\" onchange=\"get_item_prices('item_id1')\" required style=\"width:150px\"");
 										?>
+
+										<div style="text-align: center;">
+											<button onclick="get_item_form('0')" class="btn btn-primary btn-xs">Add New Item</button>
+										</div>
+										<script>
+											function get_item_form(item_id) {
+												$.ajax({
+														method: "POST",
+														url: "<?php echo site_url('items/get_item_form'); ?>",
+														data: {
+															item_id: item_id
+														},
+													})
+													.done(function(respose) {
+														$('#modal').modal('show');
+														$('#modal_title').html('Items');
+														$('#modal_body').html(respose);
+													});
+											}
+										</script>
 									</td>
 									<!-- <td>
 										<strong>Batch Number</strong>
