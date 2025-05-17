@@ -639,7 +639,6 @@ class Suppliers extends Admin_Controller
         $input['inventory_transaction'] = $this->input->post("inventory_transaction");
         $item_id = $this->input->post("item_id");
         $business_id = $this->session->userdata("business_id");
-        var_dump($input);
         $this->db->where('inventory_id', $inventory_id);
         $this->db->where('business_id', $business_id);
         $this->db->where('item_id', $item_id);;  // fixed table name
