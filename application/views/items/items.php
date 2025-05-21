@@ -364,7 +364,7 @@
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <th colspan="11" style="text-align:right">Grand Totals:</th>
+                                    <th colspan="12" style="text-align:right">Grand Totals:</th>
                                     <th><?= number_format($grand_total_cost, 2); ?></th>
                                     <th><?= number_format($grand_total_sale, 2); ?></th>
                                     <th><?= number_format($grand_expected_profit, 2); ?></th>
