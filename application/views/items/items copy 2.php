@@ -276,93 +276,100 @@
                             <thead>
                                 <tr>
                                     <th>S/No</th>
-                                    <th>Item Name</th>
-                                    <th>Category</th>
-                                    <th>Unit</th>
+                                    <th><?php echo $this->lang->line('name'); ?></th>
+                                    <th><?php echo $this->lang->line('category'); ?></th>
+                                    <!-- <th><?php echo $this->lang->line('unit'); ?></th>-->
                                     <th>Bar Code</th>
-                                    <th>Cost Price</th>
-                                    <th>Unit Price</th>
+                                    <!-- <th><?php echo $this->lang->line('description'); ?></th> -->
+                                    <th><?php echo $this->lang->line('cost_price'); ?></th>
+                                    <th><?php echo $this->lang->line('unit_price'); ?></th>
+                                    <?php //if ($this->session->userdata("role_id") == 1) { 
+                                    ?>
                                     <th>Profit %</th>
                                     <th>Discount</th>
-                                    <th>Sale Price (Unit)</th>
+                                    <th>Sale Price</th>
                                     <th>In Stock</th>
-                                    <th>Total Cost</th>
-                                    <th>Total Sale</th>
-                                    <th>Expected Profit</th>
-                                    <th>Status</th>
-                                    <th>Action</th>
+                                    <!-- <th>Expire After</th> -->
+                                    <!-- <th><?php echo $this->lang->line('reorder_level'); ?></th> -->
+                                    <!-- <th><?php echo $this->lang->line('location'); ?></th> -->
+                                    <th><?php echo $this->lang->line('Status'); ?></th>
+                                    <th><?php echo $this->lang->line('Action'); ?></th>
                                     <th>Inventory</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php
                                 $count = 1;
-                                $grand_total_cost = 0;
-                                $grand_total_sale = 0;
-                                $grand_expected_profit = 0;
-
-                                foreach ($items as $item) :
-                                    $stock_total = $item->cost_price * $item->total_quantity;
-                                    $sale_total = $item->sale_price * $item->total_quantity;
-                                    $expected_profit = $sale_total - $stock_total;
-
-                                    $grand_total_cost += $stock_total;
-                                    $grand_total_sale += $sale_total;
-                                    $grand_expected_profit += $expected_profit;
-                                ?>
+                                foreach ($items as $item) : ?>
                                     <tr>
-                                        <td><?= $count++; ?></td>
-                                        <td><?= $item->name; ?></td>
-                                        <td><?= $item->category; ?></td>
-                                        <td><?= $item->unit; ?></td>
-                                        <td><?= $item->item_code_no; ?></td>
-                                        <td><span id="costPrice_<?= $item->item_id; ?>"><?= $item->cost_price; ?></span></td>
-                                        <td><span id="unitPrice_<?= $item->item_id; ?>"><?= $item->unit_price; ?></span></td>
-                                        <td>
-                                            <?php
-                                            if ($item->cost_price > 0) {
-                                                echo round((($item->unit_price - $item->cost_price) * 100 / $item->cost_price), 1);
-                                            }
-                                            ?>
+                                        <td><?php echo $count++; ?></td>
+                                        <td> <?php echo $item->name; ?> </td>
+                                        <td> <?php echo $item->category; ?> </td>
+                                        <!-- <td> <?php echo $item->unit; ?> </td> -->
+                                        <td> <?php echo $item->item_code_no; ?> </td>
+                                        <!-- <td> <?php echo $item->description; ?> </td> -->
+                                        <td> <span id="costPrice_<?php echo $item->item_id; ?>"><?php echo $item->cost_price; ?></span>
+                                            <!-- <br />
+                                        <input style="width: 60px;" value="<?php echo $item->cost_price; ?>" name="cost_price" id="cost_price_<?php echo $item->item_id; ?>" onkeyup="update_item_cost_price('<?php echo $item->item_id; ?>')" />
+                                    </td> -->
+                                        <td> <span id="unitPrice_<?php echo $item->item_id; ?>"><?php echo $item->unit_price; ?></span>
+                                            <!-- <br /><input style="width: 60px;" value="<?php echo $item->unit_price; ?>" name="unit_price" id="unit_price_<?php echo $item->item_id; ?>" onkeyup="update_item_unit_price('<?php echo $item->item_id; ?>')" /> -->
+
+                                            </span>
                                         </td>
-                                        <td><?= $item->discount; ?></td>
-                                        <td><?= $item->sale_price; ?></td>
-                                        <td><?= $item->total_quantity; ?></td>
-                                        <td><?= $stock_total; ?></td>
-                                        <td><?= $sale_total; ?></td>
-                                        <td><?= $expected_profit; ?></td>
-                                        <td>
-                                            <?= status($item->status, $this->lang); ?>
+                                        <?php //if ($this->session->userdata("role_id") == 1) { 
+                                        ?>
+                                        <td> <?php
+                                                if ($item->cost_price > 0) {
+                                                    echo @round((($item->unit_price - $item->cost_price) * 100 / $item->cost_price), 1);
+                                                }
+                                                ?> </td>
+                                        <?php //} 
+                                        ?>
+                                        <td> <?php echo $item->discount; ?> </td>
+                                        <td> <?php echo $item->sale_price; ?> </td>
+                                        <td><?php echo $item->total_quantity ?></td>
+                                        <!-- <td title="<?php echo $item->expiry_date; ?>"> <?php
+                                                                                            if ($item->total_quantity > 0) {
+                                                                                                $current_date = new DateTime('today');  //current date or any date
+                                                                                                $expiry_date = new DateTime($item->expiry_date);   //Future date
+                                                                                                $diff = $expiry_date->diff($current_date)->format("%a");  //find difference
+                                                                                                $days = intval($diff);   //rounding days
+                                                                                                echo $days . " - days";
+                                                                                                // 
+                                                                                            } ?> </td> -->
+                                        <!-- <td> <?php echo $item->reorder_level; ?> </td> -->
+                                        <!-- <td> <?php echo $item->location; ?> </td> -->
+                                        <td> <?php echo status($item->status,  $this->lang); ?>
                                             <?php
-                                            $page = $this->uri->segment(4) ?: 0;
+
+                                            //set uri segment
+                                            if (!$this->uri->segment(4)) {
+                                                $page = 0;
+                                            } else {
+                                                $page = $this->uri->segment(4);
+                                            }
+
                                             if ($item->status == 0) {
-                                                echo "<a href='" . site_url("items/publish/{$item->item_id}/{$page}") . "'> &nbsp;" . $this->lang->line('Publish') . "</a>";
+                                                echo "<a href='" . site_url("items/publish/" . $item->item_id . "/" . $page) . "'> &nbsp;" . $this->lang->line('Publish') . "</a>";
                                             } elseif ($item->status == 1) {
-                                                echo "<a href='" . site_url("items/draft/{$item->item_id}/{$page}") . "'> &nbsp;" . $this->lang->line('Draft') . "</a>";
+                                                echo "<a href='" . site_url("items/draft/" . $item->item_id . "/" . $page) . "'> &nbsp;" . $this->lang->line('Draft') . "</a>";
                                             }
-                                            ?>
-                                        </td>
+                                            ?> </td>
                                         <td>
-                                            <button class="btn btn-success btn-xs" onclick="get_item_form('<?= $item->item_id ?>')">Edit</button>
-                                            <a class="llink llink-trash" href="<?= site_url("items/trash/{$item->item_id}/" . $this->uri->segment(4)); ?>"><i class="fa fa-trash-o"></i></a>
+
+                                            <button class="btn btn-success btn-xs" onclick="get_item_form('<?php echo $item->item_id ?>')">Edit</button>
+
+                                            <!-- <a class="llink llink-view" href="<?php echo site_url("items/view_item/" . $item->item_id . "/" . $this->uri->segment(4)); ?>"><i class="fa fa-eye"></i> </a> -->
+                                            <!-- <a class="llink llink-edit" href="<?php echo site_url("items/edit/" . $item->item_id . "/" . $this->uri->segment(4)); ?>"><i class="fa fa-pencil-square-o"></i></a> -->
+                                            <a class="llink llink-trash" href="<?php echo site_url("items/trash/" . $item->item_id . "/" . $this->uri->segment(4)); ?>"><i class="fa fa-trash-o"></i></a>
                                         </td>
-                                        <td>
-                                            <a onclick="get_item_detail('<?= $item->item_id; ?>')" href="#" data-toggle="modal" data-target="#exampleModal">
+                                        <td><a onclick="get_item_detail('<?php echo $item->item_id; ?>')" href="#" data-toggle="modal" data-target="#exampleModal">
                                                 Inventory
-                                            </a>
-                                        </td>
+                                            </a></td>
                                     </tr>
                                 <?php endforeach; ?>
                             </tbody>
-                            <tfoot>
-                                <tr>
-                                    <th colspan="11" style="text-align:right">Grand Totals:</th>
-                                    <th><?= number_format($grand_total_cost, 2); ?></th>
-                                    <th><?= number_format($grand_total_sale, 2); ?></th>
-                                    <th><?= number_format($grand_expected_profit, 2); ?></th>
-                                    <th colspan="3"></th>
-                                </tr>
-                            </tfoot>
                         </table>
 
 
@@ -401,17 +408,8 @@
 <script>
     $(document).ready(function() {
         $('#item_table').DataTable({
-            paging: false,
-            lengthChange: false,
-            dom: 'Bfrtip',
-            buttons: [{
-                extend: 'excelHtml5',
-                text: 'Export to Excel',
-                title: 'Item Report',
-                exportOptions: {
-                    columns: ':not(:last-child):not(:nth-last-child(2))' // exclude last 2 columns (Action, Inventory)
-                }
-            }]
+            "paging": false,
+            "lengthChange": false,
         });
     });
 </script>
