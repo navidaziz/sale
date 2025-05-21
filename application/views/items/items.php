@@ -282,6 +282,7 @@
                                     <th>Bar Code</th>
                                     <th>Cost Price</th>
                                     <th>Unit Price</th>
+                                    <th>Profit</th>
                                     <th>Profit %</th>
                                     <th>Discount</th>
                                     <th>Sale Price (Unit)</th>
@@ -318,6 +319,13 @@
                                         <td><?= $item->item_code_no; ?></td>
                                         <td><span id="costPrice_<?= $item->item_id; ?>"><?= $item->cost_price; ?></span></td>
                                         <td><span id="unitPrice_<?= $item->item_id; ?>"><?= $item->unit_price; ?></span></td>
+                                        <td>
+                                            <?php
+                                            if ($item->cost_price > 0) {
+                                                echo ($item->unit_price - $item->cost_price);
+                                            }
+                                            ?>
+                                        </td>
                                         <td>
                                             <?php
                                             if ($item->cost_price > 0) {
