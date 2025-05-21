@@ -321,7 +321,7 @@
                                         <td>
                                             <?php
                                             if ($item->cost_price > 0) {
-                                                echo round((($item->unit_price - $item->cost_price) * 100 / $item->cost_price), 1);
+                                                echo round((($item->unit_price - $item->cost_price) * 100 / $item->cost_price), 1) . "%";
                                             }
                                             ?>
                                         </td>
