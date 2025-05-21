@@ -648,7 +648,6 @@ class Suppliers extends Admin_Controller
             $this->db->where('business_id', $business_id);
             $item_price['cost_price'] = $input['item_cost_price'];
             $item_price['unit_price'] = $input['item_unit_price'];
-            $this->db->update('items', $item_price);
             if ($this->db->update('items', $item_price)) {
                 echo 'success';
             } else {
