@@ -698,4 +698,75 @@ class Suppliers extends Admin_Controller
         $this->data['supplier_invoice_id'] = (int) $this->input->post('supplier_invoice_id');
         $this->load->view("suppliers/add_stock_form", $this->data);
     }
+    public function get_supplier_payment_form()
+    {
+        $supplier_id = (int) $this->input->post("supplier_id");
+        $payment_id = (int) $this->input->post("payment_id");
+        if ($payment_id == 0) {
+
+            $input = $this->get_payment_inputs();
+        } else {
+            $query = "SELECT * FROM 
+            supplier_payments 
+            WHERE payment_id = $payment_id";
+            $input = $this->db->query($query)->row();
+        }
+
+        $this->data["input"] = $input;
+        $this->load->view("suppliers/get_supplier_payment_form", $this->data);
+    }
+
+    public function add_supplier_payment()
+    {
+        $this->form_validation->set_rules("business_id", "Business Id", "required");
+        $this->form_validation->set_rules("supplier_id", "Supplier Id", "required");
+        $this->form_validation->set_rules("payment_date", "Payment Date", "required");
+        $this->form_validation->set_rules("payment_mode", "Payment Mode", "required");
+        $this->form_validation->set_rules("amount", "Amount", "required");
+        $this->form_validation->set_rules("reference_no", "Reference No", "required");
+        $this->form_validation->set_rules("remarks", "Remarks", "required");
+        //$this->form_validation->set_rules("created_at", "Created At", "required");
+
+        if ($this->form_validation->run() == FALSE) {
+            echo '<div class="alert alert-danger">' . validation_errors() . "</div>";
+            exit();
+        } else {
+            $inputs = $this->get_payment_inputs();
+            $inputs->created_by = $this->session->userdata("user_id");
+            $payment_id = (int) $this->input->post("payment_id");
+            if ($payment_id == 0) {
+                $this->db->insert("supplier_payments", $inputs);
+            } else {
+                $this->db->where("payment_id", $payment_id);
+                $inputs->last_updated = date('Y-m-d H:i:s');
+                $this->db->update("supplier_payments", $inputs);
+            }
+            echo "success";
+        }
+    }
+    private function get_payment_inputs()
+    {
+        $input["payment_id"] = $this->input->post("payment_id");
+        $input["business_id"] = $this->session->userdata("business_id");
+        $input["supplier_id"] = $this->input->post("supplier_id");
+        $input["payment_date"] = $this->input->post("payment_date");
+        $input["payment_mode"] = $this->input->post("payment_mode");
+        $input["amount"] = $this->input->post("amount");
+        $input["reference_no"] = $this->input->post("reference_no");
+        $input["remarks"] = $this->input->post("remarks");
+        $input["created_at"] = $this->input->post("created_at");
+        $inputs =  (object) $input;
+        return $inputs;
+    }
+
+    public function delete_supplier_payment($payment_id)
+    {
+        $payment_id = (int) $payment_id;
+        $business_id = $this->session->userdata("business_id");
+        $this->db->where("payment_id", $payment_id);
+        $this->db->where("business_id", $business_id);
+        $this->db->delete("supplier_payments");
+        $requested_url = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : base_url();
+        redirect($requested_url);
+    }
 }

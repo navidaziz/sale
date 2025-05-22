@@ -44,21 +44,22 @@
 <!-- PAGE MAIN CONTENT -->
 <div class="row">
 	<!-- MESSENGER -->
-	<div class="col-md-12">
+	<div class="col-md-7">
 		<div class="box border blue" id="messenger">
 			<div class="box-title">
-				<h4><i class="fa fa-file"></i> Invoices</h4>
+				<h4><i class="fa fa-file"></i> Stock Invoices</h4>
 			</div>
 			<div class="box-body">
 
 				<div class="table-responsive">
 
 
-					<hr />
+
 
 					<strong>Stock In Invoices and Return Receipt List</strong>
-					</h4>
-					<table class="table">
+					<hr />
+
+					<table class="table table-bordered table-striped table_small">
 						<thead>
 							<tr>
 								<th>#</th>
@@ -77,7 +78,7 @@
 							foreach ($supplier_invoices as $count => $si): ?>
 								<tr>
 									<td><?= $count + 1 ?></td>
-									<td><?= ($si->return_receipt == 0) ? 'Return Receipt' : 'Stock In Invoice' ?></td>
+									<td><?= ($si->return_receipt == 0) ? 'Return' : 'Stock-In' ?></td>
 									<td><?= $si->supplier_invoice_number ?></td>
 									<td><?= date('M d, Y', strtotime($si->invoice_date)) ?></td>
 									<td><?= $si->total_items ?></td>
@@ -92,7 +93,7 @@
 											<span class="fa fa-print"></span> Print
 										</a>
 										<a class="btn btn-warning btn-xs" href="<?= site_url("suppliers/print_supplier_receipt/{$si->supplier_id}/{$si->supplier_invoice_id}") ?>" target="_blank">
-											<span class="fa fa-print"></span> Supplier Receipt Print
+											<span class="fa fa-print"></span> Supplier Receipt
 										</a>
 									</td>
 								</tr>
@@ -183,5 +184,86 @@
 		</div>
 	</div>
 
+	<div class="col-md-5">
+		<div class="box border blue" id="messenger">
+			<div class="box-title">
+				<h4><i class="fa fa-file"></i> Payment Detail</h4>
+			</div>
+			<div class="box-body">
+
+				<div class="table-responsive">
+
+
+
+
+					<strong>List of payments</strong>
+					<hr />
+
+					<div class="table-responsive">
+						<table class="table table-bordered table_striped table_small" id="supplier_payments">
+							<thead>
+								<tr>
+									<th></th>
+									<th>#</th>
+									<th>Payment Date</th>
+									<th>Payment Mode</th>
+									<th>Amount</th>
+									<th>Reference No</th>
+									<th>Remarks</th>
+									<th>Action</th>
+								</tr>
+							</thead>
+							<tbody>
+								<?php
+								$count = 1;
+								$business_id = $this->session->userdata("business_id");
+								$query = "SELECT * FROM supplier_payments 
+								WHERE business_id = ?
+								AND supplier_id  = ?
+								
+								";
+								$rows = $this->db->query($query, [$business_id, $suppliers[0]->supplier_id])->result();
+								foreach ($rows as $row) { ?>
+									<tr>
+										<td><a href="<?php echo site_url('suppliers/delete_supplier_payment/' . $row->payment_id); ?>" onclick="return confirm('Are you sure? you want to delete the record.')">Delete</a> </td>
+										<td><?php echo $count++ ?></td>
+										<td><?php echo $row->payment_date; ?></td>
+										<td><?php echo $row->payment_mode; ?></td>
+										<td><?php echo $row->amount; ?></td>
+										<td><?php echo $row->reference_no; ?></td>
+										<td><?php echo $row->remarks; ?></td>
+
+										<td><button onclick="get_supplier_payment_form('<?php echo $row->payment_id; ?>')">Edit<botton>
+										</td>
+									</tr>
+								<?php } ?>
+							</tbody>
+						</table>
+						<div style="text-align: center;">
+							<button onclick="get_supplier_payment_form('0')" class="btn btn-primary btn-xs">Add Payment</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script>
+		function get_supplier_payment_form(payment_id) {
+			$.ajax({
+					method: "POST",
+					url: "<?php echo site_url('suppliers/get_supplier_payment_form'); ?>",
+					data: {
+						payment_id: payment_id,
+						supplier_id: <?php echo $suppliers[0]->supplier_id; ?>
+					},
+				})
+				.done(function(respose) {
+					$('#modal').modal('show');
+					$('#modal_title').html('Supplier Payments');
+					$('#modal_body').html(respose);
+				});
+		}
+	</script>
+</div>
 
 </div>
