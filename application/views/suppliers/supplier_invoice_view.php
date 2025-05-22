@@ -92,6 +92,7 @@
 				</div>
 
 				<div class="col-md-6">
+
 					<button onclick="add_stock_form()" class="btn btn-success">Add Item Inventory</button>
 					<script>
 						function add_stock_form() {
@@ -108,6 +109,7 @@
 									$('#modal').modal('show');
 									$('#modal_title').html('Items Inventory');
 									$('#modal_body').html(respose);
+									$('.item_list').select2();
 								});
 						}
 					</script>
@@ -188,7 +190,7 @@
 					<?php if ($suppliers_invoices->supplier_invoice_id != 1) { ?>
 						<form method="post" action="<?php echo  site_url("suppliers/add_item_stocks") ?>">
 							<!-- Stock In: <input type="radio" value="stock_in" name="traction_type" onclick="stock_in()" checked="checked" />
-						Stock Return: <input type="radio" value="stock_return" onclick="stock_return()" name="traction_type" />-->
+							Stock Return: <input type="radio" value="stock_return" onclick="stock_return()" name="traction_type" />-->
 							<table class="table table-bordered table2" style="line-height: 0.5px; display:no ne" id="stock_in">
 								<input type="hidden" value="<?php echo  $suppliers[0]->supplier_id; ?>" name="supplier_id" />
 								<input type="hidden" value="<?php echo  $suppliers_invoices->supplier_invoice_id; ?>" name="supplier_invoice_id" />
@@ -199,10 +201,13 @@
 										<?php
 										echo form_dropdown("item_id", array("" => "Seelect Item") + $items, "", "id = \"item_id1\" class=\"js-example-basic-single\" onchange=\"get_item_prices('item_id1')\" required style=\"width:150px\"");
 										?>
-
 										<div style="text-align: center;">
-											<button onclick="get_item_form('0')" class="btn btn-primary btn-xs">Add New Item</button>
+											<div style="text-align: center; margin:10px">
+												<button onclick="get_item_form('0')" class="btn btn-primary btn-xs">Add New Item</button>
+											</div>
 										</div>
+
+
 										<script>
 											function get_item_form(item_id) {
 												$.ajax({
@@ -220,22 +225,39 @@
 											}
 										</script>
 									</td>
-									<!-- <td>
-										<strong>Batch Number</strong>
-										<input style="width: 80px;" type="text" name="batch_number" value="" id="batch_number" class="form - control" required="" title="Batch Number" placeholder="Batch Number">
-									</td> -->
 									<td>
-										<strong>Cost Price</strong>
-										<input type="number" step="any" id="cost_price1" name="cost_price" value="" id="cost_price" class="form - control" required="required" title="Cost Price" placeholder="Cost Price">
+										<strong>New Stock (Quantity)</strong><br />
+										<input type="number" name="transaction" value="" id="transaction" class="form-control" title="New Stock" placeholder="New Stock">
 									</td>
+
 									<td>
-										<strong>Unit Price</strong>
-										<input step="any" type="number" name="unit_price" value="" id="unit_price1" class="for m-control" title="Unit Price" placeholder="Unit Price">
+										<strong>Total Price</strong><br />
+										<input onkeyup="calculate_cost_price()" type="number" name="total_price" value="" id="total_price" class="form-control" title="Total Price" placeholder="Total Price">
 									</td>
+
 									<td>
-										<strong>New Stock (Quantity)</strong>
-										<input type="number" name="transaction" value="" id="transaction" class="form - control" title="Unit" placeholder="New Stock">
+										<strong>Cost Price</strong><br />
+										<input type="number" step="any" id="cost_price" name="cost_price" value="" class="form-control" required title="Cost Price" placeholder="Cost Price">
 									</td>
+
+									<td>
+										<strong>Unit Price</strong><br />
+										<input step="any" type="number" name="unit_price" value="" id="unit_price1" class="form-control" title="Unit Price" placeholder="Unit Price">
+									</td>
+
+									<script>
+										function calculate_cost_price() {
+											var transaction = parseFloat($('#transaction').val());
+											var total_price = parseFloat($('#total_price').val());
+
+											if (!isNaN(transaction) && transaction > 0 && !isNaN(total_price)) {
+												var cost_price = total_price / transaction;
+												$('#cost_price').val(cost_price.toFixed(2)); // rounded to 2 decimals
+											}
+										}
+									</script>
+
+
 									<!-- <td>
 										<strong>Date</strong>
 										<input style="width: 130px;" type="date" name="date" value="" id="date" class="form - control" title="date" placeholder="date" />

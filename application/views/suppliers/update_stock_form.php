@@ -1,6 +1,6 @@
  <form id="inventory_items" class="form-horizontal" enctype="multipart/form-data" method="post">
-     <input type="hidden" name="inventory_id" value="<?php echo $inventory->inventory_id; ?>" />
-     <input type="hidden" name="item_id" value="<?php echo $inventory->item_id; ?>" />
+     <input type="text" name="inventory_id" value="<?php echo $inventory->inventory_id; ?>" />
+     <input type="text" name="item_id" value="<?php echo $inventory->item_id; ?>" />
 
      <div class="form-group row">
          <label for="name" class="col-sm-4 col-form-label">Item Name</label>

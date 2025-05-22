@@ -124,6 +124,7 @@ class Suppliers extends Admin_Controller
 
         //update item enventory after first time add 
         $query = "INSERT INTO `inventory`(`item_id`, 
+                                        `business_id`,  
                                           `supplier_id`,
                                           `supplier_invoice_id`, 
                                           `batch_number`, 
@@ -132,7 +133,8 @@ class Suppliers extends Admin_Controller
                                           `transaction_type`, 
                                           `inventory_transaction`,
                                           `expiry_date`,`created_by`) 
-                            VALUES ('" . $item_id . "', 
+                            VALUES ('" . $item_id . "',
+                                    '" . $this->session->userdata("business_id") . "', 
                                     '" . $supplier_id . "', 
                                     '" . $supplier_invoice_id . "', 
                                     '" . $batch_number . "', 
@@ -223,21 +225,24 @@ class Suppliers extends Admin_Controller
 
     public function supplier_invoice_view($supplier_id, $supplier_invoice_id)
     {
+        $business_id = $this->session->userdata("business_id");
         $supplier_id = (int) $supplier_id;
         $supplier_invoice_id = (int) $supplier_invoice_id;
         $query = "SELECT * FROM `suppliers_invoices` 
-                  WHERE `supplier_invoice_id` = '" . $supplier_invoice_id . "'";
+                  WHERE `supplier_invoice_id` = '" . $supplier_invoice_id . "'
+                  AND `business_id` = '" . $business_id . "'";
         $this->data["suppliers_invoices"] = $this->db->query($query)->result()[0];
 
         $this->data["items"] = $this->supplier_model->getList("items", "item_id", "name", "`items`.`status` IN (1) and `items`.`business_id` = '" . $this->session->userdata("business_id") . "'");
 
-        $this->data["suppliers"] = $this->supplier_model->get_supplier($supplier_id);
+        $this->data["suppliers"] = $this->supplier_model->get_supplier($supplier_id, $where = array("suppliers.business_id" => $business_id));
         $this->data["title"] = $this->data["suppliers"][0]->supplier_name;
         $this->data["detail"] = "Mobile No: " . $this->data["suppliers"][0]->supplier_contact_no . " - Account No:" . $this->data["suppliers"][0]->account_number;
         $query = "SELECT inventory.*, items.name, users.userTitle FROM inventory, items, users 
                   WHERE inventory.item_id = items.item_id
                   AND inventory.created_by = users.user_id
-                  AND `supplier_invoice_id` = '" . $supplier_invoice_id . "'";
+                  AND `supplier_invoice_id` = '" . $supplier_invoice_id . "'
+                  AND inventory.business_id = '" . $business_id . "'";
         $this->data['inventories'] = $this->db->query($query)->result();
         $this->data["view"] = "suppliers/supplier_invoice_view";
         $this->load->view("layout", $this->data);
@@ -639,11 +644,14 @@ class Suppliers extends Admin_Controller
         $input['inventory_transaction'] = $this->input->post("inventory_transaction");
         $item_id = $this->input->post("item_id");
         $business_id = $this->session->userdata("business_id");
-        $this->db->where('inventory_id', $inventory_id);
-        $this->db->where('business_id', $business_id);
-        $this->db->where('item_id', $item_id);;  // fixed table name
+        $query = "Update inventory SET item_unit_price = '" . $input['item_unit_price'] . "',
+        item_cost_price = '" . $input['item_cost_price'] . "',
+        inventory_transaction = '" . $input['inventory_transaction'] . "'
+        WHERE inventory_id = '" . $inventory_id . "' 
+        AND business_id = '" . $business_id . "' 
+        AND item_id = '" . $item_id . "'";
+        if ($this->db->query($query)) {
 
-        if ($this->db->update('inventory', $input)) {
             $this->db->where('item_id', $item_id);
             $this->db->where('business_id', $business_id);
             $item_price['cost_price'] = $input['item_cost_price'];
@@ -661,6 +669,7 @@ class Suppliers extends Admin_Controller
     public function add_stock_form()
     {
         $this->data["title"] = 'Add Inventory Stock';
+        $this->data["items"] = $this->supplier_model->getList("items", "item_id", "name", "`items`.`status` IN (1) and `items`.`business_id` = '" . $this->session->userdata("business_id") . "'");
 
         $this->data['supplier_id'] = (int) $this->input->post('supplier_id');
         $this->data['supplier_invoice_id'] = (int) $this->input->post('supplier_invoice_id');
