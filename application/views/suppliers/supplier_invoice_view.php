@@ -93,7 +93,7 @@
 
 				<div class="col-md-6">
 
-					<button onclick="add_stock_form()" class="btn btn-success">Add Item Inventory</button>
+					<!-- <button onclick="add_stock_form()" class="btn btn-success">Add Item Inventory</button> -->
 					<script>
 						function add_stock_form() {
 							$.ajax({

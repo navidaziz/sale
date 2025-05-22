@@ -86,10 +86,13 @@
 										<?php if ($si->return_receipt == 0) { ?>
 											<a class="btn btn-danger btn-xs" href="<?= site_url("suppliers/supplier_return_view/{$si->supplier_id}/{$si->supplier_invoice_id}") ?>"><i class="fa fa-undo" style="font-size: 9px;" aria-hidden="true"></i> Return Detail</a>
 										<?php } else { ?>
-											<a class="btn btn-success btn-xs" href="<?= site_url("suppliers/supplier_invoice_view/{$si->supplier_id}/{$si->supplier_invoice_id}") ?>"><i class="fa fa-plus" style="font-size: 9px;" aria-hidden="true"></i> Invoice Detail</a>
+											<a class="btn btn-success btn-xs" href="<?= site_url("suppliers/supplier_invoice_view/{$si->supplier_id}/{$si->supplier_invoice_id}") ?>"><i class="fa fa-eye" style="font-size: 9px;" aria-hidden="true"></i> Invoice Detail</a>
 										<?php } ?>
 										<a class="btn btn-warning btn-xs" href="<?= site_url("suppliers/print_supplier_item_lists/{$si->supplier_id}/{$si->supplier_invoice_id}") ?>" target="_blank">
 											<span class="fa fa-print"></span> Print
+										</a>
+										<a class="btn btn-warning btn-xs" href="<?= site_url("suppliers/print_supplier_receipt/{$si->supplier_id}/{$si->supplier_invoice_id}") ?>" target="_blank">
+											<span class="fa fa-print"></span> Supplier Receipt Print
 										</a>
 									</td>
 								</tr>

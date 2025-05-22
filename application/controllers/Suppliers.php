@@ -313,6 +313,29 @@ class Suppliers extends Admin_Controller
         //$this->data["view"] = "suppliers/print_supplier_return_item_lists";
         $this->load->view("suppliers/print_supplier_item_lists", $this->data);
     }
+    public function print_supplier_receipt($supplier_id, $supplier_invoice_id)
+    {
+        $this->data['supplier_id'] =  $supplier_id = (int) $supplier_id;
+        $this->data['supplier_invoice_id'] = $supplier_invoice_id = (int) $supplier_invoice_id;
+        $query = "SELECT * FROM `suppliers_invoices` 
+                  WHERE `supplier_invoice_id` = '" . $supplier_invoice_id . "'";
+        $this->data["suppliers_invoices"] = $this->db->query($query)->result()[0];
+
+        $this->data["items"] = $this->supplier_model->getList("items", "item_id", "name", "`items`.`status` IN (1)");
+
+        $this->data["suppliers"] = $this->supplier_model->get_supplier($supplier_id);
+        $this->data["title"] = $this->data["suppliers"][0]->supplier_name;
+        $business_id = $this->session->userdata("business_id");
+        $this->data["detail"] = "Mobile No: " . $this->data["suppliers"][0]->supplier_contact_no . " - Account No:" . $this->data["suppliers"][0]->account_number;
+        $query = "SELECT inventory.*, items.name, items.category, users.userTitle FROM inventory, items, users 
+                  WHERE inventory.item_id = items.item_id
+                  AND inventory.created_by = users.user_id
+                  AND `supplier_invoice_id` = '" . $supplier_invoice_id . "'
+                  AND inventory.business_id = '" . $business_id . "'";
+        $this->data['inventories'] = $this->db->query($query)->result();
+        //$this->data["view"] = "suppliers/print_supplier_return_item_lists";
+        $this->load->view("suppliers/print_supplier_receipt", $this->data);
+    }
 
     public function print_supplier_invoices($supplier_id)
     {
