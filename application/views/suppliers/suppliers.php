@@ -124,6 +124,7 @@
                                     <th><?php echo $this->lang->line('supplier_name'); ?></th>
                                     <th><?php echo $this->lang->line('supplier_contact_no'); ?></th>
                                     <th><?php echo $this->lang->line('company_name'); ?></th>
+                                    <th>Liabilities</th>
                                     <th><?php echo $this->lang->line('account_number'); ?></th>
                                     <th>Total Amount</th>
                                     <th>Print Invoices</th>
@@ -145,6 +146,9 @@
                                         </td>
                                         <td>
                                             <?php echo $supplier->company_name; ?>
+                                        </td>
+                                        <td>
+                                            <?php echo $supplier->liabilities; ?>
                                         </td>
                                         <td>
                                             <?php echo $supplier->account_number; ?>

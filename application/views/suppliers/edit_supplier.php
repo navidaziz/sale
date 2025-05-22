@@ -198,6 +198,38 @@
 
                 </div>
 
+                <div class="form-group">
+
+                    <?php
+                    $label = array(
+                        "class" => "col-md-2 control-label",
+                        "style" => "",
+                    );
+                    echo form_label('Liabilities', "liabilities", $label);      ?>
+
+                    <div class="col-md-8">
+                        <?php
+
+                        $text = array(
+                            "type"          =>  "text",
+                            "name"          =>  "liabilities",
+                            "id"            =>  "liabilities",
+                            "class"         =>  "form-control",
+                            "style"         =>  "",
+                            "required"      => "required",
+                            "title"         =>  'Liabilities',
+                            "value"         =>  set_value("liabilities", $supplier->liabilities),
+                            "placeholder"   =>  'Liabilities'
+                        );
+                        echo  form_input($text);
+                        ?>
+                        <?php echo form_error("liabilities", "<p class=\"text-danger\">", "</p>"); ?>
+                    </div>
+
+
+
+                </div>
+
                 <div class="col-md-offset-2 col-md-10">
                     <?php
                     $submit = array(

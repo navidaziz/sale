@@ -51,7 +51,7 @@ class Supplier_model extends MY_Model
 	{
 		$inputs = array();
 		$inputs["business_id"] = $this->session->userdata("business_id");
-
+		$inputs["liabilities"]  =  $this->input->post("liabilities");
 		$inputs["supplier_name"]  =  $this->input->post("supplier_name");
 
 		$inputs["supplier_contact_no"]  =  $this->input->post("supplier_contact_no");
@@ -67,6 +67,8 @@ class Supplier_model extends MY_Model
 	{
 		$inputs = array();
 
+
+		$inputs["liabilities"]  =  $this->input->post("liabilities");
 		$inputs["supplier_name"]  =  $this->input->post("supplier_name");
 
 		$inputs["supplier_contact_no"]  =  $this->input->post("supplier_contact_no");
