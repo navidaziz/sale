@@ -191,7 +191,7 @@
 						<td><?php echo $inventory->category; ?></td>
 						<td class=" text-right"><?php echo number_format($quantity, 2); ?></td>
 						<td class="text-right"><?php echo number_format($cost_price, 2); ?></td>
-						<td class="text-right"><?php echo number_format($cost_total * $quantity, 2); ?></td>
+						<td class="text-right"><?php echo number_format($cost_price * $quantity, 2); ?></td>
 						<td></td>
 					</tr>
 				<?php endforeach; ?>
