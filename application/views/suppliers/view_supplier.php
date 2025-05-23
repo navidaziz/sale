@@ -97,7 +97,7 @@
 								<th>Transport Cost</th>
 								<th>Total Items</th>
 								<th>Total Amount</th>
-								<th>Action</th>
+								<th style="width: 35%;">Action</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -108,11 +108,11 @@
 								<tr>
 									<td>
 										<?php if ($si->total_items == 0) { ?>
-											<a href="<?php echo site_url('suppliers/delete_suppliers_invoice/' . $si->supplier_invoice_id); ?>" onclick="return confirm('Are you sure? you want to delete the record.')">Delete</a>
+											<a href="<?php echo site_url('suppliers/delete_suppliers_invoice/' . $si->supplier_invoice_id); ?>" onclick="return confirm('Are you sure? you want to delete the record.')"><i class="fa fa-trash" aria-hidden="true"></i></a>
 									</td>
 								<?php } ?>
 								<td><?= $count + 1 ?></td>
-								<td><?= ($si->return_receipt == 0) ? 'Return' : 'Stock-In' ?></td>
+								<td><?= ($si->return_receipt == 0) ? 'Return' : 'StockIn' ?></td>
 								<td><?= $si->supplier_invoice_number ?></td>
 								<td><?= date('M d, Y', strtotime($si->invoice_date)) ?></td>
 								<td><?php echo $si->transport_cost; ?></td>
