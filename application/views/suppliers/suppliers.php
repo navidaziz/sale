@@ -25,10 +25,37 @@
                     </div>
 
                     <div class="col-md-6">
-                        <div class="pull-right">
+                        <!-- <div class="pull-right">
                             <a class="btn btn-primary btn-sm" href="<?php echo site_url("suppliers/add"); ?>"><i class="fa fa-plus"></i> <?php echo $this->lang->line('New'); ?></a>
                             <a class="btn btn-danger btn-sm" href="<?php echo site_url("suppliers/trashed"); ?>"><i class="fa fa-trash-o"></i> <?php echo $this->lang->line('Trash'); ?></a>
-                        </div>
+                        </div> -->
+                        <?php
+                        $query = "SELECT SUM(item_cost_price*inventory_transaction) as `amount` 
+						FROM `inventory`
+						WHERE `business_id` = ?";
+                        $purchased = $this->db->query($query, [$this->session->userdata("business_id")])->row();
+                        $query = "SELECT SUM(amount) as `amount` 
+						FROM `supplier_payments`
+						WHERE `business_id` = ?";
+                        $paid = $this->db->query($query, [$this->session->userdata("business_id")])->row();
+
+
+                        ?>
+                        <table class="table table-bordered table-striped">
+                            <tr>
+                                <th>Liabilities</th>
+                                <th>Purchased Amount</th>
+                                <th>Amount Paid</th>
+                                <th>Remaining</th>
+                            </tr>
+                            <tr>
+                                <td><?php echo number_format($supplier->liabilities, 2); ?></td>
+                                <td><?php echo number_format($purchased->amount, 2); ?></td>
+                                <td><?php echo number_format($paid->amount, 2); ?></td>
+                                <td><?php echo number_format((($supplier->liabilities + $purchased->amount) - $paid->amount), 2); ?></td>
+
+                        </table>
+
                     </div>
 
                 </div>
@@ -117,94 +144,143 @@
 
 
                     <?php } else { ?>
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr>
 
-                                    <th><?php echo $this->lang->line('supplier_name'); ?></th>
-                                    <th><?php echo $this->lang->line('supplier_contact_no'); ?></th>
-                                    <th><?php echo $this->lang->line('company_name'); ?></th>
-                                    <th>Liabilities</th>
-                                    <th><?php echo $this->lang->line('account_number'); ?></th>
-                                    <th>Total Amount</th>
-                                    <th>Print Invoices</th>
-                                    <th><?php echo $this->lang->line('Status'); ?></th>
-                                    <th><?php echo $this->lang->line('Action'); ?></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php foreach ($suppliers as $supplier) : ?>
+                        <div class="col-md-12">
 
+
+
+                            <table class="table table-bordered table-striped" style="width: 100%;" id="sample-table-1">
+                                <thead>
                                     <tr>
-
-
-                                        <td>
-                                            <?php echo $supplier->supplier_name; ?>
-                                        </td>
-                                        <td>
-                                            <?php echo $supplier->supplier_contact_no; ?>
-                                        </td>
-                                        <td>
-                                            <?php echo $supplier->company_name; ?>
-                                        </td>
-                                        <td>
-                                            <?php echo $supplier->liabilities; ?>
-                                        </td>
-                                        <td>
-                                            <?php echo $supplier->account_number; ?>
-                                        </td>
-                                        <td><?php
-                                            $query = "SELECT  ROUND(SUM( `inventory`.`item_cost_price`*`inventory`.`inventory_transaction`),2) AS total 
-									        FROM   `inventory` WHERE `inventory`.`supplier_id`='" . $supplier->supplier_id . "';";
-                                            $total_amount = $this->db->query($query)->result()[0]->total;
-                                            echo $total_amount; ?> </td>
-                                        <td><a href="<?php echo site_url("suppliers/print_supplier_invoices/" . $supplier->supplier_id); ?>" target="_new">
-                                                <span class="fa fa-print"></span>
-                                                Print </a>
-                                        </td>
-                                        <td>
-                                            <?php if ($supplier->supplier_name != 'Opening Stock') {  ?>
-                                                <?php echo status($supplier->status,  $this->lang); ?>
-                                                <?php
-
-                                                //set uri segment
-                                                if (!$this->uri->segment(4)) {
-                                                    $page = 0;
-                                                } else {
-                                                    $page = $this->uri->segment(4);
-                                                }
-
-                                                if ($supplier->status == 0) {
-                                                    echo "<a href='" . site_url("suppliers/publish/" . $supplier->supplier_id . "/" . $page) . "'> &nbsp;" . $this->lang->line('Publish') . "</a>";
-                                                } elseif ($supplier->status == 1) {
-                                                    echo "<a href='" . site_url("suppliers/draft/" . $supplier->supplier_id . "/" . $page) . "'> &nbsp;" . $this->lang->line('Draft') . "</a>";
-                                                }
-                                                ?>
-                                            <?php } ?>
-                                        </td>
-
-                                        <td>
-                                            <a class="llink llink-view" href="<?php echo site_url("suppliers/view_supplier/" . $supplier->supplier_id . "/" . $this->uri->segment(4)); ?>"><i class="fa fa-eye"></i> </a>
-                                            <?php if ($supplier->supplier_name != 'Opening Stock') {  ?>
-                                                <a class="llink llink-edit" href="<?php echo site_url("suppliers/edit/" . $supplier->supplier_id . "/" . $this->uri->segment(4)); ?>"><i class="fa fa-pencil-square-o"></i></a>
-                                                <a class="llink llink-trash" href="<?php echo site_url("suppliers/trash/" . $supplier->supplier_id . "/" . $this->uri->segment(4)); ?>"><i class="fa fa-trash-o"></i></a>
-                                            <?php } ?>
-                                        </td>
+                                        <th>Supplier Name</th>
+                                        <th>Contact No</th>
+                                        <th>Company Name</th>
+                                        <th>Account No.</th>
+                                        <th>Liabilities</th>
+                                        <th>Purchased Amount</th>
+                                        <th>Amount Paid</th>
+                                        <th>Remaining</th>
+                                        <!-- <th>Status</th> -->
+                                        <th>Action</th>
                                     </tr>
-                                <?php endforeach; ?>
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    <?php
 
-                        <?php echo $pagination; ?>
-                    <?php } ?>
+                                    $total_liabilities = 0;
+                                    $total_purchased = 0;
+                                    $total_paid = 0;
+                                    $total_remaining = 0;
+                                    foreach ($suppliers as $supplier) :
+                                        $query = "SELECT SUM(item_cost_price*inventory_transaction) as `amount` 
+                                        FROM `inventory`
+                                        WHERE `business_id` = ?
+                                        AND `supplier_id` = ?";
+                                        $purchased = $this->db->query($query, [$this->session->userdata("business_id"), $supplier->supplier_id])->row();
+                                        $query = "SELECT SUM(amount) as `amount` 
+                                        FROM `supplier_payments`
+                                        WHERE `business_id` = ?
+                                        AND `supplier_id` = ?";
+                                        $paid = $this->db->query($query, [$this->session->userdata("business_id"), $supplier->supplier_id])->row();
+
+                                        // Sum up
+                                        $total_liabilities += $supplier->liabilities;
+                                        $total_purchased += $purchased->amount;
+                                        $total_paid += $paid->amount;
+                                        $remaining = (($supplier->liabilities + $purchased->amount) - $paid->amount);
+                                        $total_remaining += $remaining;
+                                    ?>
+
+                                        <tr>
+                                            <td>
+                                                <?php echo $supplier->supplier_name; ?>
+                                            </td>
+                                            <td>
+                                                <?php echo $supplier->supplier_contact_no; ?>
+                                            </td>
+                                            <td>
+                                                <?php echo $supplier->company_name; ?>
+                                            </td>
+                                            <td>
+                                                <?php echo $supplier->account_number; ?>
+                                            </td>
+
+                                            <td><?php echo number_format($supplier->liabilities, 2); ?></td>
+                                            <td><?php echo number_format($purchased->amount, 2); ?></td>
+                                            <td><?php echo number_format($paid->amount, 2); ?></td>
+                                            <td><?php echo number_format((($supplier->liabilities + $purchased->amount) - $paid->amount), 2); ?></td>
+
+
+                                            <!-- <td>
+                                                <?php if ($supplier->supplier_name != 'Opening Stock') {  ?>
+                                                    <?php echo status($supplier->status,  $this->lang); ?>
+                                                    <?php
+
+                                                    //set uri segment
+                                                    if (!$this->uri->segment(4)) {
+                                                        $page = 0;
+                                                    } else {
+                                                        $page = $this->uri->segment(4);
+                                                    }
+
+                                                    if ($supplier->status == 0) {
+                                                        echo "<a href='" . site_url("suppliers/publish/" . $supplier->supplier_id . "/" . $page) . "'> &nbsp;" . $this->lang->line('Publish') . "</a>";
+                                                    } elseif ($supplier->status == 1) {
+                                                        echo "<a href='" . site_url("suppliers/draft/" . $supplier->supplier_id . "/" . $page) . "'> &nbsp;" . $this->lang->line('Draft') . "</a>";
+                                                    }
+                                                    ?>
+                                                <?php } ?>
+                                            </td> -->
+
+                                            <td>
+                                                <a class="llink llink-view" href="<?php echo site_url("suppliers/view_supplier/" . $supplier->supplier_id . "/" . $this->uri->segment(4)); ?>"><i class="fa fa-eye"></i> </a>
+                                                <span style="margin-left: 10px;"></span>
+                                                <?php if ($supplier->supplier_name != 'Opening Stock') {  ?>
+                                                    <a class="llink llink-edit" href="<?php echo site_url("suppliers/edit/" . $supplier->supplier_id . "/" . $this->uri->segment(4)); ?>"><i class="fa fa-pencil-square-o"></i></a>
+                                                    <span style="margin-left: 10px;"></span>
+                                                    <a class="llink llink-trash"
+                                                        href="<?php echo site_url("suppliers/trash/" . $supplier->supplier_id . "/" . $this->uri->segment(4)); ?>"
+                                                        onclick="return confirm('Are you sure you want to move this supplier to trash?');">
+                                                        <i class="fa fa-trash-o"></i>
+                                                    </a>
+
+                                                <?php } ?>
+                                                <span style="margin-left: 10px;"></span>
+                                                <a href="<?php echo site_url("suppliers/print_supplier_invoices/" . $supplier->supplier_id); ?>" target="_new">
+                                                    <span class="fa fa-print"></span>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th colspan="4" style="text-align: right;">Total:</th>
+                                        <th><?php echo number_format($total_liabilities, 2); ?></th>
+                                        <th><?php echo number_format($total_purchased, 2); ?></th>
+                                        <th><?php echo number_format($total_paid, 2); ?></th>
+                                        <th><?php echo number_format($total_remaining, 2); ?></th>
+                                        <th></th>
+                                    </tr>
+                                </tfoot>
+
+                            </table>
+
+                            <div style="text-align: center;">
+                                <a class="btn btn-primary btn-sm" href="<?php echo site_url("suppliers/add"); ?>"><i class="fa fa-plus"></i> Add New Suppliers</a>
+                                <a class="btn btn-danger btn-sm" href="<?php echo site_url("suppliers/trashed"); ?>"><i class="fa fa-trash-o"></i> <?php echo $this->lang->line('Trash'); ?></a>
+                            </div>
+
+                            <?php echo $pagination; ?>
+                        <?php } ?>
+
+
+                        </div>
 
 
                 </div>
 
-
             </div>
-
         </div>
+        <!-- /MESSENGER -->
     </div>
-    <!-- /MESSENGER -->
-</div>

@@ -28,9 +28,36 @@
 				</div>
 
 				<div class="col-md-6">
-					<div class="pull-right">
 
-					</div>
+					<?php
+					$query = "SELECT SUM(item_cost_price*inventory_transaction) as `amount` 
+						FROM `inventory`
+						WHERE `business_id` = ?
+						AND `supplier_id` = ?";
+					$purchased = $this->db->query($query, [$this->session->userdata("business_id"), $suppliers[0]->supplier_id])->row();
+					$query = "SELECT SUM(amount) as `amount` 
+						FROM `supplier_payments`
+						WHERE `business_id` = ?
+						AND `supplier_id` = ?";
+					$paid = $this->db->query($query, [$this->session->userdata("business_id"), $suppliers[0]->supplier_id])->row();
+
+
+					?>
+					<table class="table table-bordered table-striped">
+						<tr>
+							<th>Liabilities</th>
+							<th>Purchased Amount</th>
+							<th>Amount Paid</th>
+							<th>Remaining</th>
+						</tr>
+						<tr>
+							<td><?php echo $suppliers[0]->liabilities; ?></td>
+							<td><?php echo $purchased->amount; ?></td>
+							<td><?php echo $paid->amount; ?></td>
+							<td><?php echo number_format((($suppliers[0]->liabilities + $purchased->amount) - $paid->amount), 2); ?></td>
+					</table>
+
+
 				</div>
 
 			</div>
