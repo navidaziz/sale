@@ -449,6 +449,7 @@ class Suppliers extends Admin_Controller
             si.supplier_invoice_number,
             si.invoice_date,
             si.return_receipt,
+            si.transport_cost,
             si.supplier_id,
             (SELECT COUNT(DISTINCT item_id) FROM inventory WHERE supplier_invoice_id = si.supplier_invoice_id) AS total_items,
             (SELECT ROUND(SUM(item_cost_price * inventory_transaction), 2) FROM inventory WHERE supplier_invoice_id = si.supplier_invoice_id) AS total_cost
