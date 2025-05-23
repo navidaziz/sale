@@ -769,4 +769,70 @@ class Suppliers extends Admin_Controller
         $requested_url = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : base_url();
         redirect($requested_url);
     }
+
+    private function get_suppliers_invoice_inputs()
+    {
+        $input["supplier_invoice_id"] = $this->input->post("supplier_invoice_id");
+        $input["business_id"] = $this->session->userdata("business_id");
+        $input["supplier_invoice_number"] = $this->input->post("supplier_invoice_number");
+        $input["supplier_id"] = $this->input->post("supplier_id");
+        $input["invoice_date"] = $this->input->post("invoice_date");
+        $input["return_receipt"] = $this->input->post("return_receipt");
+        $input["transport_cost"] = $this->input->post("transport_cost");
+        $inputs =  (object) $input;
+        return $inputs;
+    }
+
+    public function get_suppliers_invoice_form()
+    {
+        $supplier_invoice_id = (int) $this->input->post("supplier_invoice_id");
+        if ($supplier_invoice_id == 0) {
+
+            $input = $this->get_suppliers_invoice_inputs();
+        } else {
+            $query = "SELECT * FROM 
+            suppliers_invoices 
+            WHERE supplier_invoice_id = $supplier_invoice_id";
+            $input = $this->db->query($query)->row();
+        }
+        $this->data["input"] = $input;
+        $this->load->view("suppliers/get_suppliers_invoice_form", $this->data);
+    }
+
+    public function add_suppliers_invoice()
+    {
+        $this->form_validation->set_rules("business_id", "Business Id", "required");
+        $this->form_validation->set_rules("supplier_invoice_number", "Supplier Invoice Number", "required");
+        $this->form_validation->set_rules("supplier_id", "Supplier Id", "required");
+        $this->form_validation->set_rules("invoice_date", "Invoice Date", "required");
+        $this->form_validation->set_rules("return_receipt", "Return Receipt", "required");
+        $this->form_validation->set_rules("transport_cost", "Transport Cost", "required");
+
+        if ($this->form_validation->run() == FALSE) {
+            echo '<div class="alert alert-danger">' . validation_errors() . "</div>";
+            exit();
+        } else {
+            $inputs = $this->get_suppliers_invoice_inputs();
+            $inputs->created_by = $this->session->userdata("user_id");
+            $supplier_invoice_id = (int) $this->input->post("supplier_invoice_id");
+            if ($supplier_invoice_id == 0) {
+                $this->db->insert("suppliers_invoices", $inputs);
+            } else {
+                $this->db->where("supplier_invoice_id", $supplier_invoice_id);
+                $inputs->last_updated = date('Y-m-d H:i:s');
+                $this->db->update("suppliers_invoices", $inputs);
+            }
+            echo "success";
+        }
+    }
+    public function delete_suppliers_invoice($supplier_invoice_id)
+    {
+        $business_id = $this->session->userdata("business_id");
+        $supplier_invoice_id = (int) $supplier_invoice_id;
+        $this->db->where("supplier_invoice_id", $supplier_invoice_id);
+        $this->db->where("business_id", $business_id);
+        $this->db->delete("suppliers_invoices");
+        $requested_url = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : base_url();
+        redirect($requested_url);
+    }
 }
