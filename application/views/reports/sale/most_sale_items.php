@@ -49,10 +49,12 @@
             <div class="box-body">
                 <?php
                 $business_id = $this->session->userdata("business_id");
-                $query = "select `item_name` AS `item_name`,
-                          sum(`quantity`) AS `most_sale` 
-                          from `sales_items`
-                          WHERE business_id = ?";
+                $query = "SELECT `item_id`, `item_name`, 
+                 SUM(`quantity`) AS `most_sale`
+                FROM `sales_items`
+                WHERE `business_id` = ?
+                GROUP BY `item_id`, `item_name`
+                ORDER BY `most_sale` DESC";
                 $rows = $this->db->query($query, [$business_id])->result();
                 ?>
                 <table class="table table-bordered table-striped">
