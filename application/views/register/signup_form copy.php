@@ -59,9 +59,9 @@
                 <h4>Government Of Khyber Pakhtunkhwa</h4>
                 <address><i class="fa fa-envelope"></i> psra.pmdu@gmail.com
                   <span style="margin-left: 10px;"></span>
-                  <a style="font-weight: bold; color:red" href="tel:+92091-9216205">
+                  <a style="font-weight: bold; color:red" href="tel:+920324-4424414">
                     <i class="fa fa-phone" aria-hidden="true"></i>
-                    091-9216205 </a>
+                    0324-4424414 </a>
 
                   <br />
 

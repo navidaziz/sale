@@ -47,9 +47,9 @@
 					<p>
 						<small>
 							You are not allowed to access this module <span style="color:red;">( <i><?php echo $_GET['module'] ?></i> )</span>. <br />
-							If you suspect an error, please contact KPQUCIK SALE MIS Wing <a style="font-weight: bold; color:red" href="tel:+92091-9216205">
+							If you suspect an error, please contact QUCIK SALE <a style="font-weight: bold; color:red" href="tel:+920324-4424414">
 								<i class="fa fa-phone" aria-hidden="true"></i>
-								091-9216205 </a> for assistance. Thank you.
+								0324-4424414 </a> for assistance. Thank you.
 						</small>
 					</p>
 

@@ -69,9 +69,9 @@
 							</form>
 							<div>
 								<p style="">
-									If you need to retrieve your account username or password, please contact the MIS Section at <a style="font-weight: bold; color:red" href="tel:+92091-9216205">
+									If you need to retrieve your account username or password, please contact the MIS Section at <a style="font-weight: bold; color:red" href="tel:+920324-4424414">
 										<i class="fa fa-phone" aria-hidden="true"></i>
-										091-9216205 </a>. Please keep in mind that account details will only be shared after verification of the institute owner.</p>
+										0324-4424414 </a>. Please keep in mind that account details will only be shared after verification of the institute owner.</p>
 							</div>
 							<div class="login-helpers">
 								<a href="<?php echo site_url(); ?>">Back to Login</a>

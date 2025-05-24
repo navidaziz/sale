@@ -8,9 +8,9 @@
 				<h1 style="color: #d9534f;  font-size: 80px;  "><?php echo $message_title; ?></h1>
 				<div class="content">
 					<h3>Oops! Something went wrong</h3>
-					<p><?php echo $message; ?>. If you suspect an error, please contact KPQUCIK SALE MIS Wing <a style="font-weight: bold; color:red" href="tel:+92091-9216205">
+					<p><?php echo $message; ?>. If you suspect an error, please contact QUCIK SALE <a style="font-weight: bold; color:red" href="tel:+920324-4424414">
 							<i class="fa fa-phone" aria-hidden="true"></i>
-							091-9216205 </a> for assistance. Thank you.</p>
+							0324-4424414 </a> for assistance. Thank you.</p>
 					<div class="btn-group">
 						<a href="<?php echo site_url($this->session->userdata("role_homepage_uri")); ?>" class="btn btn-danger"><i class="fa fa-chevron-left"></i> Go Back</a>
 					</div>
