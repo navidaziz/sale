@@ -502,10 +502,10 @@
 		if (event.key === 'Enter') {
 			var unit_price = $('#user_item_unit_price_' + user_item_id).val();
 			let minValue = $('#user_item_unit_price_' + user_item_id).attr('min');
-			if (unit_price < minValue) {
-				alert('Unit Price less or equal to ' + minValue);
-				return false;
-			}
+			// if (unit_price < minValue) {
+			// 	alert('Unit Price less or equal to ' + minValue);
+			// 	return false;
+			// }
 			$('#item_list').html('<p style="text-align:center"><strong>Please Wait...... Loading</strong></p>');
 			$.ajax({
 				type: "POST",
