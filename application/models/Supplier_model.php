@@ -105,7 +105,7 @@ class Supplier_model extends MY_Model
 				$config["base_url"]  = base_url($this->uri->segment(1) . "/" . $this->uri->segment(2));
 			} else {
 				$this->supplier_model->uri_segment = $this->uri->segment(4);
-				$config["base_url"]  = base_url(ADMIN_DIR . $this->uri->segment(2) . "/" . $this->uri->segment(3));
+				$config["base_url"]  = base_url($this->uri->segment(2) . "/" . $this->uri->segment(3));
 			}
 			$config["total_rows"] = $this->supplier_model->joinGet($fields, "suppliers", $join_table, $where, true);
 			$this->pagination->initialize($config);

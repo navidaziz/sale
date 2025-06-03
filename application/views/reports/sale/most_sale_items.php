@@ -19,7 +19,7 @@
                         <li>
                             <i class="fa fa-home"></i>
                             <a
-                                href="<?php echo site_url(ADMIN_DIR . 'reports/index'); ?>">Reports Dashbaord</a>
+                                href="<?php echo site_url('reports/index'); ?>">Reports Dashbaord</a>
                         </li>
                         <li><?php echo $title; ?></li>
                     </ul>
