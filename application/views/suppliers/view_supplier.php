@@ -40,7 +40,8 @@
 						WHERE `business_id` = ?
 						AND `supplier_id` = ?";
 					$paid = $this->db->query($query, [$this->session->userdata("business_id"), $suppliers[0]->supplier_id])->row();
-
+					$query = "SELECT sum(liabilities) as total FROM `suppliers` WHERE business_id=? AND `supplier_id` = ?";
+					$liabilities = $this->db->query($query, [$this->session->userdata("business_id"), $suppliers[0]->supplier_id])->row();
 
 					?>
 					<table class="table table-bordered table-striped">
@@ -51,10 +52,11 @@
 							<th>Remaining</th>
 						</tr>
 						<tr>
-							<td><?php echo $suppliers[0]->liabilities; ?></td>
-							<td><?php echo $purchased->amount; ?></td>
-							<td><?php echo $paid->amount; ?></td>
-							<td><?php echo number_format((($suppliers[0]->liabilities + $purchased->amount) - $paid->amount), 2); ?></td>
+							<td><?php echo number_format($liabilities->total, 2); ?></td>
+							<td><?php echo number_format($purchased->amount, 2); ?></td>
+							<td><?php echo number_format($paid->amount, 2); ?></td>
+							<td><?php echo number_format((($liabilities->total + $purchased->amount) - $paid->amount), 2); ?></td>
+						</tr>
 					</table>
 
 
