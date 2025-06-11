@@ -49,10 +49,10 @@
                                 <th>Remaining</th>
                             </tr>
                             <tr>
-                                <td><?php echo number_format($supplier->liabilities, 2); ?></td>
+                                <td><?php echo number_format($suppliers->liabilities, 2); ?></td>
                                 <td><?php echo number_format($purchased->amount, 2); ?></td>
                                 <td><?php echo number_format($paid->amount, 2); ?></td>
-                                <td><?php echo number_format((($supplier->liabilities + $purchased->amount) - $paid->amount), 2); ?></td>
+                                <td><?php echo number_format((($suppliers->liabilities + $purchased->amount) - $paid->amount), 2); ?></td>
 
                         </table>
 
