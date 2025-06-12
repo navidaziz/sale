@@ -69,7 +69,7 @@
 			<div class="row" id="sale_summary_div">
 
 				<?php if (!preg_match('/mobile/i', $_SERVER['HTTP_USER_AGENT'])) { ?>
-					<div class="col-md-7">
+					<div class="col-md-5">
 						<div class="panel panel-primary">
 
 							<div class="panel-heading">
@@ -117,7 +117,7 @@
 
 
 				<!-- Right Side -->
-				<div class="col-md-5">
+				<div class="col-md-7">
 					<div class="panel panel-primary">
 
 						<?php if (!preg_match('/mobile/i', $_SERVER['HTTP_USER_AGENT'])) { ?>
