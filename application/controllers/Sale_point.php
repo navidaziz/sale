@@ -235,6 +235,7 @@ class Sale_point extends Admin_Controller
           AND  `sales_item_users`.`user_id` = '" . $user_id . "'
 		  
 		  AND `sales_item_users`.`business_id` = '" . $business_id . "'
+		  ORDER BY `sales_item_users`.`id` DESC
 		  ";
 		//AND `all_items`.`business_id` = '" . $business_id . "'
 		return $this->db->query($query)->result();
