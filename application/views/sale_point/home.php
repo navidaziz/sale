@@ -76,9 +76,9 @@
 								<h5><i class="fa fa-shopping-cart"></i> Sale Item List</h5>
 							</div>
 							<div style="padding: 5px; margin:2px">
-								<div style="height:400px" id="category_items_list"></div>
+								<div style="min-height:100px" id="category_items_list"></div>
 								<hr />
-								<div style="min-height:90px;" class="categories_list">
+								<div style="min-height:400px;" class="categories_list">
 
 									<?php
 									$business_id = $this->session->userdata("business_id");
@@ -133,7 +133,7 @@
 
 
 						<div class="panel-body">
-							<div class="panel-body" style="border:1px dashed gray; padding:1px; border-radius:5px; height:230px; overflow-x: auto;">
+							<div class="panel-body" style="border:1px dashed gray; padding:1px; border-radius:5px; height:330px; overflow-x: auto;">
 								<div id="item_list"><?php echo $user_items_list; ?></div>
 							</div>
 							<style>
