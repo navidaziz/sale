@@ -203,7 +203,7 @@
 										?>
 										<div style="text-align: center;">
 											<div style="text-align: center; margin:10px">
-												<button onclick="get_item_form('0')" class="btn btn-primary btn-xs">Add New Item</button>
+												<button type="button" onclick="get_item_form('0')" class="btn btn-primary btn-xs">Add New Item</button>
 											</div>
 										</div>
 

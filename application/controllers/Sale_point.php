@@ -187,7 +187,8 @@ class Sale_point extends Admin_Controller
                           SET `quantity`='" . $item_count . "' 
                           WHERE `item_id`='" . $item_id . "'
                           AND `user_id` = '" . $user_id . "'
-						  AND `business_id` = '" . $business_id . "'";
+						  AND `business_id` = '" . $business_id . "'
+						  AND dated = '" . date('Y-m-d H:i:s') . "'";
 					$this->db->query($query);
 				}
 			} else {
@@ -227,6 +228,7 @@ class Sale_point extends Admin_Controller
             `sales_item_users`.`quantity`, 
             `sales_item_users`.`item_id`,
             `sales_item_users`.`user_id`,
+			`all_items`.`item_code_no`,
             (`sales_item_users`.`sale_price`*`sales_item_users`.`quantity`) as `total_price`  
           FROM
             `all_items`,
@@ -235,7 +237,7 @@ class Sale_point extends Admin_Controller
           AND  `sales_item_users`.`user_id` = '" . $user_id . "'
 		  
 		  AND `sales_item_users`.`business_id` = '" . $business_id . "'
-		  ORDER BY `sales_item_users`.`id` DESC
+		  ORDER BY `sales_item_users`.`dated` DESC
 		  ";
 		//AND `all_items`.`business_id` = '" . $business_id . "'
 		return $this->db->query($query)->result();
@@ -248,6 +250,7 @@ class Sale_point extends Admin_Controller
 		$user_item_list .= '<tr>
                 <th>#</th>
                 <th>Stock</th>
+				 <th>Code</th>
                 <th>Name</th>
                 
                 <th>Price</th>
@@ -265,7 +268,9 @@ class Sale_point extends Admin_Controller
 				$user_item_list .= '<td style="color:red">' . $sales_items_user_list->total_quantity . '</td>';
 			}
 
-			$user_item_list .= '<th>' . ucwords($sales_items_user_list->name) . '</th>
+			$user_item_list .= '
+			<th>' . ucwords($sales_items_user_list->name) . '</th>
+			<th>' . $sales_items_user_list->item_code_no . '</th>
                    
                     <th><input min="' . $sales_items_user_list->cost_price . '" id="user_item_unit_price_' . $sales_items_user_list->id . '" enterkeyhint="go"  onkeydown="update_user_item_unit_price(\'' . $sales_items_user_list->id . '\')" type="number" name="unit_price" value="' . $sales_items_user_list->unit_price . '" style="width:60px" /></th>
 					</th>
@@ -376,7 +381,7 @@ class Sale_point extends Admin_Controller
 			$item_session = $this->db->query($query)->result()[0]->quantity;
 
 			if (($item->total_quantity + $item_session) >= $quantity or 1 == 1) {
-				$query = "UPDATE `sales_item_users` SET `quantity`='" . $quantity . "'
+				$query = "UPDATE `sales_item_users` SET `quantity`='" . $quantity . "',  dated = '" . date('Y-m-d H:i:s') . "'
         WHERE id='" . $id . "' ";
 				$this->db->query($query);
 			} else {

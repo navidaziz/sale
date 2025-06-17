@@ -120,7 +120,7 @@
 				<div class="col-md-7">
 					<div class="panel panel-primary">
 
-						<?php if (!preg_match('/mobile/i', $_SERVER['HTTP_USER_AGENT'])) { ?>
+						<?php if (!preg_match('/mobile/i', $_SERVER['HTTP_USER_AGENT']) or 1 == 1) { ?>
 							<div class="panel-heading">
 								<div style=" display: inline-block; vertical-align: left; text-align:right !important">
 									<label for="tags" style="display: inline-block; margin-right: 5px;">Search Item</label>
