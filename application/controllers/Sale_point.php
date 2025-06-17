@@ -748,10 +748,11 @@ class Sale_point extends Admin_Controller
 		GROUP BY item_id
 		order by `name` ASC';
 		$category_items_list = $this->db->query($query, [$like_category, $business_id])->result();
-
+		echo '<ul class="list-group">';
 		foreach ($category_items_list as $item) {
 			$item_name = htmlspecialchars($item->name, ENT_QUOTES, 'UTF-8');
-			echo '<button onclick="addItems(\'' . $item_name . '\')" class="btn btn-danger btn-sm" style="margin:1px; margin:0px; padding:0px;">' . $item_name . '</button>';
+			echo '<li onclick="addItems(\'' . $item_name . '\')" class="btn btn-danger btn-sm" style="margin:1px; margin:0px; padding:0px;">' . $item_name . '</li>';
 		}
+		echo '</ul>';
 	}
 }
