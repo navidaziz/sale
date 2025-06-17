@@ -745,13 +745,18 @@ class Sale_point extends Admin_Controller
 		$query = 'SELECT * FROM items WHERE category LIKE ? 
 		AND business_id = ?
 		AND status IN (1)
-		GROUP BY item_id
+		GROUP BY all_items
 		order by `name` ASC';
 		$category_items_list = $this->db->query($query, [$like_category, $business_id])->result();
 		echo '<ul class="list-group">';
 		foreach ($category_items_list as $item) {
+			if ($item->total_stock < 1) {
+				$stock = ' color:red; text-decoration: line-through; ';
+			} else {
+				$stock = '';
+			}
 			$item_name = htmlspecialchars($item->name, ENT_QUOTES, 'UTF-8');
-			echo '<li class="list-group-item" onclick="addItems(\'' . $item_name . '\')">
+			echo '<li class="list-group-item" style="' . $stock . '" onclick="addItems(\'' . $item_name . '\')">
             <strong>' . htmlspecialchars($item->item_code_no, ENT_QUOTES, 'UTF-8') . '</strong> - ' . $item_name . '
           </li>';
 		}
