@@ -751,7 +751,9 @@ class Sale_point extends Admin_Controller
 		echo '<ul class="list-group">';
 		foreach ($category_items_list as $item) {
 			$item_name = htmlspecialchars($item->name, ENT_QUOTES, 'UTF-8');
-			echo '<li onclick="addItems(\'' . $item_name . '\')" >' . $item_name . '</li>';
+			echo '<li class="list-group-item" onclick="addItems(\'' . $item_name . '\')">
+            <strong>' . htmlspecialchars($item->item_code_no, ENT_QUOTES, 'UTF-8') . '</strong> - ' . $item_name . '
+          </li>';
 		}
 		echo '</ul>';
 	}
