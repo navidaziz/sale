@@ -83,12 +83,31 @@
 									<?php
 									$business_id = $this->session->userdata("business_id");
 									$query = "SELECT category FROM items WHERE business_id = ? 
-									AND items.status=1 
-									GROUP BY category ORDER BY category ASC";
+											AND items.status=1
+											GROUP BY category ORDER BY category ASC";
 									$categories = $this->db->query($query, [$business_id])->result();
-									foreach ($categories as $category) { ?>
-										<button onclick="get_items_by_category('<?php echo $category->category ?>')" class="btn btn-success btn-xs"><?php echo $category->category ?></button>
-									<?php } ?>
+
+									// Group categories by first letter
+									$grouped = [];
+									foreach ($categories as $category) {
+										$firstLetter = strtoupper(substr($category->category, 0, 1));
+										$grouped[$firstLetter][] = $category->category;
+									}
+
+									// Sort groups alphabetically
+									ksort($grouped);
+
+									// Display grouped buttons
+									foreach ($grouped as $letter => $categoryList) {
+										echo "<h4><strong>$letter</strong></h4>";
+										echo "<div class='mb-2'>";
+										foreach ($categoryList as $cat) {
+											$safe_cat = htmlspecialchars($cat, ENT_QUOTES, 'UTF-8');
+											echo "<button onclick=\"get_items_by_category('$safe_cat')\" class=\"btn btn-success btn-sm m-1\">$safe_cat</button>";
+										}
+										echo "</div>";
+									}
+									?>
 
 								</div>
 								<div style="text-align: center;">
