@@ -93,7 +93,7 @@
 										$categories = $this->db->query($query, [$business_id])->result();
 										foreach ($categories as $category) { ?>
 											<button onclick="get_items_by_category('<?php echo $category->category ?>')"
-												class="btn btn-success category-btn"
+												class="btn btn-success btn-xs"
 												style="margin: 2px;">
 												<?php echo $category->category ?>
 											</button>
@@ -191,7 +191,7 @@
 											$categories = $this->db->query($query, [$business_id])->result();
 											foreach ($categories as $category) { ?>
 												<button onclick="get_items_by_category('<?php echo $category->category ?>')"
-													class="btn btn-success category-btn"
+													class="btn btn-success btn-xs"
 													style="margin: 2px;">
 													<?php echo $category->category ?>
 												</button>
