@@ -430,7 +430,7 @@
 			alert("Cash Amout is Zero");
 			return false;
 		}
-		alert((cash_amount - discount));
+		//alert((cash_amount - discount));
 		if ((cash_amount - discount) < pay_able_total) {
 			alert("Cash Amout is less the Payable total amount");
 			return false;
@@ -451,7 +451,7 @@
 				tax_ids: tax_ids
 			}
 		}).done(function(data) {
-			alert(data);
+			//alert(data);
 			if (data == 'success') {
 				$('#print_area').html(data);
 				get_user_sale_summary();

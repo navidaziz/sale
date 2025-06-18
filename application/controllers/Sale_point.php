@@ -153,11 +153,11 @@ class Sale_point extends Admin_Controller
 				} else {
 					$item_count++;
 					$query = "UPDATE `sales_item_users` 
-                          SET `quantity`='" . $item_count . "' 
+                          SET `quantity`='" . $item_count . "',
+						   `dated` = '" . date('Y-m-d H:i:s') . "' 
                           WHERE `item_id`='" . $item_id . "'
                           AND `user_id` = '" . $user_id . "'
-						  AND `business_id` = '" . $business_id . "'
-						  AND dated = '" . date('Y-m-d H:i:s') . "'";
+						  AND `business_id` = '" . $business_id . "'";
 					$this->db->query($query);
 				}
 			} else {
@@ -204,9 +204,8 @@ class Sale_point extends Admin_Controller
             `sales_item_users` 
           WHERE `all_items`.`item_id` = `sales_item_users`.`item_id`
           AND  `sales_item_users`.`user_id` = '" . $user_id . "'
-		  
 		  AND `sales_item_users`.`business_id` = '" . $business_id . "'
-		  ORDER BY `sales_item_users`.`dated` DESC
+		 ORDER BY `sales_item_users`.`dated` DESC
 		  ";
 		//AND `all_items`.`business_id` = '" . $business_id . "'
 		return $this->db->query($query)->result();
