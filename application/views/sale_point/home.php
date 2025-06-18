@@ -80,34 +80,44 @@
 								<hr />
 								<div style="min-height:400px;" class="categories_list">
 
-									<?php
-									$business_id = $this->session->userdata("business_id");
-									$query = "SELECT category FROM items WHERE business_id = ? 
-											AND items.status=1
-											GROUP BY category ORDER BY category ASC";
-									$categories = $this->db->query($query, [$business_id])->result();
+									<!-- Search box -->
+									<input type="text" id="categorySearch" class="form-control" placeholder="Search category..." onkeyup="filterCategories()" style="margin-bottom: 10px;">
 
-									// Group categories by first letter
-									$grouped = [];
-									foreach ($categories as $category) {
-										$firstLetter = strtoupper(substr($category->category, 0, 1));
-										$grouped[$firstLetter][] = $category->category;
-									}
+									<!-- Category buttons -->
+									<div id="categoryButtons">
+										<?php
+										$business_id = $this->session->userdata("business_id");
+										$query = "SELECT category FROM items WHERE business_id = ? 
+              AND items.status=1
+              GROUP BY category ORDER BY category ASC";
+										$categories = $this->db->query($query, [$business_id])->result();
+										foreach ($categories as $category) { ?>
+											<button onclick="get_items_by_category('<?php echo $category->category ?>')"
+												class="btn btn-success category-btn"
+												style="margin: 2px;">
+												<?php echo $category->category ?>
+											</button>
+										<?php } ?>
+									</div>
 
-									// Sort groups alphabetically
-									ksort($grouped);
+									<!-- Filter script -->
+									<script>
+										function filterCategories() {
+											var input = document.getElementById("categorySearch");
+											var filter = input.value.toLowerCase();
+											var buttons = document.getElementsByClassName("category-btn");
 
-									// Display grouped buttons
-									foreach ($grouped as $letter => $categoryList) {
-										echo "<h4><strong>$letter</strong></h4>";
-										echo "<div class='mb-2'>";
-										foreach ($categoryList as $cat) {
-											$safe_cat = htmlspecialchars($cat, ENT_QUOTES, 'UTF-8');
-											echo "<button onclick=\"get_items_by_category('$safe_cat')\" class=\"btn btn-success btn-sm m-1\">$safe_cat</button>";
+											for (var i = 0; i < buttons.length; i++) {
+												var txtValue = buttons[i].textContent || buttons[i].innerText;
+												if (txtValue.toLowerCase().indexOf(filter) > -1) {
+													buttons[i].style.display = "";
+												} else {
+													buttons[i].style.display = "none";
+												}
+											}
 										}
-										echo "</div>";
-									}
-									?>
+									</script>
+
 
 								</div>
 								<div style="text-align: center;">
@@ -168,34 +178,43 @@
 									<hr />
 									<div class="categories_list">
 
-										<?php
-										$business_id = $this->session->userdata("business_id");
-										$query = "SELECT category FROM items WHERE business_id = ? 
-											AND items.status=1
-											GROUP BY category ORDER BY category ASC";
-										$categories = $this->db->query($query, [$business_id])->result();
+										<!-- Search box -->
+										<input type="text" id="categorySearch" class="form-control" placeholder="Search category..." onkeyup="filterCategories()" style="margin-bottom: 10px;">
 
-										// Group categories by first letter
-										$grouped = [];
-										foreach ($categories as $category) {
-											$firstLetter = strtoupper(substr($category->category, 0, 1));
-											$grouped[$firstLetter][] = $category->category;
-										}
+										<!-- Category buttons -->
+										<div id="categoryButtons">
+											<?php
+											$business_id = $this->session->userdata("business_id");
+											$query = "SELECT category FROM items WHERE business_id = ? 
+              AND items.status=1
+              GROUP BY category ORDER BY category ASC";
+											$categories = $this->db->query($query, [$business_id])->result();
+											foreach ($categories as $category) { ?>
+												<button onclick="get_items_by_category('<?php echo $category->category ?>')"
+													class="btn btn-success category-btn"
+													style="margin: 2px;">
+													<?php echo $category->category ?>
+												</button>
+											<?php } ?>
+										</div>
 
-										// Sort groups alphabetically
-										ksort($grouped);
+										<!-- Filter script -->
+										<script>
+											function filterCategories() {
+												var input = document.getElementById("categorySearch");
+												var filter = input.value.toLowerCase();
+												var buttons = document.getElementsByClassName("category-btn");
 
-										// Display grouped buttons
-										foreach ($grouped as $letter => $categoryList) {
-											echo "<h4><strong>$letter</strong></h4>";
-											echo "<div class='mb-2'>";
-											foreach ($categoryList as $cat) {
-												$safe_cat = htmlspecialchars($cat, ENT_QUOTES, 'UTF-8');
-												echo "<button onclick=\"get_items_by_category('$safe_cat')\" class=\"btn btn-success btn-sm m-1\">$safe_cat</button>";
+												for (var i = 0; i < buttons.length; i++) {
+													var txtValue = buttons[i].textContent || buttons[i].innerText;
+													if (txtValue.toLowerCase().indexOf(filter) > -1) {
+														buttons[i].style.display = "";
+													} else {
+														buttons[i].style.display = "none";
+													}
+												}
 											}
-											echo "</div>";
-										}
-										?>
+										</script>
 
 
 									</div>
