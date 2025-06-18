@@ -93,7 +93,7 @@
 										$categories = $this->db->query($query, [$business_id])->result();
 										foreach ($categories as $category) { ?>
 											<button onclick="get_items_by_category('<?php echo $category->category ?>')"
-												class="btn btn-success btn-xs"
+												class="btn btn-success btn-xs category-btn"
 												style="margin: 2px;">
 												<?php echo $category->category ?>
 											</button>
@@ -103,8 +103,10 @@
 									<!-- Filter script -->
 									<script>
 										function filterCategories() {
+
 											var input = document.getElementById("categorySearch");
 											var filter = input.value.toLowerCase();
+
 											var buttons = document.getElementsByClassName("category-btn");
 
 											for (var i = 0; i < buttons.length; i++) {
@@ -191,7 +193,7 @@
 											$categories = $this->db->query($query, [$business_id])->result();
 											foreach ($categories as $category) { ?>
 												<button onclick="get_items_by_category('<?php echo $category->category ?>')"
-													class="btn btn-success btn-xs"
+													class="btn btn-success btn-xs category-btn"
 													style="margin: 2px;">
 													<?php echo $category->category ?>
 												</button>
