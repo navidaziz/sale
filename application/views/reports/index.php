@@ -30,12 +30,12 @@
                     <ol class="list-unstyled">
                         <li><a href="<?php echo site_url('reports/most_sale_items'); ?>">Most Sale Items</a></li>
                         <li>
-                            <a class="text-primary" target="_blank" href="<?php echo site_url("sale_point/today_items_sale_report"); ?>">
+                            <a class="text-primary" target="_blank" href="<?php echo site_url("reports/today_items_sale_report"); ?>">
                                 Print Today Sale Report
                             </a>
                         </li>
                         <li>
-                            <a class="text-primary" target="_blank" href="<?php echo site_url("sale_point/print_stock_report"); ?>">
+                            <a class="text-primary" target="_blank" href="<?php echo site_url("reports/print_stock_report"); ?>">
                                 Print Stock Report
                             </a>
                         </li>

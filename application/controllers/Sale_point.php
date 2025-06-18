@@ -45,38 +45,7 @@ class Sale_point extends Admin_Controller
 		$this->load->view("sale_point/print_stock_report", $this->data);
 	}
 
-	public function  today_items_sale_report()
-	{
-		$query = "SELECT si.item_name, 
-                     si.cost_price, 
-                     si.unit_price, 
-                     si.item_discount, 
-                     si.sale_price, 
-                     SUM(si.sale_items) as qty, 
-                     SUM(si.total_price) as 
-                     net_total, 
-                     si.returned 
-                     FROM `sales_items` as si 
-                     WHERE DATE(`created_date`) = DATE(NOW()) GROUP BY item_id, si.sale_price,si.returned ";
-		$today_items_sale = $this->db->query($query);
-		if ($today_items_sale) {
-			$this->data['today_items_sales'] = $today_items_sale->result();
-		}
 
-
-		$query = "SELECT SUM(items_total_price) as items_price, 
-                     SUM(total_tax_pay_able) as total_tax, 
-                     SUM(discount) as discount, 
-                     SUM(`total_payable`) as total_sale 
-                     FROM `sales` 
-                     WHERE DATE(created_date) = DATE(NOW())";
-		$today_sale_summary = $this->db->query($query);
-		if ($today_sale_summary) {
-			$this->data['today_sale_summary'] = $today_sale_summary->result()[0];
-		}
-
-		$this->load->view("sale_point/today_items_sale_report", $this->data);
-	}
 
 	public function get_sale_reports()
 	{

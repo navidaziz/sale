@@ -172,6 +172,10 @@
         </tbody>
       </table>
 
+      <?php if ($today_sale_summary->items_price != $today_items_sale->result()[0]->net_total) { ?>
+        <div class="alert alert-danger">Some Thing Wrong.</div>
+      <?php } ?>
+
 
 
 
