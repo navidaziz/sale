@@ -81,6 +81,8 @@ class Items extends Admin_Controller
         $this->data["view"] =  "items/items";
         $this->load->view("layout", $this->data);
     }
+
+
     //-----------------------------------------------------
 
     /**

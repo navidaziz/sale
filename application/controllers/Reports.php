@@ -164,4 +164,26 @@ class Reports extends Admin_Controller
 
         $this->load->view("reports/sale/today_items_sale_report", $this->data);
     }
+
+    public function low_stock_items()
+    {
+
+        //$where = "`items`.`status` IN (0, 1) ";
+        //$data = $this->item_model->get_item_list($where);
+        //$this->data["items"] = $data->items;
+        //$this->data["pagination"] = $data->pagination;
+        $business_id = $this->session->userdata("business_id");
+        $query = "SELECT * FROM all_items WHERE `status` IN (0, 1) 
+        AND business_id = '" . $business_id . "'
+        AND reorder_level > total_quantity";
+
+
+
+        $this->data["items"] = $this->db->query($query)->result();
+
+
+        $this->data["title"] = 'Less Stock Items';
+        $this->data["view"] =  "reports/stock/low_stock_items";
+        $this->load->view("layout", $this->data);
+    }
 }
