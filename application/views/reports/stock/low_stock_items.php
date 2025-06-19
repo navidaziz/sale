@@ -50,10 +50,10 @@
                         <thead>
                             <tr>
                                 <th>S/No</th>
+                                <th>Item Code</th>
                                 <th>Item Name</th>
                                 <th>Category</th>
                                 <th>Unit</th>
-                                <th>Item Code</th>
                                 <th>Cost Price</th>
                                 <th>Sale Price (Unit)</th>
                                 <th>Stock</th>
@@ -77,10 +77,11 @@
                             ?>
                                 <tr>
                                     <td><?= $count++; ?></td>
+                                    <td><?= $item->item_code_no; ?></td>
                                     <td><?= $item->name; ?></td>
                                     <td><?= $item->category; ?></td>
                                     <td><?= $item->unit; ?></td>
-                                    <td><?= $item->item_code_no; ?></td>
+
                                     <td><?= $item->cost_price; ?></td>
 
                                     <td><?= $item->sale_price; ?></td>
