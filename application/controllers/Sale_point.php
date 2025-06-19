@@ -710,7 +710,7 @@ class Sale_point extends Admin_Controller
 		// Add wildcard for LIKE if needed
 		$like_category = '%' . $category . '%';
 		$business_id = $this->session->userdata("business_id");
-		$query = 'SELECT * FROM all_items WHERE category = ? 
+		$query = 'SELECT * FROM all_items WHERE category LIKE ? 
 		AND business_id = ?
 		AND status IN (1) ORDER BY `name` ASC';
 		$category_items_list = $this->db->query($query, [$like_category, $business_id])->result();
