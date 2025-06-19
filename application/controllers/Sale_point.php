@@ -240,13 +240,13 @@ class Sale_point extends Admin_Controller
 			<th>' . ucwords($sales_items_user_list->name) . '</th>
 			<th>' . $sales_items_user_list->item_code_no . '</th>
                    
-                    <th><input min="' . $sales_items_user_list->cost_price . '" id="user_item_unit_price_' . $sales_items_user_list->id . '" enterkeyhint="go"  onkeydown="update_user_item_unit_price(\'' . $sales_items_user_list->id . '\')" type="number" name="unit_price" value="' . $sales_items_user_list->unit_price . '" style="width:60px" /></th>
+                    <th><input min="' . $sales_items_user_list->cost_price . '" id="user_item_unit_price_' . $sales_items_user_list->id . '" enterkeyhint="done"  onkeydown="update_user_item_unit_price(\'' . $sales_items_user_list->id . '\')" type="number" name="unit_price" value="' . $sales_items_user_list->unit_price . '" style="width:60px" /></th>
 					</th>
                     <th>
-                    <input min="' . $sales_items_user_list->unit_price . '" id="user_item_discount_' . $sales_items_user_list->id . '" enterkeyhint="go"  onkeydown="update_user_item_discount(\'' . $sales_items_user_list->id . '\')" type="number" name="discount" value="' . $sales_items_user_list->discount . '" style="width:60px" /></th>
+                    <input min="' . $sales_items_user_list->unit_price . '" id="user_item_discount_' . $sales_items_user_list->id . '" enterkeyhint="done"  onkeydown="update_user_item_discount(\'' . $sales_items_user_list->id . '\')" type="number" name="discount" value="' . $sales_items_user_list->discount . '" style="width:60px" /></th>
                    
                     <th>' . $sales_items_user_list->sale_price . '</th>
-                    <th><input id="user_item_' . $sales_items_user_list->id . '" enterkeyhint="go"  onkeydown="update_user_item_quantity(\'' . $sales_items_user_list->id . '\')" type="number" name="quantity" value="' . $sales_items_user_list->quantity . '" style="width:60px" /></th>
+                    <th><input id="user_item_' . $sales_items_user_list->id . '" enterkeyhint="done"  onkeydown="update_user_item_quantity(\'' . $sales_items_user_list->id . '\')" type="number" name="quantity" value="' . $sales_items_user_list->quantity . '" style="width:60px" /></th>
                     <th>' . $sales_items_user_list->total_price . '</th>
 
                   </tr>';
