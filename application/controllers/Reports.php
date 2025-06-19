@@ -183,7 +183,7 @@ class Reports extends Admin_Controller
         $this->data["items"] = $this->db->query($query)->result();
 
 
-        $this->data["title"] = 'Less Stock Items';
+        $this->data["title"] = 'Low Stock Items';
         $this->data["view"] =  "reports/stock/low_stock_items";
         $this->load->view("layout", $this->data);
     }
