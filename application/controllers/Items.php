@@ -70,7 +70,8 @@ class Items extends Admin_Controller
         //$this->data["pagination"] = $data->pagination;
         $business_id = $this->session->userdata("business_id");
         $query = "SELECT * FROM all_items WHERE `status` IN (0, 1) 
-        AND business_id = '" . $business_id . "'";
+        AND business_id = '" . $business_id . "'
+        ORDER BY category, name ASC";
 
 
 

@@ -175,7 +175,8 @@ class Reports extends Admin_Controller
         $business_id = $this->session->userdata("business_id");
         $query = "SELECT * FROM all_items WHERE `status` IN (0, 1) 
         AND business_id = '" . $business_id . "'
-        AND reorder_level > total_quantity";
+        AND reorder_level > total_quantity
+        ORDER BY category, name ASC";
 
 
 
