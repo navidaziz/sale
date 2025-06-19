@@ -155,7 +155,7 @@
 							<div class="panel-heading">
 								<div style=" display: inline-block; vertical-align: left; text-align:right !important">
 									<label for="tags" style="display: inline-block; margin-right: 5px;">Search Item</label>
-									<input type="submit" id="tags" enterkeyhint="done" name="search_sale_item" placeholder="Search Sale Item" class="form-control" style="display: inline-block; width: auto;" />
+									<input type="search" id="tags" enterkeyhint="done" name="search_sale_item" placeholder="Search Sale Item" class="form-control" style="display: inline-block; width: auto;" />
 
 								</div>
 							</div>
