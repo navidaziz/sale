@@ -290,6 +290,7 @@
                                     <th>Total Cost</th>
                                     <th>Total Sale</th>
                                     <th>Expected Profit</th>
+                                    <th>Item Saled</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                     <th>Inventory</th>
@@ -339,6 +340,7 @@
                                         <td><?= $stock_total; ?></td>
                                         <td><?= $sale_total; ?></td>
                                         <td><?= $expected_profit; ?></td>
+                                        <td><?php echo $item->item_saled; ?></td>
                                         <td>
                                             <?= status($item->status, $this->lang); ?>
                                             <?php
@@ -364,7 +366,7 @@
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <th colspan="12" style="text-align:right">Grand Totals:</th>
+                                    <th colspan="13" style="text-align:right">Grand Totals:</th>
                                     <th><?= number_format($grand_total_cost, 2); ?></th>
                                     <th><?= number_format($grand_total_sale, 2); ?></th>
                                     <th><?= number_format($grand_expected_profit, 2); ?></th>
