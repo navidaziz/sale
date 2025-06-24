@@ -47,62 +47,101 @@ class Sale_point extends Admin_Controller
 
 
 
+	// public function get_sale_reports()
+	// {
+	// 	$query = "SELECT SUM(items_total_price) as items_price, 
+	//                  SUM(total_tax_pay_able) as total_tax, 
+	//                  SUM(discount) as discount, 
+	//                  SUM(`total_payable`) as total_sale 
+	//                  FROM `sales` 
+	//                  WHERE 
+	// 				 business_id = '" . $this->session->userdata("business_id") . "'
+	// 				 AND DATE(created_date) = DATE(NOW())";
+	// 	$today_sale_summary = $this->db->query($query);
+	// 	if ($today_sale_summary) {
+	// 		$this->data['today_sale_summary'] = $today_sale_summary->row();
+	// 	}
+
+
+	// 	$query = "SELECT SUM(items_total_price) as items_price, 
+	//                  SUM(total_tax_pay_able) as total_tax, 
+	//                  SUM(discount) as discount, 
+	//                  SUM(`total_payable`) as total_sale 
+	//                  FROM `sales` 
+	//                  WHERE 
+	// 				 business_id = '" . $this->session->userdata("business_id") . "'
+	// 				 AND MONTH(created_date) = MONTH(NOW())
+	// 				 AND YEAR(created_date) = YEAR(NOW())";
+	// 	$current_month_sale_summary = $this->db->query($query);
+	// 	if ($current_month_sale_summary) {
+	// 		$this->data['current_month_sale_summary'] = $current_month_sale_summary->row();
+	// 	}
+
+	// 	$query = "SELECT 
+	// 	SUM(quantity * sale_price) AS total_sale,
+	// 	SUM(quantity * (sale_price - cost_price)) AS total_profit
+	// 	FROM 
+	// 	sales_items
+	// 	WHERE 
+	// 	business_id = '" . $this->session->userdata("business_id") . "'
+	// 	AND DATE(created_date) = CURDATE();
+	// 	";
+	// 	$this->data['today_sale_profit'] = $this->db->query($query)->row();
+
+
+
+	// 	$query = "SELECT 
+	// 	SUM(quantity * sale_price) AS total_sale,
+	// 	SUM(quantity * (sale_price - cost_price)) AS total_profit
+	// 	FROM 
+	// 	sales_items
+	// 	WHERE 
+	// 	business_id = '" . $this->session->userdata("business_id") . "'
+	// 	 AND MONTH(created_date) = MONTH(NOW())
+	// 	AND YEAR(created_date) = YEAR(NOW())";
+	// 	$this->data['current_month_sale_profit'] = $this->db->query($query)->row();
+
+	// 	$this->load->view("sale_point/sale_reports", $this->data);
+	// }
+
 	public function get_sale_reports()
 	{
-		$query = "SELECT SUM(items_total_price) as items_price, 
-                     SUM(total_tax_pay_able) as total_tax, 
-                     SUM(discount) as discount, 
-                     SUM(`total_payable`) as total_sale 
-                     FROM `sales` 
-                     WHERE 
-					 business_id = '" . $this->session->userdata("business_id") . "'
-					 AND DATE(created_date) = DATE(NOW())";
-		$today_sale_summary = $this->db->query($query);
-		if ($today_sale_summary) {
-			$this->data['today_sale_summary'] = $today_sale_summary->row();
-		}
+		$business_id = $this->session->userdata("business_id");
 
+		// Combined sales table summary for today and this month
+		$query = "
+        SELECT 
+            SUM(CASE WHEN DATE(created_date) = CURDATE() THEN items_total_price ELSE 0 END) AS today_items_price,
+            SUM(CASE WHEN DATE(created_date) = CURDATE() THEN total_tax_pay_able ELSE 0 END) AS today_tax,
+            SUM(CASE WHEN DATE(created_date) = CURDATE() THEN discount ELSE 0 END) AS today_discount,
+            SUM(CASE WHEN DATE(created_date) = CURDATE() THEN total_payable ELSE 0 END) AS today_total_sale,
+            
+            SUM(CASE WHEN MONTH(created_date) = MONTH(NOW()) AND YEAR(created_date) = YEAR(NOW()) THEN items_total_price ELSE 0 END) AS month_items_price,
+            SUM(CASE WHEN MONTH(created_date) = MONTH(NOW()) AND YEAR(created_date) = YEAR(NOW()) THEN total_tax_pay_able ELSE 0 END) AS month_tax,
+            SUM(CASE WHEN MONTH(created_date) = MONTH(NOW()) AND YEAR(created_date) = YEAR(NOW()) THEN discount ELSE 0 END) AS month_discount,
+            SUM(CASE WHEN MONTH(created_date) = MONTH(NOW()) AND YEAR(created_date) = YEAR(NOW()) THEN total_payable ELSE 0 END) AS month_total_sale
+        FROM sales
+        WHERE business_id = '" . $this->db->escape_str($business_id) . "'";
 
-		$query = "SELECT SUM(items_total_price) as items_price, 
-                     SUM(total_tax_pay_able) as total_tax, 
-                     SUM(discount) as discount, 
-                     SUM(`total_payable`) as total_sale 
-                     FROM `sales` 
-                     WHERE 
-					 business_id = '" . $this->session->userdata("business_id") . "'
-					 AND MONTH(created_date) = MONTH(NOW())
-					 AND YEAR(created_date) = YEAR(NOW())";
-		$current_month_sale_summary = $this->db->query($query);
-		if ($current_month_sale_summary) {
-			$this->data['current_month_sale_summary'] = $current_month_sale_summary->row();
-		}
+		$this->data['sale_summary'] = $this->db->query($query)->row();
 
-		$query = "SELECT 
-		SUM(quantity * sale_price) AS total_sale,
-		SUM(quantity * (sale_price - cost_price)) AS total_profit
-		FROM 
-		sales_items
-		WHERE 
-		business_id = '" . $this->session->userdata("business_id") . "'
-		AND DATE(created_date) = CURDATE();
-		";
-		$this->data['today_sale_profit'] = $this->db->query($query)->row();
+		// Combined profit/sale from sales_items for today and month
+		$query = "
+        SELECT 
+            SUM(CASE WHEN DATE(created_date) = CURDATE() THEN quantity * sale_price ELSE 0 END) AS today_sale,
+            SUM(CASE WHEN DATE(created_date) = CURDATE() THEN quantity * (sale_price - cost_price) ELSE 0 END) AS today_profit,
 
+            SUM(CASE WHEN MONTH(created_date) = MONTH(NOW()) AND YEAR(created_date) = YEAR(NOW()) THEN quantity * sale_price ELSE 0 END) AS month_sale,
+            SUM(CASE WHEN MONTH(created_date) = MONTH(NOW()) AND YEAR(created_date) = YEAR(NOW()) THEN quantity * (sale_price - cost_price) ELSE 0 END) AS month_profit
+        FROM sales_items
+        WHERE business_id = '" . $this->db->escape_str($business_id) . "'";
 
-
-		$query = "SELECT 
-		SUM(quantity * sale_price) AS total_sale,
-		SUM(quantity * (sale_price - cost_price)) AS total_profit
-		FROM 
-		sales_items
-		WHERE 
-		business_id = '" . $this->session->userdata("business_id") . "'
-		 AND MONTH(created_date) = MONTH(NOW())
-		AND YEAR(created_date) = YEAR(NOW())";
-		$this->data['current_month_sale_profit'] = $this->db->query($query)->row();
+		$this->data['profit_summary'] = $this->db->query($query)->row();
 
 		$this->load->view("sale_point/sale_reports", $this->data);
 	}
+
+
 
 	public function receipt_list()
 	{
