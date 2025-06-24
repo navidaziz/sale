@@ -532,6 +532,7 @@
 		}).done(function(data) {
 			$('#item_list').html(data);
 			get_user_sale_summary();
+			$('#tags').val('');
 			$('#error_message_sale').delay(5000).fadeOut('slow');
 		});
 

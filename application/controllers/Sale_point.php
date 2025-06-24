@@ -222,8 +222,8 @@ class Sale_point extends Admin_Controller
                 <th>Name</th>
                 
                 <th>Price</th>
-                <th>Discount</th>
-                <th>Sale Price</th>
+                <!-- <th>Discount</th>
+                <th>Sale Price</th> --!>
                 <th >Quantity</th>
                 <th>Total</th>
               </tr>';
@@ -237,15 +237,17 @@ class Sale_point extends Admin_Controller
 			}
 
 			$user_item_list .= '
-			<th>' . ucwords($sales_items_user_list->name) . '</th>
 			<th>' . $sales_items_user_list->item_code_no . '</th>
+			<th>' . ucwords($sales_items_user_list->name) . '</th>
+			
                    
                     <th><input min="' . $sales_items_user_list->cost_price . '" id="user_item_unit_price_' . $sales_items_user_list->id . '" inputmode="decimal" enterkeyhint="done"  onkeydown="update_user_item_unit_price(\'' . $sales_items_user_list->id . '\')" type="text" name="unit_price" value="' . $sales_items_user_list->unit_price . '" style="width:60px" /></th>
 					</th>
-                    <th>
+                    <!-- <th>
                     <input min="' . $sales_items_user_list->unit_price . '" id="user_item_discount_' . $sales_items_user_list->id . '" inputmode="decimal" enterkeyhint="done"  onkeydown="update_user_item_discount(\'' . $sales_items_user_list->id . '\')" type="text" name="discount" value="' . $sales_items_user_list->discount . '" style="width:60px" /></th>
                    
                     <th>' . $sales_items_user_list->sale_price . '</th>
+					--!>
                     <th><input id="user_item_' . $sales_items_user_list->id . '" inputmode="decimal" enterkeyhint="done"  onkeydown="update_user_item_quantity(\'' . $sales_items_user_list->id . '\')" type="text" name="quantity" value="' . $sales_items_user_list->quantity . '" style="width:60px" /></th>
                     <th>' . $sales_items_user_list->total_price . '</th>
 
@@ -715,19 +717,25 @@ class Sale_point extends Admin_Controller
 		AND business_id = ?
 		AND status IN (1) ORDER BY `name` ASC';
 		$category_items_list = $this->db->query($query, [$like_category, $business_id])->result();
+		echo '<div id="categoryListWrapper">';
 		echo '<ul class="list-group">';
 		foreach ($category_items_list as $item) {
-			if ($item->total_quantity < 1) {
-				$stock = ' color:red; text-decoration: line-through; ';
-			} else {
-				$stock = '';
-			}
+			$stock = ($item->total_quantity < 1) ? ' color:red; text-decoration: line-through; ' : '';
 			$item_name = htmlspecialchars($item->name, ENT_QUOTES, 'UTF-8');
-			echo '<li class="list-group-item" style="' . $stock . '" onclick="addItems(\'' . $item_name . '\')">
-            <strong>' . htmlspecialchars($item->item_code_no, ENT_QUOTES, 'UTF-8') . '</strong> - ' . $item_name . '
-			- ' . $item->total_quantity . '
-          </li>';
+			echo '<li class="list-group-item" style="' . $stock . '" ondblclick="addItems(\'' . $item_name . '\')">
+        <strong>' . htmlspecialchars($item->item_code_no, ENT_QUOTES, 'UTF-8') . '</strong> - ' . $item_name . '
+        - ' . $item->total_quantity . '
+    </li>';
 		}
 		echo '</ul>';
+		echo '</div>
+		<script>
+    // Automatically hide the list after 10 seconds
+    setTimeout(function () {
+        document.getElementById("categoryListWrapper").style.display = "none";
+    }, 10000); // 10000 ms = 10 seconds
+</script>
+		'; // Closing the wrapper div
+
 	}
 }
