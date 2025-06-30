@@ -187,4 +187,6 @@ class Reports extends Admin_Controller
         $this->data["view"] =  "reports/stock/low_stock_items";
         $this->load->view("layout", $this->data);
     }
+
+    
 }
