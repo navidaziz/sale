@@ -105,7 +105,7 @@
             <th>#</th>
             <th>Date</th>
             <th>Total Sale</th>
-            <th>Profie</th>
+            <th>Profit</th>
 
           </tr>
           <?php echo $this->sessopn ?>

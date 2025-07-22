@@ -105,7 +105,8 @@
             <th>#</th>
             <th>Date</th>
             <th>Total Sale</th>
-            <th>Profie</th>
+            <th>Items Amount</th>
+            <th>Profit</th>
 
           </tr>
           <?php echo $this->sessopn ?>
@@ -116,15 +117,21 @@
           $count = 1;
           $total_sale = 0.00;
           $total_profit = 0.00;
-          foreach ($today_items_sales as $report) { ?>
+          foreach ($today_items_sales as $report) {
+
+            $profit = round($report->item_sale_total - $report->item_cost_total);
+            $total_profit +=  $profit;
+          ?>
             <tr>
               <td><?php echo $count++; ?></td>
               <td><?php echo date('d M, Y', strtotime($report->created_date)); ?></td>
               <td><?php echo $report->item_sale_total;
                   $total_sale += $report->item_sale_total;
                   ?></td>
-              <td><?php echo $report->item_sale_total - $report->item_cost_total;
-                  $total_profit += ($report->item_sale_total - $report->item_cost_total);
+              <td><?php echo $profit ?></td>
+
+              <td><?php echo $report->item_sale_total -  $profit;
+
                   ?></td>
 
             </tr>
@@ -135,6 +142,7 @@
 
             <th colspan="2" style="text-align: right;">Total (Rs)</th>
             <th><?php echo $total_sale; ?></th>
+            <th><?php echo $total_sale - $total_profit; ?></th>
             <th><?php echo $total_profit; ?></th>
 
           </tr>
