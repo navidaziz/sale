@@ -118,21 +118,17 @@
           $total_sale = 0.00;
           $total_profit = 0.00;
           foreach ($today_items_sales as $report) {
-
-            $profit = round($report->item_sale_total - $report->item_cost_total);
+            $sale = round($report->item_sale_total, 2);
+            $total_sale += $sale;
+            $profit = round(($report->item_sale_total - $report->item_cost_total), 2);
             $total_profit +=  $profit;
           ?>
             <tr>
               <td><?php echo $count++; ?></td>
               <td><?php echo date('d M, Y', strtotime($report->created_date)); ?></td>
-              <td><?php echo $report->item_sale_total;
-                  $total_sale += $report->item_sale_total;
-                  ?></td>
+              <td><?php echo $sale ?></td>
+              <td><?php echo $sale - $profit; ?></td>
               <td><?php echo $profit ?></td>
-
-              <td><?php echo $report->item_sale_total -  $profit;
-
-                  ?></td>
 
             </tr>
           <?php } ?>
