@@ -260,8 +260,7 @@
               </tbody>
               <tfoot>
                 <tr>
-                  <th colspan="1" style="text-align:right;">Total:</th>
-                  <th colspan="5"></th>
+                  <th colspan="6" style="text-align:right;">Total:</th>
                   <th><?php echo number_format($total_amount, 2); ?></th>
 
                 </tr>
