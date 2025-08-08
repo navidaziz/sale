@@ -234,6 +234,7 @@
                   <th><?php echo $this->lang->line('expense_title'); ?></th>
                   <th><?php echo $this->lang->line('expense_description'); ?></th>
                   <th><?php echo $this->lang->line('expense_attachment'); ?></th>
+                  <th>Date</th>
                   <th><?php echo $this->lang->line('expense_amount'); ?></th>
                 </tr>
               </thead>
@@ -250,6 +251,7 @@
                     <td><?php echo $expense->expense_type; ?></td>
                     <td><?php echo $expense->expense_title; ?></td>
                     <td><?php echo $expense->expense_description; ?></td>
+                    <td><?php echo date('d M, Y', strtotime($expense->expense_date)); ?></td>
                     <td><?php echo file_type(base_url("assets/uploads/" . $expense->expense_attachment)); ?></td>
 
                     <td><?php echo number_format($expense->expense_amount, 2); ?></td>
@@ -259,7 +261,7 @@
               <tfoot>
                 <tr>
                   <th colspan="1" style="text-align:right;">Total:</th>
-                  <th colspan="4"></th>
+                  <th colspan="5"></th>
                   <th><?php echo number_format($total_amount, 2); ?></th>
 
                 </tr>
