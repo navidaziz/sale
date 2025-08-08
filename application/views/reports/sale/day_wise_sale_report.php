@@ -157,7 +157,7 @@
             <th><?php echo $total_sale - $total_profit; ?></th>
             <th><?php echo $total_profit; ?></th>
             <th><?php echo $total_expense; ?></th>
-            <th><?php echo $$net_profit_total; ?></th>
+            <th><?php echo $net_profit_total; ?></th>
 
           </tr>
 
