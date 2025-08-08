@@ -251,9 +251,9 @@
                     <td><?php echo $expense->expense_type; ?></td>
                     <td><?php echo $expense->expense_title; ?></td>
                     <td><?php echo $expense->expense_description; ?></td>
-                    <td><?php echo date('d M, Y', strtotime($expense->expense_date)); ?></td>
-                    <td><?php echo file_type(base_url("assets/uploads/" . $expense->expense_attachment)); ?></td>
 
+                    <td><?php echo file_type(base_url("assets/uploads/" . $expense->expense_attachment)); ?></td>
+                    <td><?php echo date('d M, Y', strtotime($expense->expense_date)); ?></td>
                     <td><?php echo number_format($expense->expense_amount, 2); ?></td>
                   </tr>
                 <?php endforeach; ?>
