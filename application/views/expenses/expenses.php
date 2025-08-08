@@ -124,6 +124,21 @@
               ?>
               <?php echo form_error("expense_description", "<p class=\"text-danger\">", "</p>"); ?> </div>
           </div>
+
+
+
+          <div class="form-group">
+            <label for="expense_date" class="col-md-2 control-label">Date</label>
+            <div class="col-md-10">
+              <input type="date" name="expense_date" value="" id="expense_date" class="form-control" required="required" title="Expense Date" placeholder="Expense Date">
+            </div>
+          </div>
+
+
+
+
+
+
           <div class="form-group">
             <?php
             $label = array(
@@ -206,8 +221,8 @@
     <div class="col-md-8">
       <div class="box border blue" id="messenger">
         <div class="box-title">
-          <h4 class="pull-left">Today Expenses List</h4>
-          <h4 class="pull-right" style="color:#FF0 !important;"><em>Today Total Expenses: Rs</em> <?php echo $total_expenses; ?></h4>
+          <h4 class="pull-left">Current Month Expenses List</h4>
+
         </div>
         <div class="box-body">
           <div class="table-responsive">
@@ -215,36 +230,43 @@
               <thead>
                 <tr>
                   <td>#</td>
-                  <th><?php echo $this->lang->line('expense_amount'); ?></th>
+                  <th><?php echo $this->lang->line('expense_type'); ?></th>
                   <th><?php echo $this->lang->line('expense_title'); ?></th>
                   <th><?php echo $this->lang->line('expense_description'); ?></th>
                   <th><?php echo $this->lang->line('expense_attachment'); ?></th>
-                  <th><?php echo $this->lang->line('expense_type'); ?></th>
-
-
+                  <th><?php echo $this->lang->line('expense_amount'); ?></th>
                 </tr>
               </thead>
               <tbody>
                 <?php
-                $count = 0;
+                $count = 1; // Start numbering from 1
+                $total_amount = 0; // Variable to store total
 
-                foreach ($expenses as $expense): ?>
+                foreach ($expenses as $expense):
+                  $total_amount += $expense->expense_amount; // Add to total
+                ?>
                   <tr>
                     <td><?php echo $count++; ?></td>
-                    <td><?php echo $expense->expense_amount; ?></td>
+                    <td><?php echo $expense->expense_type; ?></td>
                     <td><?php echo $expense->expense_title; ?></td>
                     <td><?php echo $expense->expense_description; ?></td>
-                    <td><?php
-                        echo file_type(base_url("assets/uploads/" . $expense->expense_attachment));
-                        ?></td>
-                    <td><?php echo $expense->expense_type; ?></td>
+                    <td><?php echo file_type(base_url("assets/uploads/" . $expense->expense_attachment)); ?></td>
 
-
+                    <td><?php echo number_format($expense->expense_amount, 2); ?></td>
                   </tr>
                 <?php endforeach; ?>
               </tbody>
+              <tfoot>
+                <tr>
+                  <th colspan="1" style="text-align:right;">Total:</th>
+                  <th colspan="4"></th>
+                  <th><?php echo number_format($total_amount, 2); ?></th>
+
+                </tr>
+              </tfoot>
             </table>
-            <?php echo $pagination; ?>
+
+
           </div>
         </div>
       </div>

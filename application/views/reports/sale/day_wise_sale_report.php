@@ -107,7 +107,7 @@
             <th>Total Sale</th>
             <th>Items Amount</th>
             <th>Profit</th>
-
+            <th>Expenses</th>
           </tr>
           <?php echo $this->sessopn ?>
         </thead>
@@ -129,6 +129,17 @@
               <td><?php echo $sale ?></td>
               <td><?php echo $sale - $profit; ?></td>
               <td><?php echo $profit ?></td>
+              <?php
+
+              $query = "SELECT SUM(`expense_amount`) AS `total_expense` 
+              FROM `expenses` WHERE `expense_date` = '" . date('Y-m-d', strtotime($report->created_date)) . "'";
+              $expense = $this->db->query($query)->result()[0]->total_expense;
+              $expense = $expense ? $expense : 0.00;
+              $total_expense += $expense;
+
+              ?>
+              <td></td>
+
 
             </tr>
           <?php } ?>
@@ -140,6 +151,7 @@
             <th><?php echo $total_sale; ?></th>
             <th><?php echo $total_sale - $total_profit; ?></th>
             <th><?php echo $total_profit; ?></th>
+            <th><?php echo $total_expense; ?></th>
 
           </tr>
 

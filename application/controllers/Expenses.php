@@ -61,10 +61,10 @@ class Expenses extends Admin_Controller
     {
         $start_date = $this->input->post("start_date");
         $end_date = $this->input->post("end_date");
-        $where = "`expenses`.`status` IN (0, 1) AND DATE(`expenses`.`created_date`) BETWEEN '" . $start_date . "' AND '" . $end_date . "'";
+        $where = "`expenses`.`status` IN (0, 1) AND DATE(`expenses`.`expense_date`) BETWEEN '" . $start_date . "' AND '" . $end_date . "'";
         $expenses = $this->expense_model->get_expense_list($where, false);
 
-        $query = "Select sum(`expense_amount`) as total_expenses FROM `expenses` WHERE `expenses`.`status` IN (0, 1) AND DATE(`expenses`.`created_date`) BETWEEN '" . $start_date . "' AND '" . $end_date . "'";
+        $query = "Select sum(`expense_amount`) as total_expenses FROM `expenses` WHERE `expenses`.`status` IN (0, 1) AND DATE(`expenses`.`expense_date`) BETWEEN '" . $start_date . "' AND '" . $end_date . "'";
         $result = $this->db->query($query);
         $total_expenses = $result->result()[0]->total_expenses;
         $this->data['total_expenses'] = $total_expenses;
@@ -86,18 +86,21 @@ class Expenses extends Admin_Controller
         $business_id = $this->session->userdata("business_id");
 
         $this->data["expense_types"] = $this->expense_model->getList("expense_types", "expense_type_id", "expense_type", $where = "business_id = $business_id");
-        $today = date("Y-m-d", time());
+        $month = date("m", time());
+        $year = date("Y", time());
 
         $where = "`expenses`.`status` IN (0, 1) 
         AND `expenses`.business_id = '" . $business_id . "'
-        AND DATE(`expenses`.`created_date`) = '" . $today . "'";
+        AND MONTH(`expenses`.`expense_date`) = '" . $month . "'
+        AND YEAR(`expenses`.`created_date`) = '" . $year . "'";
         $data = $this->expense_model->get_expense_list($where);
 
 
-        $query = "Select sum(`expense_amount`) as total_expenses FROM `expenses`
+        $query = "Select sum(`expense_date`) as total_expenses FROM `expenses`
         WHERE `expenses`.`status` IN (0, 1) 
         AND business_id = '" . $business_id . "'
-         AND DATE(`expenses`.`created_date`) = '" . $today . "'";
+        AND MONTH(`expenses`.`created_date`) = '" . $month . "'
+        AND MONTH(`expenses`.`created_date`) = '" . $year . "'";
         $result = $this->db->query($query);
         $total_expenses = $result->result()[0]->total_expenses;
         $this->data['total_expenses'] = $total_expenses;

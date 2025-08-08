@@ -51,16 +51,18 @@ class Expense_model extends MY_Model
     {
         $inputs = array();
 
-        $inputs['business_id']  = $this->session->userdata("business_id");
+        $business_id = $this->session->userdata("business_id");
+        $inputs['business_id']  = $business_id;
 
         $inputs["expense_type_id"]  =  $this->input->post("expense_type_id");
 
         $inputs["expense_amount"]  =  $this->input->post("expense_amount");
 
         $inputs["expense_title"]  =  $this->input->post("expense_title");
+        $inputs["expense_date"]  =  $this->input->post("expense_date");
 
         $inputs["expense_description"]  =  $this->input->post("expense_description");
-        $inputs['created_date'] = date('Y-m-d H:i:s');
+        //$inputs['created_date'] = date('Y-m-d H:i:s');
 
         if ($_FILES["expense_attachment"]["size"] > 0) {
             $inputs["expense_attachment"]  =  $this->router->fetch_class() . "/" . $this->input->post("expense_attachment");
@@ -72,15 +74,16 @@ class Expense_model extends MY_Model
     public function update_data($expense_id, $image_field = NULL)
     {
         $inputs = array();
-        $inputs['business_id']  = $this->session->userdata("business_id");
+        $business_id = $this->session->userdata("business_id");
+        $inputs['business_id']  = $business_id;
         $inputs["expense_type_id"]  =  $this->input->post("expense_type_id");
-
+        $inputs["expense_date"]  =  $this->input->post("expense_date");
         $inputs["expense_amount"]  =  $this->input->post("expense_amount");
 
         $inputs["expense_title"]  =  $this->input->post("expense_title");
 
         $inputs["expense_description"]  =  $this->input->post("expense_description");
-        $inputs['created_date'] = date('Y-m-d H:i:s');
+        //$inputs['created_date'] = date('Y-m-d H:i:s');
 
         if ($_FILES["expense_attachment"]["size"] > 0) {
             //remove previous file....
