@@ -108,6 +108,7 @@
             <th>Items Amount</th>
             <th>Profit</th>
             <th>Expenses</th>
+            <th>Net Income</th>
           </tr>
           <?php echo $this->sessopn ?>
         </thead>
@@ -135,10 +136,14 @@
               FROM `expenses` WHERE `expense_date` = '" . date('Y-m-d', strtotime($report->created_date)) . "'";
               $expense = $this->db->query($query)->result()[0]->total_expense;
               $expense = $expense ? $expense : 0.00;
+
               $total_expense += $expense;
+              $net_profit = $profit - $expense;
+              $net_profit_total += $net_profit;
 
               ?>
-              <td></td>
+              <td><?php echo $expense; ?></td>
+              <td><?php echo $net_profit; ?></td>
 
 
             </tr>
@@ -152,6 +157,7 @@
             <th><?php echo $total_sale - $total_profit; ?></th>
             <th><?php echo $total_profit; ?></th>
             <th><?php echo $total_expense; ?></th>
+            <th><?php echo $$net_profit_total; ?></th>
 
           </tr>
 
