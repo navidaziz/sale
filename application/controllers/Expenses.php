@@ -93,7 +93,7 @@ class Expenses extends Admin_Controller
         AND `expenses`.business_id = '" . $business_id . "'
         AND MONTH(`expenses`.`expense_date`) = '" . $month . "'
         AND YEAR(`expenses`.`created_date`) = '" . $year . "'";
-        $data = $this->expense_model->get_expense_list($where);
+        $this->data["expenses"] = $this->expense_model->get_expense_list($where, false);
 
 
         $query = "Select sum(`expense_date`) as total_expenses FROM `expenses`
@@ -105,8 +105,6 @@ class Expenses extends Admin_Controller
         $total_expenses = $result->result()[0]->total_expenses;
         $this->data['total_expenses'] = $total_expenses;
 
-        $this->data["expenses"] = $data->expenses;
-        $this->data["pagination"] = $data->pagination;
         $this->data["title"] = $this->lang->line('Expenses');
         $this->data["view"] = "expenses/expenses";
         $this->load->view("layout", $this->data);
