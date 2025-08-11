@@ -159,10 +159,10 @@
             </th>
             <th><?php echo $total_profit; ?>
               <br />
-              - <?php
-                $profit_margin =  ($total_profit / $total_sale) * 100;
-                echo 'Margin  % ≈' . $profit_margin . ' %';
-                ?>
+              - <small><?php
+                        $profit_margin =  ($total_profit / $total_sale) * 100;
+                        echo 'Margin  % ≈' . round($profit_margin, 2) . ' %';
+                        ?></small>
             </th>
             <th><?php echo $total_expense; ?></th>
             <th><?php echo $net_profit_total; ?></th>
