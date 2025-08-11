@@ -159,9 +159,9 @@
             </th>
             <th><?php echo $total_profit; ?>
               <br />
-              - <small><?php
+              <small><?php
                         $profit_margin =  ($total_profit / $total_sale) * 100;
-                        echo 'Margin  % ≈' . round($profit_margin, 2) . ' %';
+                        echo 'Margin  % ≈ ' . round($profit_margin, 2) . ' %';
                         ?></small>
             </th>
             <th><?php echo $total_expense; ?></th>
