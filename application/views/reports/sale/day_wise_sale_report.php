@@ -154,8 +154,16 @@
 
             <th colspan="2" style="text-align: right;">Total (Rs)</th>
             <th><?php echo $total_sale; ?></th>
-            <th><?php echo $total_sale - $total_profit; ?></th>
-            <th><?php echo $total_profit; ?></th>
+            <th><?php echo $total_sale - $total_profit; ?>
+
+            </th>
+            <th><?php echo $total_profit; ?>
+              <br />
+              - <?php
+                $profit_margin =  ($total_profit / $total_sale) * 100;
+                echo 'Margin  % ≈' . $profit_margin . ' %';
+                ?>
+            </th>
             <th><?php echo $total_expense; ?></th>
             <th><?php echo $net_profit_total; ?></th>
 
