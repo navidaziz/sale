@@ -277,6 +277,13 @@
                             <!-- Vertical Tabs -->
                             <div class="col-md-2">
                                 <ul class="nav nav-pills nav-stacked">
+                                    <li class="list-group-item  <?php if ($item_category == NULL) {
+                                                                    echo ' active ';
+                                                                } ?> ">
+                                        <a href=" <?php echo site_url("items/view") ?>" style="cursor: pointer; padding: 0px;">
+                                            <?php echo $category->category; ?>
+                                        </a>
+                                    </li>
                                     <?php
                                     $business_id = $this->session->userdata('business_id');
                                     $query = "SELECT category, COUNT(*) as total FROM `items` 
@@ -286,9 +293,9 @@
                                     $item_category = $this->input->get('category');
                                     foreach ($categories as $category) {
                                     ?>
-                                        <li class="list-group-item" <?php if ($item_category == $category->category) {
-                                                                        echo ' class="active" ';
-                                                                    } ?>>
+                                        <li class="list-group-item  <?php if ($item_category == $category->category) {
+                                                                        echo ' active ';
+                                                                    } ?> ">
                                             <a href="<?php echo site_url("items/view") ?>?category=<?php echo $category->category; ?>"
                                                 style="cursor: pointer; padding: 0px;">
                                                 <?php echo $category->category; ?> (<?php echo $category->total; ?>)
