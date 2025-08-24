@@ -103,6 +103,7 @@
             <th>#</th>
             <th>Date</th>
             <th>Item Name</th>
+            <th>Item Code</th>
             <th>Cost Price</th>
             <th>Unit Price</th>
             <th>Discount</th>
@@ -122,6 +123,7 @@
               <td><?php echo $count++; ?></td>
               <td><?php echo date('d M, Y', strtotime($report->created_date)); ?></td>
               <td><?php echo $report->item_name; ?></td>
+              <td><?php echo $report->item_code; ?></td>
               <td><?php echo $report->cost_price; ?></td>
               <td><?php echo $report->unit_price; ?></td>
               <td><?php echo $report->item_discount; ?></td>
