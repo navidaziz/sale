@@ -285,7 +285,7 @@
                                         </a>
                                     </li>
                                     <?php
-                                    $category_count = 0;
+                                    $category_count = 1;
                                     $business_id = $this->session->userdata('business_id');
                                     $query = "SELECT category, COUNT(*) as total FROM `items` 
                                         WHERE status=1 
