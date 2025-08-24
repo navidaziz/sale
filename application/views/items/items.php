@@ -281,7 +281,7 @@
                                                                     echo ' active ';
                                                                 } ?> ">
                                         <a href=" <?php echo site_url("items/view") ?>" style="cursor: pointer; padding: 0px;">
-                                            All Items
+                                            ALL ITEMS
                                         </a>
                                     </li>
                                     <?php
