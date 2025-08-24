@@ -272,7 +272,7 @@
                 <?php } else { ?>
                     <div class="table-responsive">
 
-                        <table id="item_table" class="table table-bordered" style="font-size: 12px;">
+                        <table id="item_table" class="table table-bordered table_small" style="font-size: 12px;">
                             <thead>
                                 <tr>
                                     <th>S/No</th>
