@@ -273,163 +273,157 @@
 
 
                     <div class="box-body">
-                        <div class="tabbable header-tabs">
-                            <ul class="nav nav-tabs">
-
-
-                                <?php
-                                $business_id = $this->session->userdata('business_id');
-                                $query = "SELECT category FROM `items` 
-                                WHERE status=1 
-                                AND business_id = $business_id GROUP BY category;";
-                                $categories = $this->db->query($query)->result();
-                                $item_category = $this->input->get('category');
-                                foreach ($categories as $category) {
-                                ?>
-                                    <li <?php if ($item_category == $category) {
-                                            echo ' class="active" ';
-                                        } ?>>
-
-                                        <a href="<?php echo site_url(ADMIN_DIR . "items/view/" . $category->category) ?>?category=<?php echo $category->category; ?>"
-                                            contenteditable="false" style="cursor: pointer; padding: 7px 8px;">
-                                            <span
-                                                class="hidden-inline-mobile"><?php echo $category->category; ?></span></a>
-                                    </li>
-                                <?php } ?>
-
-
-
-
-                            </ul>
-                        </div>
-                        <div class="tab-content">
-                            <div class="tab-pane fade in active" id="box_tab3">
-                                <!-- TAB 1 -->
-                                <div class="row">
-                                    <div class="col-md-12">
-
-
-                                    </div>
-
-                                </div>
-                                <hr class="margin-bottom-0">
-
+                        <div class="row">
+                            <!-- Vertical Tabs -->
+                            <div class="col-md-3">
+                                <ul class="nav nav-pills nav-stacked">
+                                    <?php
+                                    $business_id = $this->session->userdata('business_id');
+                                    $query = "SELECT category FROM `items` 
+                                        WHERE status=1 
+                                        AND business_id = $business_id GROUP BY category;";
+                                    $categories = $this->db->query($query)->result();
+                                    $item_category = $this->input->get('category');
+                                    foreach ($categories as $category) {
+                                    ?>
+                                        <li class="list-group-item" <?php if ($item_category == $category->category) {
+                                                                        echo ' class="active" ';
+                                                                    } ?>>
+                                            <a href="<?php echo site_url(ADMIN_DIR . "items/view/" . $category->category) ?>?category=<?php echo $category->category; ?>"
+                                                style="cursor: pointer; padding: 10px;">
+                                                <?php echo $category->category; ?>
+                                            </a>
+                                        </li>
+                                    <?php } ?>
+                                </ul>
                             </div>
 
+                            <!-- Tab Content -->
+                            <div class="col-md-9">
+                                <div class="tab-content">
+                                    <div class="tab-pane fade in active" id="box_tab3">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="table-responsive">
 
+                                                    <table id="item_table" class="table table-bordered table_small" style="font-size: 12px;">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>S/No</th>
+                                                                <th>Item Name</th>
+                                                                <th>Category</th>
+                                                                <th>Unit</th>
+                                                                <th>Bar Code</th>
+                                                                <th>Cost Price</th>
+                                                                <th>Unit Price</th>
+                                                                <th>Profit</th>
+                                                                <th>Profit %</th>
+                                                                <th>Discount</th>
+                                                                <th>Sale Price (Unit)</th>
+                                                                <th>In Stock</th>
+                                                                <th>Total Cost</th>
+                                                                <th>Total Sale</th>
+                                                                <th>Expected Profit</th>
+                                                                <th>Item Saled</th>
+                                                                <th>Status</th>
+                                                                <th>Action</th>
+                                                                <th>Inventory</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <?php
+                                                            $count = 1;
+                                                            $grand_total_cost = 0;
+                                                            $grand_total_sale = 0;
+                                                            $grand_expected_profit = 0;
+
+                                                            foreach ($items as $item) :
+                                                                $stock_total = $item->cost_price * $item->total_quantity;
+                                                                $sale_total = $item->sale_price * $item->total_quantity;
+                                                                $expected_profit = $sale_total - $stock_total;
+
+                                                                $grand_total_cost += $stock_total;
+                                                                $grand_total_sale += $sale_total;
+                                                                $grand_expected_profit += $expected_profit;
+                                                            ?>
+                                                                <tr>
+                                                                    <td><?= $count++; ?></td>
+                                                                    <td><?= $item->name; ?></td>
+                                                                    <td><?= $item->category; ?></td>
+                                                                    <td><?= $item->unit; ?></td>
+                                                                    <td><?= $item->item_code_no; ?></td>
+                                                                    <td><span id="costPrice_<?= $item->item_id; ?>"><?= $item->cost_price; ?></span></td>
+                                                                    <td><span id="unitPrice_<?= $item->item_id; ?>"><?= $item->unit_price; ?></span></td>
+                                                                    <td>
+                                                                        <?php
+                                                                        if ($item->cost_price > 0) {
+                                                                            echo ($item->unit_price - $item->cost_price);
+                                                                        }
+                                                                        ?>
+                                                                    </td>
+                                                                    <td>
+                                                                        <?php
+                                                                        if ($item->cost_price > 0) {
+                                                                            echo round((($item->unit_price - $item->cost_price) * 100 / $item->cost_price), 1) . "%";
+                                                                        }
+                                                                        ?>
+                                                                    </td>
+                                                                    <td><?= $item->discount; ?></td>
+                                                                    <td><?= $item->sale_price; ?></td>
+                                                                    <td><?= $item->total_quantity; ?></td>
+                                                                    <td><?= $stock_total; ?></td>
+                                                                    <td><?= $sale_total; ?></td>
+                                                                    <td><?= $expected_profit; ?></td>
+                                                                    <td><?php echo $item->item_saled; ?></td>
+                                                                    <td>
+                                                                        <?= status($item->status, $this->lang); ?>
+                                                                        <?php
+                                                                        $page = $this->uri->segment(4) ?: 0;
+                                                                        if ($item->status == 0) {
+                                                                            echo "<a href='" . site_url("items/publish/{$item->item_id}/{$page}") . "'> &nbsp;" . $this->lang->line('Publish') . "</a>";
+                                                                        } elseif ($item->status == 1) {
+                                                                            echo "<a href='" . site_url("items/draft/{$item->item_id}/{$page}") . "'> &nbsp;" . $this->lang->line('Draft') . "</a>";
+                                                                        }
+                                                                        ?>
+                                                                    </td>
+                                                                    <td>
+                                                                        <button class="btn btn-success btn-xs" onclick="get_item_form('<?= $item->item_id ?>')">Edit</button>
+                                                                        <a class="llink llink-trash" href="<?= site_url("items/trash/{$item->item_id}/" . $this->uri->segment(4)); ?>"><i class="fa fa-trash-o"></i></a>
+                                                                    </td>
+                                                                    <td>
+                                                                        <a onclick="get_item_detail('<?= $item->item_id; ?>')" href="#" data-toggle="modal" data-target="#exampleModal">
+                                                                            Inventory
+                                                                        </a>
+                                                                    </td>
+                                                                </tr>
+                                                            <?php endforeach; ?>
+                                                        </tbody>
+                                                        <tfoot>
+                                                            <tr>
+                                                                <th colspan="13" style="text-align:right">Grand Totals:</th>
+                                                                <th><?= number_format($grand_total_cost, 2); ?></th>
+                                                                <th><?= number_format($grand_total_sale, 2); ?></th>
+                                                                <th><?= number_format($grand_expected_profit, 2); ?></th>
+                                                                <th colspan="3"></th>
+                                                            </tr>
+                                                        </tfoot>
+                                                    </table>
+
+
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr class="margin-bottom-0">
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
 
-                    <div class="table-responsive">
 
-                        <table id="item_table" class="table table-bordered table_small" style="font-size: 12px;">
-                            <thead>
-                                <tr>
-                                    <th>S/No</th>
-                                    <th>Item Name</th>
-                                    <th>Category</th>
-                                    <th>Unit</th>
-                                    <th>Bar Code</th>
-                                    <th>Cost Price</th>
-                                    <th>Unit Price</th>
-                                    <th>Profit</th>
-                                    <th>Profit %</th>
-                                    <th>Discount</th>
-                                    <th>Sale Price (Unit)</th>
-                                    <th>In Stock</th>
-                                    <th>Total Cost</th>
-                                    <th>Total Sale</th>
-                                    <th>Expected Profit</th>
-                                    <th>Item Saled</th>
-                                    <th>Status</th>
-                                    <th>Action</th>
-                                    <th>Inventory</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                                $count = 1;
-                                $grand_total_cost = 0;
-                                $grand_total_sale = 0;
-                                $grand_expected_profit = 0;
-
-                                foreach ($items as $item) :
-                                    $stock_total = $item->cost_price * $item->total_quantity;
-                                    $sale_total = $item->sale_price * $item->total_quantity;
-                                    $expected_profit = $sale_total - $stock_total;
-
-                                    $grand_total_cost += $stock_total;
-                                    $grand_total_sale += $sale_total;
-                                    $grand_expected_profit += $expected_profit;
-                                ?>
-                                    <tr>
-                                        <td><?= $count++; ?></td>
-                                        <td><?= $item->name; ?></td>
-                                        <td><?= $item->category; ?></td>
-                                        <td><?= $item->unit; ?></td>
-                                        <td><?= $item->item_code_no; ?></td>
-                                        <td><span id="costPrice_<?= $item->item_id; ?>"><?= $item->cost_price; ?></span></td>
-                                        <td><span id="unitPrice_<?= $item->item_id; ?>"><?= $item->unit_price; ?></span></td>
-                                        <td>
-                                            <?php
-                                            if ($item->cost_price > 0) {
-                                                echo ($item->unit_price - $item->cost_price);
-                                            }
-                                            ?>
-                                        </td>
-                                        <td>
-                                            <?php
-                                            if ($item->cost_price > 0) {
-                                                echo round((($item->unit_price - $item->cost_price) * 100 / $item->cost_price), 1) . "%";
-                                            }
-                                            ?>
-                                        </td>
-                                        <td><?= $item->discount; ?></td>
-                                        <td><?= $item->sale_price; ?></td>
-                                        <td><?= $item->total_quantity; ?></td>
-                                        <td><?= $stock_total; ?></td>
-                                        <td><?= $sale_total; ?></td>
-                                        <td><?= $expected_profit; ?></td>
-                                        <td><?php echo $item->item_saled; ?></td>
-                                        <td>
-                                            <?= status($item->status, $this->lang); ?>
-                                            <?php
-                                            $page = $this->uri->segment(4) ?: 0;
-                                            if ($item->status == 0) {
-                                                echo "<a href='" . site_url("items/publish/{$item->item_id}/{$page}") . "'> &nbsp;" . $this->lang->line('Publish') . "</a>";
-                                            } elseif ($item->status == 1) {
-                                                echo "<a href='" . site_url("items/draft/{$item->item_id}/{$page}") . "'> &nbsp;" . $this->lang->line('Draft') . "</a>";
-                                            }
-                                            ?>
-                                        </td>
-                                        <td>
-                                            <button class="btn btn-success btn-xs" onclick="get_item_form('<?= $item->item_id ?>')">Edit</button>
-                                            <a class="llink llink-trash" href="<?= site_url("items/trash/{$item->item_id}/" . $this->uri->segment(4)); ?>"><i class="fa fa-trash-o"></i></a>
-                                        </td>
-                                        <td>
-                                            <a onclick="get_item_detail('<?= $item->item_id; ?>')" href="#" data-toggle="modal" data-target="#exampleModal">
-                                                Inventory
-                                            </a>
-                                        </td>
-                                    </tr>
-                                <?php endforeach; ?>
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <th colspan="13" style="text-align:right">Grand Totals:</th>
-                                    <th><?= number_format($grand_total_cost, 2); ?></th>
-                                    <th><?= number_format($grand_total_sale, 2); ?></th>
-                                    <th><?= number_format($grand_expected_profit, 2); ?></th>
-                                    <th colspan="3"></th>
-                                </tr>
-                            </tfoot>
-                        </table>
-
-
-
-
-                    </div>
                 <?php } ?>
 
             </div>
