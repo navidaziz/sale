@@ -290,10 +290,10 @@
                                             echo ' class="active" ';
                                         } ?>>
 
-                                        <a href="<?php echo site_url(ADMIN_DIR . "items/view/" . $category) ?>?category=<?php echo $category; ?>"
+                                        <a href="<?php echo site_url(ADMIN_DIR . "items/view/" . $category->category) ?>?category=<?php echo $category->category; ?>"
                                             contenteditable="false" style="cursor: pointer; padding: 7px 8px;">
                                             <span
-                                                class="hidden-inline-mobile"><?php echo $category; ?></span></a>
+                                                class="hidden-inline-mobile"><?php echo $category->category; ?></span></a>
                                     </li>
                                 <?php } ?>
 
