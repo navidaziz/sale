@@ -299,7 +299,7 @@
                                                                     } ?> ">
                                             <a href="<?php echo site_url("items/view") ?>?category=<?php echo $category->category; ?>"
                                                 style="cursor: pointer; padding: 0px;">
-                                                <?php echo $category_count . ". " . $category->category; ?> (<?php echo $category->total; ?>)
+                                                <?php echo $category_count++ . ". " . $category->category; ?> (<?php echo $category->total; ?>)
                                             </a>
                                         </li>
                                     <?php } ?>
