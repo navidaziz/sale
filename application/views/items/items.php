@@ -275,7 +275,7 @@
                     <div class="box-body">
                         <div class="row">
                             <!-- Vertical Tabs -->
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <ul class="nav nav-pills nav-stacked">
                                     <?php
                                     $business_id = $this->session->userdata('business_id');
@@ -299,7 +299,7 @@
                             </div>
 
                             <!-- Tab Content -->
-                            <div class="col-md-9">
+                            <div class="col-md-10">
                                 <div class="tab-content">
                                     <div class="tab-pane fade in active" id="box_tab3">
                                         <div class="row">
