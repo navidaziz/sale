@@ -281,7 +281,7 @@
                                     $business_id = $this->session->userdata('business_id');
                                     $query = "SELECT category, COUNT(*) as total FROM `items` 
                                         WHERE status=1 
-                                        AND business_id = $business_id GROUP BY category ORDER BY category ASC;";
+                                        AND business_id = $business_id GROUP BY category ORDER BY TRIM(category) ASC;";
                                     $categories = $this->db->query($query)->result();
                                     $item_category = $this->input->get('category');
                                     foreach ($categories as $category) {
