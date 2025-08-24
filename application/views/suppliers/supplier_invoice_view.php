@@ -305,6 +305,7 @@
 						<thead>
 							<th>#</th>
 							<th>Item Name</th>
+							<th>Item Code</th>
 							<th>Cost Price</th>
 							<th>Unit Price</th>
 							<th>Quantity</th>
@@ -323,6 +324,7 @@
 								<tr>
 									<td><?php echo $count++; ?></td>
 									<td><?php echo $inventory->name; ?></td>
+									<td><?php echo $inventory->item_code_no; ?></td>
 									<td><?php echo $inventory->item_cost_price; ?></td>
 									<td><?php echo $inventory->item_unit_price; ?></td>
 									<td><?php echo $inventory->inventory_transaction; ?></td>
