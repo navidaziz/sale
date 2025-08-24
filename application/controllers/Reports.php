@@ -74,7 +74,7 @@ class Reports extends Admin_Controller
         $business_id = $this->session->userdata('business_id');
 
         $query = "SELECT si.item_name, 
-        si.item_code, 
+        si.item_code_no, 
                      si.cost_price, 
                      si.unit_price, 
                      si.item_discount, 
@@ -188,6 +188,4 @@ class Reports extends Admin_Controller
         $this->data["view"] =  "reports/stock/low_stock_items";
         $this->load->view("layout", $this->data);
     }
-
-    
 }
