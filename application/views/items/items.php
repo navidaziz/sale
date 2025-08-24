@@ -289,7 +289,7 @@
                                         <li class="list-group-item" <?php if ($item_category == $category->category) {
                                                                         echo ' class="active" ';
                                                                     } ?>>
-                                            <a href="<?php echo site_url(ADMIN_DIR . "items/view/" . $category->category) ?>?category=<?php echo $category->category; ?>"
+                                            <a href="<?php echo site_url(ADMIN_DIR . "items/view") ?>?category=<?php echo $category->category; ?>"
                                                 style="cursor: pointer; padding: 0px;">
                                                 <?php echo $category->category; ?> (<?php echo $category->total; ?>)
                                             </a>

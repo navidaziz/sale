@@ -61,17 +61,24 @@ class Items extends Admin_Controller
     /**
      * get a list of all items that are not trashed
      */
-    public function view()
+    public function view($item_category = NULL)
     {
 
         //$where = "`items`.`status` IN (0, 1) ";
         //$data = $this->item_model->get_item_list($where);
         //$this->data["items"] = $data->items;
         //$this->data["pagination"] = $data->pagination;
+        if ($item_category) {
+            $this->data['item_category'] = $this->input->get('category');
+        }
         $business_id = $this->session->userdata("business_id");
         $query = "SELECT * FROM all_items WHERE `status` IN (0, 1) 
-        AND business_id = '" . $business_id . "'
-        ORDER BY category, name ASC";
+        AND business_id = '" . $business_id . "'";
+
+        if ($item_category) {
+            $query .= " AND category = '" . $item_category . "'";
+        }
+        $query .= " ORDER BY category, name ASC";
 
 
 
