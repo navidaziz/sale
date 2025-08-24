@@ -61,9 +61,10 @@ class Items extends Admin_Controller
     /**
      * get a list of all items that are not trashed
      */
-    public function view($item_category = NULL)
+    public function view()
     {
 
+        $item_category = $this->input->get('category');
         //$where = "`items`.`status` IN (0, 1) ";
         //$data = $this->item_model->get_item_list($where);
         //$this->data["items"] = $data->items;
