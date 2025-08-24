@@ -238,7 +238,7 @@ class Suppliers extends Admin_Controller
         $this->data["suppliers"] = $this->supplier_model->get_supplier($supplier_id, $where = array("suppliers.business_id" => $business_id));
         $this->data["title"] = $this->data["suppliers"][0]->supplier_name;
         $this->data["detail"] = "Mobile No: " . $this->data["suppliers"][0]->supplier_contact_no . " - Account No:" . $this->data["suppliers"][0]->account_number;
-        $query = "SELECT inventory.*, items.name, users.userTitle FROM inventory, items, users 
+        $query = "SELECT inventory.*, items.name, items.item_code_no, users.userTitle FROM inventory, items, users 
                   WHERE inventory.item_id = items.item_id
                   AND inventory.created_by = users.user_id
                   AND `supplier_invoice_id` = '" . $supplier_invoice_id . "'
