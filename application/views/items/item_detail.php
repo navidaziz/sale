@@ -271,6 +271,16 @@
                         </tbody>
                     </table>
 
+                    <div>
+                        <?php
+                        $query = "SELECT * FROM `sales_items` WHERE item_id = $item_id";
+                        $item_sales = $this->db->query($query)->result();
+                        var_dump($item_sales);
+                        ?>
+
+
+                    </div>
+
                 </div>
 
 

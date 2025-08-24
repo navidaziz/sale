@@ -395,6 +395,7 @@ class Items extends Admin_Controller
     function get_item_detail()
     {
         $item_id = (int) $this->input->post("item_id");
+        $this->data['item_id'] = $this->item_model->get($item_id);
         $business_id = $this->session->userdata("business_id");
         $query = "SELECT * FROM all_items WHERE item_id = '" . $item_id . "'
         AND business_id = '" . $business_id . "'";
