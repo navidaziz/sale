@@ -281,7 +281,7 @@
                                                                     echo ' active ';
                                                                 } ?> ">
                                         <a href=" <?php echo site_url("items/view") ?>" style="cursor: pointer; padding: 0px;">
-                                            <?php echo $category->category; ?>
+                                            All Items
                                         </a>
                                     </li>
                                     <?php
