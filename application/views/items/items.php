@@ -270,6 +270,57 @@
                     </div>
 
                 <?php } else { ?>
+
+
+                    <div class="box-body">
+                        <div class="tabbable header-tabs">
+                            <ul class="nav nav-tabs">
+
+
+                                <?php
+                                $business_id = $this->session->userdata('business_id');
+                                $query = "SELECT category FROM `items` 
+                                WHERE status=1 
+                                AND business_id = $business_id GROUP BY category;";
+                                $categories = $this->db->query($query)->result();
+                                $item_category = $this->input->get('category');
+                                foreach ($categories as $category) {
+                                ?>
+                                    <li <?php if ($item_category == $category) {
+                                            echo ' class="active" ';
+                                        } ?>>
+
+                                        <a href="<?php echo site_url(ADMIN_DIR . "items/view/" . $category) ?>?category=<?php echo $category; ?>"
+                                            contenteditable="false" style="cursor: pointer; padding: 7px 8px;">
+                                            <span
+                                                class="hidden-inline-mobile"><?php echo $category; ?></span></a>
+                                    </li>
+                                <?php } ?>
+
+
+
+
+                            </ul>
+                        </div>
+                        <div class="tab-content">
+                            <div class="tab-pane fade in active" id="box_tab3">
+                                <!-- TAB 1 -->
+                                <div class="row">
+                                    <div class="col-md-12">
+
+
+                                    </div>
+
+                                </div>
+                                <hr class="margin-bottom-0">
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+
                     <div class="table-responsive">
 
                         <table id="item_table" class="table table-bordered table_small" style="font-size: 12px;">
