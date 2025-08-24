@@ -123,7 +123,12 @@
               <td><?php echo $count++; ?></td>
               <td><?php echo date('d M, Y', strtotime($report->created_date)); ?></td>
               <td><?php echo $report->item_name; ?></td>
-              <td><?php echo $report->item_code_no; ?></td>
+              <td><?php
+
+                  $query = "SELECT item_code_no FROM items WHERE item_id = (SELECT item_id FROM sales_items WHERE item_name = '" . $report->item_name . "' LIMIT 1) LIMIT 1";
+                  $item_code = $this->db->query($query)->result()[0]->item_code_no;
+                  echo $item_code;
+                  ?></td>
               <td><?php echo $report->cost_price; ?></td>
               <td><?php echo $report->unit_price; ?></td>
               <td><?php echo $report->item_discount; ?></td>

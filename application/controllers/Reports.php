@@ -74,7 +74,6 @@ class Reports extends Admin_Controller
         $business_id = $this->session->userdata('business_id');
 
         $query = "SELECT si.item_name, 
-        si.item_code_no, 
                      si.cost_price, 
                      si.unit_price, 
                      si.item_discount, 
