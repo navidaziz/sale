@@ -309,7 +309,7 @@
                                                     <table id="item_table" class="table table-bordered table_small" style="font-size: 12px;">
                                                         <thead>
                                                             <tr>
-                                                                <th>S/No</th>
+                                                                <th>#</th>
                                                                 <th>Item Name</th>
                                                                 <th>Category</th>
                                                                 <th>Unit</th>
@@ -319,11 +319,11 @@
                                                                 <th>Profit</th>
                                                                 <th>Profit %</th>
                                                                 <th>Discount</th>
-                                                                <th>Sale Price (Unit)</th>
+                                                                <th>Sale Price</th>
                                                                 <th>In Stock</th>
                                                                 <th>Total Cost</th>
                                                                 <th>Total Sale</th>
-                                                                <th>Expected Profit</th>
+                                                                <th>Exp. Profit</th>
                                                                 <th>Item Saled</th>
                                                                 <th>Status</th>
                                                                 <th>Action</th>
