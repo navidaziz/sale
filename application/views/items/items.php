@@ -279,9 +279,9 @@
                                 <ul class="nav nav-pills nav-stacked">
                                     <?php
                                     $business_id = $this->session->userdata('business_id');
-                                    $query = "SELECT category FROM `items` 
+                                    $query = "SELECT category, COUNT(*) as total FROM `items` 
                                         WHERE status=1 
-                                        AND business_id = $business_id GROUP BY category;";
+                                        AND business_id = $business_id GROUP BY category ORDER BY category ASC;";
                                     $categories = $this->db->query($query)->result();
                                     $item_category = $this->input->get('category');
                                     foreach ($categories as $category) {
@@ -290,8 +290,8 @@
                                                                         echo ' class="active" ';
                                                                     } ?>>
                                             <a href="<?php echo site_url(ADMIN_DIR . "items/view/" . $category->category) ?>?category=<?php echo $category->category; ?>"
-                                                style="cursor: pointer; padding: 10px;">
-                                                <?php echo $category->category; ?>
+                                                style="cursor: pointer; padding: 0px;">
+                                                <?php echo $category->category; ?> (<?php echo $category->total; ?>)
                                             </a>
                                         </li>
                                     <?php } ?>
