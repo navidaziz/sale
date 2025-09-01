@@ -684,6 +684,7 @@ class Items extends Admin_Controller
                 $inputs->business_id = $this->session->userdata("business_id");
                 $inputs->discount = 0;
                 $inputs->record_level = 5;
+                $inputs->unit = 'Dana';
                 $inputs->location = NULL;
                 $this->db->insert("items", $inputs);
                 $item_id = $this->db->insert_id();
