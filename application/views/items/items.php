@@ -320,8 +320,8 @@
                                                                 <th>#</th>
                                                                 <th>Item Name</th>
                                                                 <th>Category</th>
-                                                                <th>Unit</th>
                                                                 <th>Record Level</th>
+                                                                <th>Unit</th>
                                                                 <th>Bar Code</th>
                                                                 <th>Cost Price</th>
                                                                 <th>Unit Price</th>
