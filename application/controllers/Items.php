@@ -683,7 +683,7 @@ class Items extends Admin_Controller
                 $inputs->created_by = $this->session->userdata("user_id");
                 $inputs->business_id = $this->session->userdata("business_id");
                 $inputs->discount = 0;
-                $inputs->record_level = 0;
+                $inputs->record_level = 5;
                 $inputs->location = NULL;
                 $this->db->insert("items", $inputs);
                 $item_id = $this->db->insert_id();
