@@ -35,7 +35,7 @@ class Item_model extends MY_Model
 
         $inputs["unit"]  =  $this->input->post("unit");
 
-        $inputs["reorder_level"]  =  $this->input->post("reorder_level");
+        $inputs["record_level"]  =  $this->input->post("record_level");
 
         $inputs["location"]  =  $this->input->post("location");
         $inputs["business_id"]  =  $this->session->userdata("business_id");
@@ -61,7 +61,7 @@ class Item_model extends MY_Model
 
         $inputs["unit"]  =  $this->input->post("unit");
 
-        $inputs["reorder_level"]  =  $this->input->post("reorder_level");
+        $inputs["record_level"]  =  $this->input->post("record_level");
 
         $inputs["location"]  =  $this->input->post("location");
         $inputs["discount"]  =  $this->input->post("discount");

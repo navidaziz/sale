@@ -321,6 +321,7 @@
                                                                 <th>Item Name</th>
                                                                 <th>Category</th>
                                                                 <th>Unit</th>
+                                                                <th>Record Level</th>
                                                                 <th>Bar Code</th>
                                                                 <th>Cost Price</th>
                                                                 <th>Unit Price</th>
@@ -358,6 +359,7 @@
                                                                     <td><?= $count++; ?></td>
                                                                     <td><?= $item->name; ?></td>
                                                                     <td><?= $item->category; ?></td>
+                                                                    <td><?= $item->record_level; ?></td>
                                                                     <td><?= $item->unit; ?></td>
                                                                     <td><?= $item->item_code_no; ?></td>
                                                                     <td><span id="costPrice_<?= $item->item_id; ?>"><?= $item->cost_price; ?></span></td>

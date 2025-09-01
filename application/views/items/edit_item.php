@@ -332,25 +332,25 @@
                         "class" => "col-md-2 control-label",
                         "style" => "",
                     );
-                    echo form_label($this->lang->line('reorder_level'), "reorder_level", $label);      ?>
+                    echo form_label($this->lang->line('record_level'), "record_level", $label);      ?>
 
                     <div class="col-md-8">
                         <?php
 
                         $text = array(
                             "type"          =>  "text",
-                            "name"          =>  "reorder_level",
-                            "id"            =>  "reorder_level",
+                            "name"          =>  "record_level",
+                            "id"            =>  "record_level",
                             "class"         =>  "form-control",
                             "style"         =>  "",
                             "required"      => "required",
-                            "title"         =>  $this->lang->line('reorder_level'),
-                            "value"         =>  set_value("reorder_level", $item->reorder_level),
-                            "placeholder"   =>  $this->lang->line('reorder_level')
+                            "title"         =>  $this->lang->line('record_level'),
+                            "value"         =>  set_value("record_level", $item->record_level),
+                            "placeholder"   =>  $this->lang->line('record_level')
                         );
                         echo  form_input($text);
                         ?>
-                        <?php echo form_error("reorder_level", "<p class=\"text-danger\">", "</p>"); ?>
+                        <?php echo form_error("record_level", "<p class=\"text-danger\">", "</p>"); ?>
                     </div>
 
 

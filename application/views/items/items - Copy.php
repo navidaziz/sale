@@ -101,7 +101,7 @@
                                 <th>Sale Price</th>
                                 <th>In Stock</th>
 
-                                <th><?php echo $this->lang->line('reorder_level'); ?></th>
+                                <th><?php echo $this->lang->line('record_level'); ?></th>
                                 <!-- <th><?php echo $this->lang->line('location'); ?></th> -->
                                 <th><?php echo $this->lang->line('Status'); ?></th>
                                 <th><?php echo $this->lang->line('Action'); ?></th>
@@ -144,7 +144,7 @@
                                     <td><?php echo $item->total_quantity ?></td>
 
                                     <td>
-                                        <?php echo $item->reorder_level; ?>
+                                        <?php echo $item->record_level; ?>
                                     </td>
                                     <!-- <td>
                                         <?php echo $item->location; ?>

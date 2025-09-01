@@ -129,9 +129,9 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th><?php echo $this->lang->line('reorder_level'); ?></th>
+                                    <th><?php echo $this->lang->line('record_level'); ?></th>
                                     <td>
-                                        <?php echo $item->reorder_level; ?>
+                                        <?php echo $item->record_level; ?>
                                     </td>
                                 </tr>
                                 <tr>

@@ -56,9 +56,9 @@
              </div>
          </div>
          <div class="form-group row">
-             <label for="reorder_level" class="col-sm-4 col-form-label">Reorder Level</label>
+             <label for="record_level" class="col-sm-4 col-form-label">Reorder Level</label>
              <div class="col-sm-8">
-                 <input type="text" id="reorder_level" name="reorder_level" value="<?php echo $input->reorder_level; ?>" class="form-control">
+                 <input type="text" id="record_level" name="record_level" value="<?php echo $input->record_level; ?>" class="form-control">
              </div>
          </div>
          <div class="form-group row">

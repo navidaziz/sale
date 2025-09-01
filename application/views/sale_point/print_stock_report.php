@@ -112,7 +112,7 @@
             <th>Sale Price</th>
 
             <th>Expire After</th>
-            <!-- <th><?php echo $this->lang->line('reorder_level'); ?></th> -->
+            <!-- <th><?php echo $this->lang->line('record_level'); ?></th> -->
             <th>In Stock</th>
             <th>location</th>
           </tr>
@@ -152,7 +152,7 @@
                                                                 echo $days . "";
                                                                 // 
                                                               } ?> </td>
-              <!-- <td> <?php echo $item->reorder_level; ?> </td> -->
+              <!-- <td> <?php echo $item->record_level; ?> </td> -->
               <td><?php echo $item->total_quantity ?></td>
               <td> <?php echo $item->location; ?> </td>
 

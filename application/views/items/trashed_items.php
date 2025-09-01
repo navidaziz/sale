@@ -81,7 +81,7 @@
 								<th><?php echo $this->lang->line('cost_price'); ?></th>
 								<th><?php echo $this->lang->line('unit_price'); ?></th>
 								<th><?php echo $this->lang->line('unit'); ?></th>
-								<th><?php echo $this->lang->line('reorder_level'); ?></th>
+								<th><?php echo $this->lang->line('record_level'); ?></th>
 								<th><?php echo $this->lang->line('location'); ?></th>
 								<th><?php echo $this->lang->line('Action'); ?></th>
 							</tr>
@@ -113,7 +113,7 @@
 										<?php echo $item->unit; ?>
 									</td>
 									<td>
-										<?php echo $item->reorder_level; ?>
+										<?php echo $item->record_level; ?>
 									</td>
 									<td>
 										<?php echo $item->location; ?>

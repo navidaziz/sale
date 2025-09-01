@@ -591,7 +591,7 @@ class Items extends Admin_Controller
         $input["unit_price"] = $this->input->post("unit_price");
         $input["discount"] = $this->input->post("discount");
         $input["unit"] = $this->input->post("unit");
-        $input["reorder_level"] = $this->input->post("reorder_level");
+        $input["record_level"] = $this->input->post("record_level");
         $input["location"] = $this->input->post("location");
         $inputs =  (object) $input;
         return $inputs;
@@ -655,7 +655,7 @@ class Items extends Admin_Controller
         $this->form_validation->set_rules("unit_price", "Unit Price", "required");
         //$this->form_validation->set_rules("discount", "Discount", "required");
         //$this->form_validation->set_rules("unit", "Unit", "required");
-        //$this->form_validation->set_rules("reorder_level", "Reorder Level", "required");
+        //$this->form_validation->set_rules("record_level", "Reorder Level", "required");
         //$this->form_validation->set_rules("location", "Location", "required");
 
         if ($this->form_validation->run() == FALSE) {
@@ -683,7 +683,7 @@ class Items extends Admin_Controller
                 $inputs->created_by = $this->session->userdata("user_id");
                 $inputs->business_id = $this->session->userdata("business_id");
                 $inputs->discount = 0;
-                $inputs->reorder_level = 0;
+                $inputs->record_level = 0;
                 $inputs->location = NULL;
                 $this->db->insert("items", $inputs);
                 $item_id = $this->db->insert_id();
@@ -766,7 +766,7 @@ class Items extends Admin_Controller
             ),
 
             array(
-                "field"  =>  "reorder_level",
+                "field"  =>  "record_level",
                 "label"  =>  "Reorder Level",
                 "rules"  =>  "required"
             ),
