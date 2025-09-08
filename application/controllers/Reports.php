@@ -135,28 +135,26 @@ class Reports extends Admin_Controller
 
     public function year_month_wise_sale_report()
     {
-        $business_id = $this->session->userdata('business_id');
+        $business_id = (int) $this->session->userdata('business_id');
 
-        $query = "
-        SELECT 
-            YEAR(si.created_date) as sale_year,
-            MONTH(si.created_date) as sale_month,
-            DATE_FORMAT(si.created_date, '%M %Y') as year_month,
-            SUM(si.cost_price * si.sale_items) as item_cost_total,
-            SUM(si.sale_price * si.sale_items) as item_sale_total
-        FROM sales_items si
-        WHERE si.business_id = $business_id
+        $sql = "
+        SELECT
+            YEAR(si.created_date) AS sale_year,
+            MONTH(si.created_date) AS sale_month,
+            SUM(si.cost_price * si.sale_items) AS item_cost_total,
+            SUM(si.sale_price * si.sale_items) AS item_sale_total
+        FROM `sales_items` AS si
+        WHERE si.business_id = ?
         GROUP BY YEAR(si.created_date), MONTH(si.created_date)
         ORDER BY sale_year, sale_month
     ";
 
-        $result = $this->db->query($query);
-        if ($result) {
-            $this->data['year_month_sales'] = $result->result();
-        }
+        $query = $this->db->query($sql, [$business_id]);
+        $this->data['year_month_sales'] = $query->result();
 
-        $this->load->view("reports/sale/year_month_wise_sale_report", $this->data);
+        $this->load->view('reports/sale/year_month_wise_sale_report', $this->data);
     }
+
 
 
     public function  today_items_sale_report()
