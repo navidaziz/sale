@@ -97,6 +97,7 @@
       <h4 style="text-align: center;">Day's Wise Sale Report From <?php echo date('d M, Y', strtotime($startdate)) . " - " . date('d M, Y', strtotime($enddate)); ?></h4>
 
 
+
       <table class="table table-bordered" id="year_month_wise_report">
         <thead>
           <tr>
@@ -130,8 +131,8 @@
             $query = "
                 SELECT SUM(expense_amount) AS total_expense
                 FROM expenses 
-                WHERE YEAR(expense_date) = " . $report->sale_year . "
-                  AND MONTH(expense_date) = " . $report->sale_month . "
+                WHERE YEAR(expense_date) = " . (int)$report->sale_year . "
+                  AND MONTH(expense_date) = " . (int)$report->sale_month . "
             ";
             $expense = $this->db->query($query)->row()->total_expense;
             $expense = $expense ? $expense : 0.00;
@@ -139,6 +140,9 @@
             $total_expense += $expense;
             $net_profit = $profit - $expense;
             $net_profit_total += $net_profit;
+
+            // Row-wise margin
+            $row_margin = ($sale > 0) ? round(($profit / $sale) * 100, 2) : 0;
           ?>
             <tr>
               <td><?php echo $count++; ?></td>
@@ -146,7 +150,11 @@
               <td><?php echo date("F", mktime(0, 0, 0, $report->sale_month, 1)); ?></td>
               <td><?php echo number_format($sale, 2); ?></td>
               <td><?php echo number_format($cost, 2); ?></td>
-              <td><?php echo number_format($profit, 2); ?></td>
+              <td>
+                <?php echo number_format($profit, 2); ?>
+                <br>
+                <small>Margin ≈ <?php echo $row_margin; ?> %</small>
+              </td>
               <td><?php echo number_format($expense, 2); ?></td>
               <td><?php echo number_format($net_profit, 2); ?></td>
             </tr>
@@ -162,7 +170,7 @@
               <small>
                 <?php
                 $profit_margin = ($total_sale > 0) ? ($total_profit / $total_sale) * 100 : 0;
-                echo 'Margin % ≈ ' . round($profit_margin, 2) . ' %';
+                echo 'Margin ≈ ' . round($profit_margin, 2) . ' %';
                 ?>
               </small>
             </th>
