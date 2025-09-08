@@ -132,6 +132,33 @@ class Reports extends Admin_Controller
         $this->load->view("reports/sale/day_wise_sale_report", $this->data);
     }
 
+
+    public function year_month_wise_sale_report()
+    {
+        $business_id = $this->session->userdata('business_id');
+
+        $query = "
+        SELECT 
+            YEAR(si.created_date) as sale_year,
+            MONTH(si.created_date) as sale_month,
+            DATE_FORMAT(si.created_date, '%M %Y') as year_month,
+            SUM(si.cost_price * si.sale_items) as item_cost_total,
+            SUM(si.sale_price * si.sale_items) as item_sale_total
+        FROM sales_items si
+        WHERE si.business_id = $business_id
+        GROUP BY YEAR(si.created_date), MONTH(si.created_date)
+        ORDER BY sale_year, sale_month
+    ";
+
+        $result = $this->db->query($query);
+        if ($result) {
+            $this->data['year_month_sales'] = $result->result();
+        }
+
+        $this->load->view("reports/sale/year_month_wise_sale_report", $this->data);
+    }
+
+
     public function  today_items_sale_report()
     {
         $query = "SELECT si.item_name, 
