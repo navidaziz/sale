@@ -46,7 +46,7 @@
                         </li>
                         <li>
                             <a class="text-primary" target="_blank" href="<?php echo site_url("reports/year_month_wise_sale_report"); ?>">
-                                Year and Monthly Report
+                                Yearly and Monthly Report
                             </a>
                         </li>
                         <li>
