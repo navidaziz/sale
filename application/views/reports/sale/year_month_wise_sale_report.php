@@ -94,7 +94,7 @@
   <page size='A4'>
     <div style="padding: 5px;  padding-left:20px; padding-right:20px; " contenteditable="true">
       <h3 style="text-align: center;"> <?php echo $this->session->userdata("business_name"); ?> </h3>
-      <h4 style="text-align: center;">Day's Wise Sale Report From <?php echo date('d M, Y', strtotime($startdate)) . " - " . date('d M, Y', strtotime($enddate)); ?></h4>
+      <h4 style="text-align: center;">Year and Monthly Report</h4>
 
 
 
