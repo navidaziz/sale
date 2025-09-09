@@ -427,9 +427,9 @@ class Suppliers extends Admin_Controller
 
         $business_id = $this->session->userdata("business_id");
         $where = "`suppliers`.`status` IN (0, 1) AND `suppliers`.`business_id` = '" . $business_id . "'";
-        $data = $this->supplier_model->get_supplier_list($where);
-        $this->data["suppliers"] = $data->suppliers;
-        $this->data["pagination"] = $data->pagination;
+        $this->data["suppliers"] = $this->supplier_model->get_supplier_list($where, false);
+        //$this->data["suppliers"] = $data->suppliers;
+        //$this->data["pagination"] = $data->pagination;
         $this->data["title"] = $this->lang->line('Suppliers');
         $this->data["view"] = "suppliers/suppliers";
         $this->load->view("layout", $this->data);
