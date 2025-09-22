@@ -720,6 +720,7 @@ class Suppliers extends Admin_Controller
     public function add_supplier_payment()
     {
         $this->form_validation->set_rules("business_id", "Business Id", "required");
+        $this->form_validation->set_rules("payment_of", "Payment Of", "required");
         $this->form_validation->set_rules("supplier_id", "Supplier Id", "required");
         $this->form_validation->set_rules("payment_date", "Payment Date", "required");
         $this->form_validation->set_rules("payment_mode", "Payment Mode", "required");
@@ -752,6 +753,7 @@ class Suppliers extends Admin_Controller
         $input["supplier_id"] = $this->input->post("supplier_id");
         $input["payment_date"] = $this->input->post("payment_date");
         $input["payment_mode"] = $this->input->post("payment_mode");
+        $input["payment_of"] = $this->input->post("payment_of");
         $input["amount"] = $this->input->post("amount");
         $input["reference_no"] = $this->input->post("reference_no");
         $input["remarks"] = $this->input->post("remarks");
