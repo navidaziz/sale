@@ -14,6 +14,7 @@
         <div class="col-sm-8">
             <select id="payment_mode" name="payment_mode" class="form-control" required>
                 <option value="">-- Select Payment Mode --</option>
+                <option value="Cash" <?php echo ($input->payment_mode == 'Easy Paisa') ? 'selected' : ''; ?>>Easy Paisa</option>
                 <option value="Cash" <?php echo ($input->payment_mode == 'Cash') ? 'selected' : ''; ?>>Cash</option>
                 <option value="Bank Transfer" <?php echo ($input->payment_mode == 'Bank Transfer') ? 'selected' : ''; ?>>Bank Transfer</option>
                 <option value="Cheque" <?php echo ($input->payment_mode == 'Cheque') ? 'selected' : ''; ?>>Cheque</option>
