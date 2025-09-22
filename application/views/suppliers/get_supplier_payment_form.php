@@ -21,7 +21,14 @@
             </select>
         </div>
     </div>
+    <div class="form-group row">
+        <label for="payment_of" class="col-sm-4 col-form-label">Payment Of</label>
+        <div class="col-sm-8">
+            <input type="radio" required id="payment_of" name="payment_of" value="Liabilities" <?php echo ($input->payment_of == 'Liabilities') ? 'checked' : ''; ?>> Liabilities
+            <input type="radio" required id="payment_of" name="payment_of" value="Purchase" <?php echo ($input->payment_of == 'Purchase') ? 'checked' : ''; ?>> Purchase
 
+        </div>
+    </div>
     <div class="form-group row">
         <label for="amount" class="col-sm-4 col-form-label">Amount</label>
         <div class="col-sm-8">

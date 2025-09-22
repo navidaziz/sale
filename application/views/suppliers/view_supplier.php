@@ -199,6 +199,7 @@
 									<th>#</th>
 									<th>Payment Date</th>
 									<th>Payment Mode</th>
+									<th>Payment Of</th>
 									<th>Amount</th>
 									<th>Reference No</th>
 									<th>Remarks</th>
@@ -221,6 +222,7 @@
 										<td><?php echo $count++ ?></td>
 										<td><?php echo $row->payment_date; ?></td>
 										<td><?php echo $row->payment_mode; ?></td>
+										<td><?php echo $row->payment_of; ?></td>
 										<td><?php echo $row->amount; ?></td>
 										<td><?php echo $row->reference_no; ?></td>
 										<td><?php echo $row->remarks; ?></td>
