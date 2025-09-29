@@ -109,6 +109,9 @@
             <th>Profit</th>
             <th>Expenses</th>
             <th>Net Income</th>
+
+            <th>Items Payments</th>
+            <th>Liabilities Payment</th>
           </tr>
         </thead>
         <tbody>
@@ -176,6 +179,20 @@
             </th>
             <th><?php echo number_format($total_expense, 2); ?></th>
             <th><?php echo number_format($net_profit_total, 2); ?></th>
+            <th><?php
+                $query = "SELECT SUM(paid_amount) AS paid_amount FROM supplier_payments 
+                WHERE  YEAR(payment_date) = " . (int)$report->sale_year . "
+                  AND MONTH(payment_date) = " . (int)$report->sale_month . "
+                  AND payment_of = 'Purchase'";
+                echo $this->db->query($query)->row()->paid_amount;
+                ?></th>
+            <th><?php
+                $query = "SELECT SUM(paid_amount) AS paid_amount FROM supplier_payments 
+                WHERE  YEAR(payment_date) = " . (int)$report->sale_year . "
+                  AND MONTH(payment_date) = " . (int)$report->sale_month . "
+                  AND payment_of = 'Liabilities'";
+                echo $this->db->query($query)->row()->paid_amount;
+                ?></th>
           </tr>
         </tbody>
       </table>
