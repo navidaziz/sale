@@ -47,6 +47,36 @@
                 <h4><?php echo $title; ?></h4>
             </div>
             <div class="box-body">
+
+
+                <?php
+                $business_id = $this->session->userdata("business_id");
+                $query = "SELECT i.category, 
+                 SUM(s.`quantity`) AS `most_sale`
+                FROM `sales_items` as s INNER JOIN items as i ON i.item_id = s.item_id
+                WHERE s.`business_id` = ?
+                GROUP BY `i`.`category`
+                ORDER BY `most_sale` DESC";
+                $rows = $this->db->query($query, [$business_id])->result();
+                ?>
+                <table class="table table-bordered table-striped">
+                    <tr>
+                        <th>#</th>
+                        <th>ITEMS CATEGORY NAME</th>
+                        <th>SALE</th>
+                    </tr>
+                    <?php
+                    $count = 1;
+                    foreach ($rows as $row) { ?>
+                        <tr>
+                            <th><?php echo $count++; ?></th>
+                            <th><?php echo $row->category; ?></th>
+                            <th><?php echo $row->most_sale; ?></th>
+                        </tr>
+                    <?php } ?>
+                </table>
+
+
                 <?php
                 $business_id = $this->session->userdata("business_id");
                 $query = "SELECT `item_id`, `item_name`, 
