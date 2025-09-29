@@ -111,6 +111,7 @@
             <th>Net Income</th>
 
             <th>Items Payments</th>
+            <th>Item Cash In Hand</th>
             <th>Liabilities Payment</th>
           </tr>
         </thead>
@@ -165,15 +166,18 @@
                 WHERE  YEAR(payment_date) = " . (int)$report->sale_year . "
                   AND MONTH(payment_date) = " . (int)$report->sale_month . "
                   AND payment_of = 'Purchase'";
-                  echo $this->db->query($query)->row()->paid_amount;
+                  echo $item_paid_amount = $this->db->query($query)->row()->paid_amount;
                   ?></th>
-              <th><?php
-                  $query = "SELECT SUM(amount) AS paid_amount FROM supplier_payments 
+              <th><?php echo $cost - $item_paid_amount; ?></th>
+              <th>
+
+                <?php
+                $query = "SELECT SUM(amount) AS paid_amount FROM supplier_payments 
                 WHERE  YEAR(payment_date) = " . (int)$report->sale_year . "
                   AND MONTH(payment_date) = " . (int)$report->sale_month . "
                   AND payment_of = 'Liabilities'";
-                  echo $this->db->query($query)->row()->paid_amount;
-                  ?></th>
+                echo $this->db->query($query)->row()->paid_amount;
+                ?></th>
             </tr>
           <?php } ?>
 
