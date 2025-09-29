@@ -161,14 +161,14 @@
               <td><?php echo number_format($expense, 2); ?></td>
               <td><?php echo number_format($net_profit, 2); ?></td>
               <th><?php
-                  $query = "SELECT SUM(paid_amount) AS paid_amount FROM supplier_payments 
+                  $query = "SELECT SUM(amount) AS paid_amount FROM supplier_payments 
                 WHERE  YEAR(payment_date) = " . (int)$report->sale_year . "
                   AND MONTH(payment_date) = " . (int)$report->sale_month . "
                   AND payment_of = 'Purchase'";
                   echo $this->db->query($query)->row()->paid_amount;
                   ?></th>
               <th><?php
-                  $query = "SELECT SUM(paid_amount) AS paid_amount FROM supplier_payments 
+                  $query = "SELECT SUM(amount) AS paid_amount FROM supplier_payments 
                 WHERE  YEAR(payment_date) = " . (int)$report->sale_year . "
                   AND MONTH(payment_date) = " . (int)$report->sale_month . "
                   AND payment_of = 'Liabilities'";
