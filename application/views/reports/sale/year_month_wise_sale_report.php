@@ -211,7 +211,33 @@
           <tr>
             <th colspan="3" style="text-align: right;">Total (Rs)</th>
             <th><?php echo number_format($total_sale, 2); ?></th>
-            <th><?php echo number_format($total_sale - $total_profit, 2); ?></th>
+            <th><?php
+
+                $items_amount = $total_sale - $total_profit;
+                echo number_format($total_sale - $total_profit, 2); ?>
+              <small>
+                <?php
+                $query = "SELECT SUM(amount) AS paid_amount FROM supplier_payments 
+                   WHERE  payment_of = 'Purchase'
+                   AND business_id = " . (int)$this->session->userdata("business_id") . "";
+                $item_paid_amount = $this->db->query($query)->row()->paid_amount;
+                echo number_format($item_paid_amount);
+                ?>
+                <br />--------------<br />
+                <?php echo number_format($items_amount  - $item_paid_amount); ?>
+                <br />
+                <?php
+                $query = "SELECT SUM(amount) AS paid_amount FROM supplier_payments 
+                   WHERE  business_id = " . (int)$this->session->userdata("business_id") . "";
+                $over_all_paid = $this->db->query($query)->row()->paid_amount;
+                echo number_format($over_all_paid);
+                echo "<br />--------------<br />";
+                echo "liabilities Paid" . number_format($item_paid_amount - $over_all_paid);
+
+                ?>
+              </small>
+
+            </th>
 
             <th>
               <?php echo number_format($total_profit, 2); ?>
