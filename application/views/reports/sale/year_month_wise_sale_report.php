@@ -172,7 +172,7 @@
               <td>
                 <?php echo number_format($profit, 2); ?>
                 <br>
-                <small>Margin ≈ <?php echo $row_margin; ?> %</small>
+                <small>≈ <?php echo $row_margin; ?> %</small>
               </td>
               <td><?php echo number_format($expense, 2); ?></td>
               <td><?php echo number_format($net_profit, 2); ?></td>
