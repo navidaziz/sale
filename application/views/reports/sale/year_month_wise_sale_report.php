@@ -290,8 +290,7 @@
           $liabilities_paid = (float) $this->db->query($liabilities_query)->row()->paid_amount ?: 0.00;
           ?>
           <tr>
-            <td colspan="2">Total</td>
-            <td><?php echo date("F", mktime(0, 0, 0, $report->sale_month, 1)); ?></td>
+            <td colspan="3">Total</td>
             <td><?php echo number_format($sale, 2); ?></td>
             <td>
               <?php echo number_format($cost, 2); ?>
