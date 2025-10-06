@@ -128,7 +128,7 @@
             WHERE si.business_id = ?
             GROUP BY YEAR(si.created_date), MONTH(si.created_date)
             ORDER BY sale_year, sale_month
-        ";
+            ";
 
           $query = $this->db->query($sql, [$business_id]);
           $year_month_sales = $query->result();
@@ -222,6 +222,104 @@
             </tr>
           <?php } ?>
         </tbody>
+
+        <footer>
+          <?php
+          $business_id = (int) $this->session->userdata('business_id');
+
+          // Fetch year-month wise sales summary
+          $sql = "
+            SELECT 
+                SUM(si.cost_price * si.sale_items) AS item_cost_total,
+                SUM(si.sale_price * si.sale_items) AS item_sale_total
+            FROM sales_items AS si
+            WHERE si.business_id = ?
+            ";
+
+          $query = $this->db->query($sql, [$business_id]);
+          $report = $query->row();
+
+          $count = 1;
+          $total_sale = $total_profit = $total_expense = $net_profit_total = 0.00;
+
+          $sale   = round($report->item_sale_total, 2);
+          $cost   = round($report->item_cost_total, 2);
+          $profit = $sale - $cost;
+
+          $total_sale   += $sale;
+          $total_profit += $profit;
+
+          // Get total expenses for this month
+          $expense_query = "
+                SELECT SUM(expense_amount) AS total_expense
+                FROM expenses
+                WHERE   business_id = {$business_id}
+            ";
+          $expense = (float) $this->db->query($expense_query)->row()->total_expense ?: 0.00;
+
+          $total_expense += $expense;
+          $net_profit = $profit - $expense;
+          $net_profit_total += $net_profit;
+
+          $row_margin = ($sale > 0) ? round(($profit / $sale) * 100, 2) : 0;
+
+          // Supplier Payments (Purchase)
+          $purchase_payment_query = "
+                SELECT SUM(amount) AS paid_amount
+                FROM supplier_payments
+                WHERE   payment_of = 'Purchase'
+                  AND business_id = {$business_id}
+            ";
+          $item_paid_amount = (float) $this->db->query($purchase_payment_query)->row()->paid_amount ?: 0.00;
+
+          // Supplier Payments (All)
+          $overall_payment_query = "
+                SELECT SUM(amount) AS paid_amount
+                FROM supplier_payments
+                WHERE   business_id = {$business_id}
+            ";
+          $overall_paid = (float) $this->db->query($overall_payment_query)->row()->paid_amount ?: 0.00;
+
+          // Liabilities Payments
+          $liabilities_query = "
+                SELECT SUM(amount) AS paid_amount
+                FROM supplier_payments
+                WHERE payment_of = 'Liabilities'
+                  AND business_id = {$business_id}
+            ";
+          $liabilities_paid = (float) $this->db->query($liabilities_query)->row()->paid_amount ?: 0.00;
+          ?>
+          <tr>
+            <td><?php echo $count++; ?></td>
+            <td><?php echo $report->sale_year; ?></td>
+            <td><?php echo date("F", mktime(0, 0, 0, $report->sale_month, 1)); ?></td>
+            <td><?php echo number_format($sale, 2); ?></td>
+            <td>
+              <?php echo number_format($cost, 2); ?>
+              <br>
+              <small>
+                <?php echo number_format($item_paid_amount); ?><br>
+                --------------<br>
+                <?php echo number_format($cost - $item_paid_amount); ?><br>
+                <?php echo number_format($overall_paid); ?><br>
+                --------------<br>
+                Liabilities Paid:
+                <?php echo number_format($item_paid_amount - $overall_paid); ?>
+              </small>
+            </td>
+            <td>
+              <?php echo number_format($profit, 2); ?><br>
+              <small>≈ <?php echo $row_margin; ?>%</small>
+            </td>
+            <td><?php echo number_format($expense, 2); ?></td>
+            <td><?php echo number_format($net_profit, 2); ?></td>
+            <td><?php echo number_format($item_paid_amount, 2); ?></td>
+            <td><?php echo number_format($cost - $item_paid_amount, 2); ?></td>
+            <td><?php echo number_format($liabilities_paid, 2); ?></td>
+          </tr>
+
+        </footer>
+
       </table>
 
 
