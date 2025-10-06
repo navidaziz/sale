@@ -176,7 +176,7 @@
                   $over_all_paid = $this->db->query($query)->row()->paid_amount;
                   echo number_format($over_all_paid);
                   echo "<br />--------------<br />";
-                  echo "libalities Paid" . number_format($cost - $over_all_paid);
+                  echo "liabilities Paid" . number_format($item_paid_amount - $over_all_paid);
 
                   ?>
                 </small>
