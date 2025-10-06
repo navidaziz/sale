@@ -153,7 +153,22 @@
               <td><?php echo $report->sale_year; ?></td>
               <td><?php echo date("F", mktime(0, 0, 0, $report->sale_month, 1)); ?></td>
               <td><?php echo number_format($sale, 2); ?></td>
-              <td><?php echo number_format($cost, 2); ?></td>
+              <td><?php echo number_format($cost, 2); ?>
+                <br />
+                <small>
+                  <?php
+                  $query = "SELECT SUM(amount) AS paid_amount FROM supplier_payments 
+                   WHERE  YEAR(payment_date) = " . (int)$report->sale_year . "
+                  AND MONTH(payment_date) = " . (int)$report->sale_month . "
+                  AND payment_of = 'Purchase'";
+                  $item_paid_amount = $this->db->query($query)->row()->paid_amount;
+                  echo number_format($item_paid_amount);
+
+                  ?>
+                  <br />----------------<br />
+                  <?php echo number_format($cost - $item_paid_amount); ?>
+                </small>
+              </td>
               <td>
                 <?php echo number_format($profit, 2); ?>
                 <br>
