@@ -165,7 +165,7 @@
                   echo number_format($item_paid_amount);
 
                   ?>
-                  <br />----------------<br />
+                  <br />--------------<br />
                   <?php echo number_format($cost - $item_paid_amount); ?>
                 </small>
               </td>
