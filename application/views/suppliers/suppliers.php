@@ -186,12 +186,14 @@
                                         AND `supplier_id` = ?";
                                         $paid = $this->db->query($query, [$this->session->userdata("business_id"), $supplier->supplier_id])->row();
 
-                                        // Sum up
-                                        $total_liabilities += $supplier->liabilities;
-                                        $total_purchased += $purchased->amount;
-                                        $total_paid += $paid->amount;
-                                        $remaining = (($supplier->liabilities + $purchased->amount) - $paid->amount);
-                                        $total_remaining += $remaining;
+                                        if ('Opening Stock' != '$supplier->supplier_name') {
+                                            // Sum up
+                                            $total_liabilities += $supplier->liabilities;
+                                            $total_purchased += $purchased->amount;
+                                            $total_paid += $paid->amount;
+                                            $remaining = (($supplier->liabilities + $purchased->amount) - $paid->amount);
+                                            $total_remaining += $remaining;
+                                        }
                                     ?>
 
                                         <tr>
