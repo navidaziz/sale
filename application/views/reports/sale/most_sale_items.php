@@ -55,7 +55,7 @@
                  SUM(s.`quantity`) AS `most_sale`,
                 MIN(s.`quantity`) AS `min_sale`,
                 MAX(s.`quantity`) AS `max_sale`,
-                AVG(s.`quantity`) AS `avg_sale`,
+                AVG(s.`quantity`) AS `avg_sale`
                 FROM `sales_items` as s INNER JOIN items as i ON i.item_id = s.item_id
                 WHERE s.`business_id` = ?
                 GROUP BY `i`.`category`
