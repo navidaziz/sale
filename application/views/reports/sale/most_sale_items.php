@@ -52,7 +52,10 @@
                 <?php
                 $business_id = $this->session->userdata("business_id");
                 $query = "SELECT i.category, 
-                 SUM(s.`quantity`) AS `most_sale`
+                 SUM(s.`quantity`) AS `most_sale`,
+                MIN(s.`quantity`) AS `min_sale`,
+                MAX(s.`quantity`) AS `max_sale`,
+                AVG(s.`quantity`) AS `avg_sale`,
                 FROM `sales_items` as s INNER JOIN items as i ON i.item_id = s.item_id
                 WHERE s.`business_id` = ?
                 GROUP BY `i`.`category`
@@ -64,6 +67,9 @@
                         <th>#</th>
                         <th>ITEMS CATEGORY NAME</th>
                         <th>SALE</th>
+                        <th>MIN</th>
+                        <th>MAX</th>
+                        <th>AVG</th>
                     </tr>
                     <?php
                     $count = 1;
@@ -72,6 +78,9 @@
                             <th><?php echo $count++; ?></th>
                             <th><?php echo $row->category; ?></th>
                             <th><?php echo $row->most_sale; ?></th>
+                            <th><?php echo $row->min_sale; ?></th>
+                            <th><?php echo $row->max_sale; ?></th>
+                            <th><?php echo $row->avg_sale; ?></th>
                         </tr>
                     <?php } ?>
                 </table>
