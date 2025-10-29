@@ -68,7 +68,7 @@
                             $grand_expected_profit = 0;
 
                             $business_id = $this->session->userdata("business_id");
-                            echo $query = "SELECT * FROM all_items WHERE `status` IN (0, 1) 
+                            $query = "SELECT * FROM all_items WHERE `status` IN (0, 1) 
                                 AND business_id = '" . $business_id . "'
                                 AND item_id IN (
                                     SELECT item_id FROM inventory
@@ -77,6 +77,7 @@
                                 )
                                 AND record_level > total_quantity
                                 ORDER BY category, name ASC";
+                            $items = $this->db->query($query)->result();
 
                             foreach ($items as $item) :
                                 $stock_total = $item->cost_price * $item->total_quantity;
