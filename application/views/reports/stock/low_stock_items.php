@@ -53,9 +53,7 @@
                                 <th>Item Code</th>
                                 <th>Item Name</th>
                                 <th>Category</th>
-                                <th>Cat. Count</th>
-                                <td>Cat. Item Total</td>
-                                <th>Unit</th>
+                                <td>Suppliers</td>
                                 <th>Cost Price</th>
                                 <th>Sale Price (Unit)</th>
                                 <th>Stock</th>
@@ -83,13 +81,15 @@
                                     <td><?= $item->name; ?></td>
                                     <td><?= $item->category; ?></td>
                                     <th><?php
-                                        $query = "SELECT COUNT(item_id) as category_items, SUM() FROM `items` 
-                                        WHERE category =''" . $item->category . "'' ";
-                                        $result = $this->db->query($query)->row();
-                                        echo $result->category_items;
+                                        $query = "SELECT s.supplier_name, i.item_cost_price, i.item_unit_price 
+                                        FROM `inventory` as i INNER JOIN suppliers as s ON(s.supplier_id = i.supplier_id) 
+                                        WHERE item_id =" . $item->item_id . ";";
+                                        $suppliers = $this->db->query($query)->row();
+                                        foreach ($suppliers as $supplier) {
+                                            echo $supplier->supplier_name . " " . $supplier->item_cost_price . " - " . $supplier->item_unit_price . "<br>";
+                                        }
                                         ?></th>
-                                    <th></th>
-                                    <td><?= $item->unit; ?></td>
+                                    <!-- <td><?= $item->unit; ?></td> -->
 
                                     <td><?= $item->cost_price; ?></td>
 
