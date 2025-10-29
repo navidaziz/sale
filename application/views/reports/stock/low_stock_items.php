@@ -80,15 +80,19 @@
                                     <td><?= $item->item_code_no; ?></td>
                                     <td><?= $item->name; ?></td>
                                     <td><?= $item->category; ?></td>
-                                    <th><?php
-                                        $query = "SELECT s.supplier_name, i.item_cost_price, i.item_unit_price 
+                                    <th>
+                                        <small>
+                                            <?php
+                                            $query = "SELECT s.supplier_name, i.item_cost_price, i.item_unit_price 
                                         FROM `inventory` as i INNER JOIN suppliers as s ON(s.supplier_id = i.supplier_id) 
                                         WHERE item_id =" . $item->item_id . ";";
-                                        $suppliers = $this->db->query($query)->row();
-                                        foreach ($suppliers as $supplier) {
-                                            echo $supplier->supplier_name . " " . $supplier->item_cost_price . " - " . $supplier->item_unit_price . "<br>";
-                                        }
-                                        ?></th>
+                                            $suppliers = $this->db->query($query)->result();
+                                            foreach ($suppliers as $supplier) {
+                                                echo $supplier->supplier_name . " " . $supplier->item_cost_price . " - " . $supplier->item_unit_price . "<br>";
+                                            }
+                                            ?>
+                                        </small>
+                                    </th>
                                     <!-- <td><?= $item->unit; ?></td> -->
 
                                     <td><?= $item->cost_price; ?></td>
