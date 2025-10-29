@@ -68,7 +68,7 @@
                             $grand_expected_profit = 0;
 
                             $business_id = $this->session->userdata("business_id");
-                            $query = "SELECT * FROM all_items WHERE `status` IN (0, 1) 
+                            echo $query = "SELECT * FROM all_items WHERE `status` IN (0, 1) 
                                 AND business_id = '" . $business_id . "'
                                 AND item_id IN (
                                     SELECT item_id FROM inventory
