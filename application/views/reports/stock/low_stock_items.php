@@ -88,7 +88,7 @@
                                         WHERE item_id =" . $item->item_id . ";";
                                             $suppliers = $this->db->query($query)->result();
                                             foreach ($suppliers as $supplier) {
-                                                echo $supplier->supplier_name . " " . $supplier->item_cost_price . " - " . $supplier->item_unit_price . "<br>";
+                                                echo $supplier->supplier_name . " " . $supplier->item_cost_price . "<br>";
                                             }
                                             ?>
                                         </small>
