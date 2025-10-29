@@ -104,7 +104,7 @@
                                         AVG(s.`quantity`) AS `avg_sale`
                                         FROM `sales_items` as s INNER JOIN items as i ON i.item_id = s.item_id
                                         WHERE s.`item_id` = ?";
-                                            $rows = $this->db->query($query, [$business_id])->row();
+                                            $rows = $this->db->query($query, [$item->item_id])->row();
                                             echo "Min: " . round($rows->min_sale, 2) . "<br>";
                                             echo "Max: " . round($rows->max_sale, 2) . "<br>";
                                             echo "Avg: " . round($rows->avg_sale, 2) . "<br>";
