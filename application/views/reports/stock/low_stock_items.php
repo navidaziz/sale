@@ -53,6 +53,8 @@
                                 <th>Item Code</th>
                                 <th>Item Name</th>
                                 <th>Category</th>
+                                <th>Cat. Count</th>
+                                <td>Cat. Item Total</td>
                                 <th>Unit</th>
                                 <th>Cost Price</th>
                                 <th>Sale Price (Unit)</th>
@@ -80,6 +82,13 @@
                                     <td><?= $item->item_code_no; ?></td>
                                     <td><?= $item->name; ?></td>
                                     <td><?= $item->category; ?></td>
+                                    <th><?php
+                                        $query = "SELECT COUNT(item_id) as category_items, SUM() FROM `items` 
+                                        WHERE category =''" . $item->category . "'' ";
+                                        $result = $this->db->query($query)->row();
+                                        echo $result->category_items;
+                                        ?></th>
+                                    <th></th>
                                     <td><?= $item->unit; ?></td>
 
                                     <td><?= $item->cost_price; ?></td>
