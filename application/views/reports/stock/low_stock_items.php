@@ -147,9 +147,9 @@
                 extend: 'excelHtml5',
                 text: 'Export to Excel',
                 title: 'Item Report',
-                exportOptions: {
-                    columns: ':not(:last-child):not(:nth-last-child(2))' // exclude last 2 columns (Action, Inventory)
-                }
+                //exportOptions: {
+                //  columns: ':not(:last-child):not(:nth-last-child(2))' // exclude last 2 columns (Action, Inventory)
+                //}
             }]
         });
     });
