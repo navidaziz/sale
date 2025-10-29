@@ -53,7 +53,8 @@
                                 <th>Item Code</th>
                                 <th>Item Name</th>
                                 <th>Category</th>
-                                <td>Suppliers</td>
+                                <th>Suppliers</th>
+                                <th>Saled</th>
                                 <th>Cost Price</th>
                                 <th>Sale Price (Unit)</th>
                                 <th>Stock</th>
@@ -90,6 +91,24 @@
                                             foreach ($suppliers as $supplier) {
                                                 echo $supplier->supplier_name . " " . $supplier->item_cost_price . "<br>";
                                             }
+                                            ?>
+                                        </small>
+                                    </th>
+                                    <th>
+                                        <small>
+                                            <?php
+                                            $query = "SELECT 
+                                        SUM(s.`quantity`) AS `most_sale`,
+                                        MIN(s.`quantity`) AS `min_sale`,
+                                        MAX(s.`quantity`) AS `max_sale`,
+                                        AVG(s.`quantity`) AS `avg_sale`
+                                        FROM `sales_items` as s INNER JOIN items as i ON i.item_id = s.item_id
+                                        WHERE s.`item_id` = ?";
+                                            $rows = $this->db->query($query, [$business_id])->row();
+                                            echo "Min: " . round($rows->min_sale, 2) . "<br>";
+                                            echo "Max: " . round($rows->max_sale, 2) . "<br>";
+                                            echo "Avg: " . round($rows->avg_sale, 2) . "<br>";
+                                            echo "Total: " . round($rows->most_sale, 2);
                                             ?>
                                         </small>
                                     </th>
