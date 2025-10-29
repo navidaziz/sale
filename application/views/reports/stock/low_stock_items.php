@@ -84,12 +84,12 @@
                                     <th>
                                         <small>
                                             <?php
-                                            $query = "SELECT s.supplier_name, i.item_cost_price, i.item_unit_price 
+                                            $query = "SELECT s.supplier_name, i.inventory_transaction, i.item_cost_price, i.item_unit_price 
                                         FROM `inventory` as i INNER JOIN suppliers as s ON(s.supplier_id = i.supplier_id) 
                                         WHERE item_id =" . $item->item_id . ";";
                                             $suppliers = $this->db->query($query)->result();
                                             foreach ($suppliers as $supplier) {
-                                                echo $supplier->supplier_name . " " . $supplier->item_cost_price . "<br>";
+                                                echo $supplier->supplier_name . " " . $supplier->inventory_transaction . " -  " . $supplier->item_cost_price . "<br>";
                                             }
                                             ?>
                                         </small>
