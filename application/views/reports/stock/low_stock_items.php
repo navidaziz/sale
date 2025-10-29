@@ -163,13 +163,29 @@
             lengthChange: false,
             dom: 'Bfrtip',
             buttons: [{
-                extend: 'excelHtml5',
-                text: 'Export to Excel',
-                title: 'Item Report',
-                //exportOptions: {
-                //  columns: ':not(:last-child):not(:nth-last-child(2))' // exclude last 2 columns (Action, Inventory)
-                //}
-            }]
+                    extend: 'excelHtml5',
+                    text: 'Export to Excel',
+                    title: 'Item Report'
+                },
+                {
+                    extend: 'pdfHtml5',
+                    text: 'Export to PDF',
+                    title: 'Item Report',
+                    orientation: 'landscape', // optional
+                    pageSize: 'A4', // optional
+                    exportOptions: {
+                        columns: ':visible' // export visible columns
+                    }
+                },
+                {
+                    extend: 'print',
+                    text: 'Print Report',
+                    title: 'Item Report',
+                    exportOptions: {
+                        columns: ':visible'
+                    }
+                }
+            ]
         });
     });
 </script>
