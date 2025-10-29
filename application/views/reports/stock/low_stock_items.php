@@ -54,7 +54,7 @@
                                 <th>Item Name</th>
                                 <th>Category</th>
                                 <th>Suppliers</th>
-                                <th>Saled</th>
+                                <th>Sale</th>
                                 <th>Cost Price</th>
                                 <th>Sale Price (Unit)</th>
                                 <th>Stock</th>
