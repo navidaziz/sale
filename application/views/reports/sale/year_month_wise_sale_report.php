@@ -118,7 +118,29 @@
         <tbody>
           <!-- Loop through $year_month_sales -->
           <!-- Each row reflects sales data for a month -->
-          <?php $count = 1;
+          <?php
+          $business_id = (int) $this->session->userdata('business_id');
+
+          // Fetch year-month wise sales summary
+          $sql = "
+            SELECT
+                YEAR(si.created_date) AS sale_year,
+                MONTH(si.created_date) AS sale_month,
+                SUM(si.cost_price * si.sale_items) AS item_cost_total,
+                SUM(si.sale_price * si.sale_items) AS item_sale_total
+            FROM sales_items AS si
+            WHERE si.business_id = ?
+            GROUP BY YEAR(si.created_date), MONTH(si.created_date)
+            ORDER BY sale_year, sale_month
+            ";
+
+          $query = $this->db->query($sql, [$business_id]);
+          $year_month_sales = $query->result();
+
+          $count = 1;
+          $total_sale = $total_profit = $total_expense = $net_profit_total = 0.00;
+
+          $count = 1;
           foreach ($year_month_sales as $report): ?>
             <?php
             $sale = round($report->item_sale_total, 2);
