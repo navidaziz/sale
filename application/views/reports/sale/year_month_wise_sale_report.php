@@ -154,6 +154,17 @@
             ";
             $expense = (float) $this->db->query($expense_query)->row()->total_expense ?: 0.00;
 
+            $query = " SELECT openning_balance 
+            FROM `openning_balance` 
+            WHERE YEAR(date) = {$report->sale_year}
+            AND MONTH(date) = {$report->sale_month}
+            AND business_id = {$business_id}";
+            $openning_balance = (float) $this->db->query($query)->row()->openning_balance ?: 0.00;
+
+
+
+
+
             $total_expense += $expense;
             $net_profit = $profit - $expense;
             $net_profit_total += $net_profit;
@@ -195,7 +206,10 @@
             <tr>
               <td><?php echo $count++; ?></td>
               <td><?php echo $report->sale_year; ?></td>
-              <td><?php echo date("F", mktime(0, 0, 0, $report->sale_month, 1)); ?></td>
+              <td><?php echo date("F", mktime(0, 0, 0, $report->sale_month, 1)); ?>
+                <br />
+                Openning Balance: <?php echo number_format($openning_balance, 2); ?>
+              </td>
               <td><?php echo number_format($sale, 2); ?></td>
               <td>
                 <?php echo number_format($cost, 2); ?>
