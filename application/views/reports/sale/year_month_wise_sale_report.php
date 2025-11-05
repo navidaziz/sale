@@ -104,18 +104,17 @@
           <tr>
             <th>#</th>
             <th>Month</th>
-            <th><small>Opening Balance</small></th>
+            <th>Opening Balance</th>
             <th>Total Sale</th>
-            <th>Item Cost<br><small>(Paid / Unpaid / Total Paid)</small></th>
-            <th>Gross Profit<br><small>(Margin %)</small></th>
+            <th>Item Cost</th>
+            <th>Profit <small>(Margin %)</small></th>
+            <th>Gross Profit</th>
             <th>Expenses</th>
             <th>Items Paid</th>
             <th>Liabilities Paid</th>
-            <th>Total Paid
-              <small>Exp+items+liabi</small>
-            </th>
+            <th>Total Paid</th>
             <th>In Hand Total</th>
-            <th>Total Monthly Profit</th>
+            <th>Net Profit</th>
           </tr>
         </thead>
 
@@ -206,17 +205,11 @@
               </td>
               <td><?= number_format($sale, 2); ?></td>
               <td>
-                <?= number_format($cost, 2); ?><br>
-                <small>
-                  <?= number_format($item_paid, 2); ?> /
-                  <?= number_format($cash_in_hand, 2); ?> /
-                  <?= number_format($overall_paid, 2); ?>
-                </small>
+                <?= number_format($cost, 2); ?>
               </td>
+              <th> <small>≈ <?= $margin; ?>%</small></th>
               <td>
-                <?= number_format($profit, 2); ?><br>
-                <small>≈ <?= $margin; ?>%</small>
-              </td>
+                <?= number_format($profit, 2); ?></td>
               <td><?= number_format($expense, 2); ?></td>
               <td><?= number_format($item_paid, 2); ?></td>
               <td><?= number_format($liabilities_paid, 2); ?></td>
