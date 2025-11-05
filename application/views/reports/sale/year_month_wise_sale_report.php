@@ -108,10 +108,14 @@
             <th>Item Cost<br><small>(Paid / Unpaid / Total Paid)</small></th>
             <th>Gross Profit<br><small>(Margin %)</small></th>
             <th>Expenses</th>
-            <th>Net Income</th>
-            <th>Item Payments</th>
-            <th>Item Cash In Hand</th>
+            <th>Items Paid</th>
             <th>Liabilities Paid</th>
+            <th>Total Paid
+              <small>Exp+items+liabi</small>
+            </th>
+            <th>In Hand Total</th>
+            <th>Items Cash</th>
+            <th>Profit</th>
           </tr>
         </thead>
 
@@ -182,6 +186,7 @@
           AND MONTH(payment_date) = {$report->sale_month}
           AND business_id = {$business_id}
         ")->row()->paid_amount ?: 0;
+            $overall_paid = $overall_paid + $expense;
 
             $liabilities_paid = (float) $this->db->query("
           SELECT SUM(amount) AS paid_amount
@@ -215,10 +220,36 @@
                 <small>≈ <?= $margin; ?>%</small>
               </td>
               <td><?= number_format($expense, 2); ?></td>
-              <td><?= number_format($net_income, 2); ?></td>
               <td><?= number_format($item_paid, 2); ?></td>
-              <td><?= number_format($cash_in_hand, 2); ?></td>
               <td><?= number_format($liabilities_paid, 2); ?></td>
+              <td><?= number_format($overall_paid, 2); ?></td>
+              <?php $cash_in_hand_total = (($openning_balance + $sale) - $overall_paid);
+              $item_cash = $cash_in_hand_total - $net_income;
+              ?>
+              <td><?= number_format($cash_in_hand_total, 2); ?></td>
+              <td><?= number_format($item_cash, 2); ?></td>
+              <td><?= number_format($net_income, 2); ?></td>
+
+
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Year</th>
+                  <th>Month<br><small>Opening Balance</small></th>
+                  <th>Total Sale</th>
+                  <th>Item Cost<br><small>(Paid / Unpaid / Total Paid)</small></th>
+                  <th>Gross Profit<br><small>(Margin %)</small></th>
+                  <th>Expenses</th>
+                  <th>Items Paid</th>
+                  <th>Liabilities Paid</th>
+                  <th>Total Paid
+                    <small>Exp+items+liabi</small>
+                  </th>
+                  <th>In Hand Total</th>
+                  <th>Items Cash</th>
+                  <th>Profit</th>
+                </tr>
+              </thead>
             </tr>
           <?php endforeach; ?>
         </tbody>
@@ -243,6 +274,7 @@
             <td><?= number_format($total_liabilities, 2); ?></td>
           </tr>
         </tfoot>
+
       </table>
 
 
