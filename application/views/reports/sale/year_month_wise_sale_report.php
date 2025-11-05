@@ -33,7 +33,8 @@
     }
 
     page[size="A4"] {
-      width: 21cm;
+      /* width: 21cm; */
+      width: 29.7cm;
       /* height: 29.7cm;  */
       height: auto;
     }
@@ -102,8 +103,8 @@
         <thead>
           <tr>
             <th>#</th>
-            <th>Year</th>
-            <th>Month<br><small>Opening Balance</small></th>
+            <th>Month</th>
+            <th><small>Opening Balance</small></th>
             <th>Total Sale</th>
             <th>Item Cost<br><small>(Paid / Unpaid / Total Paid)</small></th>
             <th>Gross Profit<br><small>(Margin %)</small></th>
@@ -201,10 +202,8 @@
             ?>
             <tr>
               <td><?= $count++; ?></td>
-              <td><?= $report->sale_year; ?></td>
-              <td>
-                <?= date("F", mktime(0, 0, 0, $report->sale_month, 1)); ?><br>
-                <small><?= number_format($openning_balance, 2); ?></small>
+              <td><?= date("M", mktime(0, 0, 0, $report->sale_month, 1)); ?> - <?= $report->sale_year; ?></td>
+              <td><small><?= number_format($openning_balance, 2); ?></small>
               </td>
               <td><?= number_format($sale, 2); ?></td>
               <td>
