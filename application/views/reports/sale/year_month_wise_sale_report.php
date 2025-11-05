@@ -222,11 +222,9 @@
               <td><?= number_format($item_paid, 2); ?></td>
               <td><?= number_format($liabilities_paid, 2); ?></td>
               <td><?= number_format($overall_paid, 2); ?></td>
-              <?php $cash_in_hand_total = ($overall_paid - ($openning_balance + $sale));
-              $item_cash = $cash_in_hand_total - $net_income;
-              ?>
+              <?php $cash_in_hand_total = ($overall_paid - ($openning_balance + $sale)); ?>
               <td><?= number_format($cash_in_hand_total, 2); ?></td>
-              <td><?= number_format($item_cash, 2); ?></td>
+              <td><?= number_format($cost, 2); ?></td>
               <td><?= number_format($net_income, 2); ?></td>
 
 
