@@ -115,7 +115,7 @@
               <small>Exp+items+liabi</small>
             </th>
             <th>In Hand Total</th>
-            <th>Profit</th>
+            <th>Total Monthly Profit</th>
           </tr>
         </thead>
 
