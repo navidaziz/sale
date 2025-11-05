@@ -115,7 +115,6 @@
               <small>Exp+items+liabi</small>
             </th>
             <th>In Hand Total</th>
-            <th>Items Cash</th>
             <th>Profit</th>
           </tr>
         </thead>
@@ -223,10 +222,8 @@
               <td><?= number_format($liabilities_paid, 2); ?></td>
               <td><?= number_format($overall_paid, 2); ?></td>
               <?php $cash_in_hand_total = ($overall_paid - ($openning_balance + $sale));
-              $item_cash = $cash_in_hand_total - $net_income;
               ?>
               <td><?= number_format($cash_in_hand_total, 2); ?></td>
-              <td><?= number_format($item_cash, 2); ?></td>
               <td><?= number_format($net_income, 2); ?></td>
 
 
