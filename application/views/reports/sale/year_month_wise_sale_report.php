@@ -231,25 +231,6 @@
               <td><?= number_format($net_income, 2); ?></td>
 
 
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Year</th>
-                  <th>Month<br><small>Opening Balance</small></th>
-                  <th>Total Sale</th>
-                  <th>Item Cost<br><small>(Paid / Unpaid / Total Paid)</small></th>
-                  <th>Gross Profit<br><small>(Margin %)</small></th>
-                  <th>Expenses</th>
-                  <th>Items Paid</th>
-                  <th>Liabilities Paid</th>
-                  <th>Total Paid
-                    <small>Exp+items+liabi</small>
-                  </th>
-                  <th>In Hand Total</th>
-                  <th>Items Cash</th>
-                  <th>Profit</th>
-                </tr>
-              </thead>
             </tr>
           <?php endforeach; ?>
         </tbody>
