@@ -49,12 +49,14 @@
 							<th>Liabilities</th>
 							<th>Purchased Amount</th>
 							<th>Amount Paid</th>
+							<th>Purchased Amount Remaining</th>
 							<th>Remaining</th>
 						</tr>
 						<tr>
 							<td><?php echo number_format($liabilities->total, 2); ?></td>
 							<td><?php echo number_format($purchased->amount, 2); ?></td>
 							<td><?php echo number_format($paid->amount, 2); ?></td>
+							<td></td><?php echo number_format(($purchased->amount - $paid->amount), 2); ?></td>
 							<td><?php echo number_format((($liabilities->total + $purchased->amount) - $paid->amount), 2); ?></td>
 						</tr>
 					</table>
